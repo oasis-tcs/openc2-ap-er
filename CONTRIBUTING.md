@@ -13,7 +13,7 @@ tracking facility or using the TC's [comment facility](https://www.oasis-open.or
 Issues and/or posted to the TC's [archived comment list](https://lists.oasis-open.org/archives/openc2/) is governed by the terms of the 
 [OASIS Feedback License](https://www.oasis-open.org/policies-guidelines/ipr#appendixa)
 
-**Use of Contributions.**  As with all OASIS Technical Committee assets, content placed into this GitHub repository is visible and publicly accessible.  
+**Use of Contributions.**  As with all OASIS Technical Committee assets, content placed into this GitHub repository is visible and publicly accessible. 
 Subject to applicable [licensing](https://github.com/oasis-tcs/openc2-ap-edr/blob/master/LICENSE.md) rules, the repository content may be re-used freely, 
 including the creation and publication of derivative works.
 
