@@ -413,8 +413,6 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 -------
 
--------
-
 # Appendix F. Notices
 
 Copyright © OASIS Open 2020. All Rights Reserved.
