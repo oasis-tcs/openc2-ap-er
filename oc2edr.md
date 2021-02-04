@@ -57,7 +57,7 @@ This document was last revised or approved by the OASIS Open Command and Control
 
 TC members should send comments on this specification to the TC's email list. Others should send comments to the TC's public comment list, after subscribing to it by following the instructions at the "Send A Comment" button on the TC's web page at https://www.oasis-open.org/committees/openc2/.
 
-This specification is provided under the [Non-Assertion](https://www.oasis-open.org/policies-guidelines/ipr#Non-Assertion-Mode) Mode of the OASIS IPR Policy, the mode chosen when the Technical Committee was established. For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the TC's web page (https://www.oasis-open.org/committees/openc2/ipr.php).
+This specification is provided under the [Non-Assertion](https://www.oasis-open.org/policies-guidelines/ipr#Non-Assertion-Mode) Mode of the OASIS  R Policy, the mode chosen when the Technical Committee was established. For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the TC's web page (https://www.oasis-open.org/committees/openc2/ipr.php).
 
 Note that any machine-readable content ([Computer Language Definitions](https://www.oasis-open.org/policies-guidelines/tc-process#wpComponentsCompLang)) declared Normative for this Work Product is provided in separate plain text files. In the event of a discrepancy between any such plain text file and display content in the Work Product's prose narrative document(s), the content in the separate plain text file prevails.
 
@@ -91,36 +91,156 @@ For complete copyright information please see the Notices section in the Appendi
 
 # 1 Introduction
 
-<!-- All text is normative unless otherwise labeled -->
+_The content in this section is non-normative, except where it is marked normative._
+
+OpenC2 is a suite of specifications that enables command and control of cyber defense systems and components. OpenC2 typically uses a request-response paradigm where a _Command_ is encoded by a _Producer_ (managing application) and transferred to a _Consumer_ (managed device or virtualized function) using a secure transfer protocol, and the Consumer can respond with status and any requested information.
+
+OpenC2 allows the application producing the commands to discover the set of capabilities supported by the managed devices. These capabilities permit the managing application to adjust its behavior to take advantage of the features exposed by the managed device. The capability definitions can be easily extended in a noncentralized manner, allowing standard and non-standard capabilities to be defined with semantic and syntactic rigor.
+
+## 1.1 IPR Policy
+This specification is provided under the [Non-Assertion](https://www.oasis-open.org/policies-guidelines/ipr#Non-Assertion-Mode) Mode of the [OASIS IPR Policy](https://www.oasis-open.org/policies-guidelines/ipr), the mode chosen when the Technical Committee was established. For information on whether any patents have been disclosed that may be essential to implementing this specification, and any offers of patent licensing terms, please refer to the Intellectual Property Rights section of the TC's web page ([https://www.oasis-open.org/committees/openc2/ipr.php](https://www.oasis-open.org/committees/openc2/ipr.php)).
+
+## 1.2 Terminology
+
+_This section is normative._
+
+* **Action**: The task or activity to be performed (e.g., 'deny').
+* **Actuator**: The function performed by the Consumer that executes the Command (e.g., 'Endpoint Response').
+* **Argument**: A property of a Command that provides additional information on how to perform the Command, such as date/time, periodicity, duration, etc.
+* **Command**: A Message defined by an Action-Target pair that is sent from a Producer and received by a Consumer.
+* **Consumer**: A managed device / application that receives Commands. Note that a single device / application can have both Consumer and Producer capabilities.
+* **Message**: A content- and transport-independent set of elements conveyed between Consumers and Producers.
+* **Producer**: A manager application that sends Commands.
+* **Response**: A Message from a Consumer to a Producer acknowledging a Command or returning the requested resources or status to a previously received Command.
+* **Specifier**: A property or field that identifies a Target or Actuator to some level of precision.
+* **Target**: The object of the Action, i.e., the Action is performed on the Target (e.g., device).
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[RFC2119]](#rfc2119) and [[RFC8174]](#rfc8174) when, and only when, they appear in all capitals, as shown here.
+
+## 1.3 Normative References
+
+The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
+
+(Reference sources:
+For references to IETF RFCs, use the approved citation formats at:  
+http://docs.oasis-open.org/templates/ietf-rfc-list/ietf-rfc-list.html.  
+For references to W3C Recommendations, use the approved citation formats at:  
+http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
+Remove this note before submitting for publication.)
+
+###### [RFC2119]
+Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
+
+###### [RFC8174]
+Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+###### [OpenC2-HTTPS-v1.0]
+_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
+
+###### [Winnt.h-registry-types]
+_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
 
-Here is a customized command line which will generate HTML from this markdown file (named ap-edr-v1.0-wd01.md):
+## 1.4 Non-Normative References
 
-pandoc -f gfm -t html ap-edr-v1.0-wd01.md -c styles/markdown-styles-v1.7.3.css --toc --toc-depth=5 -s -o ap-edr-v1.0-wd01.html --metadata title="OpenC2 Actuator Profile for Endpoint Detection and Response Version 1.0"
+###### [RFC3552]
+Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
 
-OASIS staff are currently using pandoc 2.6 from https://github.com/jgm/pandoc/releases/tag/2.6.
+## 1.5 Document Conventions
+### 1.5.1 Naming Conventions
+* [[RFC2119]](#rfc2119)/[[RFC8174]](#rfc8174) key words (see [Section 1.2](#12-terminology)) are in all uppercase.
+* All property names and literals are in lowercase, except when referencing canonical names defined in another standard (e.g., literal values from an IANA registry).
+* Words in property names are separated with an underscore (_), while words in string enumerations and type names are separated with a hyphen (-).
+* The term "hyphen" used here refers to the ASCII hyphen or minus character, which in Unicode is "hyphen-minus", U+002D.
 
-This also requires the presence of a .css file containing the HTML styles (like styles/markdown-styles-v1.7.3.css).
+### 1.5.2 Font Colors and Style
+The following color, font and font style conventions are used in this document:
 
-Note this command generates a Table of Contents (TOC) in HTML which is located at the top of the HTML document, and which requires additional editing in order to be published in the expected OASIS style. This editing will be handled by OASIS staff during publication.
-A TC may use other ways to generate HTML from markdown, which may generate a TOC in a different way.
+* A fixed width font is used for all type names, property names, and literals.
+* Property names are in bold style – **'created_at'**.
+* All examples in this document are expressed in JSON. They are in fixed width font, with straight quotes, black text and a light shaded background, and 4-space indentation. JSON examples in this document are representations of JSON Objects. They should not be interpreted as string literals. The ordering of object keys is insignificant. Whitespace before or after JSON structural characters in the examples are insignificant [[RFC8259]](#rfc8259).
+* Parts of the example may be omitted for conciseness and clarity. These omitted parts are denoted with ellipses (...).
 
-## 1.1 Changes from earlier versions
+Example:
 
+```json
+{
+    "action": "deny",
+    "target": {
+        "file": {
+            "hashes": {
+                "sha256": "22fe72a34f006ea67d26bb7004e2b6941b5c3953d43ae7ec24d41b1a928a6973"
+            }
+        }
+    }
+}
+```
 
-## 1.2 Glossary
+## 1.6 Overview
+In general, there are two types of participants involved in the exchange of OpenC2 Messages, as depicted in Figure 1-1:
+1. **Producers**: A Producer is an entity that creates Commands to provide instruction to one or more systems to act in accordance with the content of the Command. A Producer may receive and process Responses in conjunction with a Command.
+2. **Consumers**: A Consumer is an entity that receives and may act upon a Command. A Consumer may create Responses that provide any information captured or necessary to send back to the Producer.
 
-### 1.2.1 Definitions of terms
-Sensor: A data capturing utility within the context of an EDR.
+![OpenC2 Message Exchange](images/image_1.png)
 
-### 1.2.2 Acronyms and abbreviations
-EDR: Endpoint Detection and Response
+**Figure 1-1. OpenC2 Message Exchange**
 
-ED: Endpoint Detection
+OpenC2 is a suite of specifications for Producers and Consumers to command and execute cyber defense functions. These specifications include the OpenC2 Language Specification, Actuator Profiles, and Transfer Specifications. The OpenC2 Language Specification and Actuator Profile specifications focus on the language content and meaning at the Producer and Consumer of the Command and Response while the transfer specifications focus on the protocols for their exchange.
+* The **OpenC2 Language Specification ([[OpenC2-Lang-v1.0]](#openc2-lang-v10))** provides the semantics for the essential elements of the language, the structure for Commands and Responses, and the schema that defines the proper syntax for the language elements that represents the Command or Response.
+* **OpenC2 Actuator Profiles** specify the subset of the OpenC2 language relevant in the context of specific Actuator functions. Cyber defense components, devices, systems and/or instances may (in fact are likely to) implement multiple Actuator profiles. Actuator profiles extend the language by defining Specifiers that identify the Actuator to the required level of precision. Actuator Profiles may define Command Arguments and Targets that are relevant and/or unique to those Actuator functions.
+* **OpenC2 Transfer Specifications** utilize existing protocols and standards to implement OpenC2 in specific environments. These standards are used for communications and security functions beyond the scope of the language, such as message transfer encoding, authentication, and end-to-end transport of OpenC2 Messages.
 
-ER: Endpoint Response
+The OpenC2 Language Specification defines a language used to compose Messages for command and control of cyber defense systems and components. A Message consists of a header and a payload (_defined_ as a Message body in the OpenC2 Language Specification Version 1.0 and _specified_ in one or more Actuator profiles).
 
-## 1.3 Purpose and Scope
+The language defines two payload structures:
+
+1. **Command**: An instruction from one system known as the Producer, to one or more systems, the Consumer(s), to act on the content of the Command.
+2. **Response**: Any information sent back to the Producer as a result of the Command.
+
+OpenC2 implementations integrate the related OpenC2 specifications described above with related industry specifications, protocols, and standards. Figure 1-2 depicts the relationships among OpenC2 specifications, and their relationships to other industry standards and environment-specific implementations of OpenC2. Note that the layering of implementation aspects in the diagram is notional, and not intended to preclude any particular approach to implementing the needed functionality (for example, the use of an application-layer message signature function to provide message source authentication and integrity).
+
+![OpenC2 Documentation and Layering Model](images/image_2.png)
+
+**Figure 1-2. OpenC2 Documentation and Layering Model**
+
+OpenC2 is conceptually partitioned into four layers as shown in Table 1-1.
+
+**Table 1-1. OpenC2 Protocol Layers**
+
+| Layer | Examples |
+| :--- | :--- |
+| Function-Specific Content | Actuator Profiles<br>(standard and extensions) |
+| Common Content | Language Specification<br>[[OpenC2-Lang-v1.0]](#openc2-lang-v10) |
+| Message | Transfer Specifications<br>([[OpenC2-HTTPS-v1.0]](#openc2-https-v10), OpenC2-over-CoAP, ...) |
+| Secure Transport | HTTPS, CoAP, MQTT, OpenDXL, ... |
+
+* The **Secure Transport** layer provides a communication path between the Producer and the Consumer. OpenC2 can be layered over any standard transport protocol.
+* The **Message** layer provides a transfer- and content-independent mechanism for conveying Messages. A transfer specification maps transfer-specific protocol elements to a transfer-independent set of message elements consisting of content and associated metadata.
+* The **Common Content** layer defines the structure of Commands and Responses and a set of common language elements used to construct them.
+* The **Function-specific Content** layer defines the language elements used to support a particular cyber defense function. An Actuator profile defines the implementation conformance requirements for that function. Producers and Consumers will support one or more profiles.
+
+The components of a Command are an Action (what is to be done), a Target (what is being acted upon), an optional Actuator (what is performing the command), and Command Arguments, which influence how the Command is to be performed. An Action coupled with a Target is sufficient to describe a complete Command. Though optional, the inclusion of an Actuator and/or Command Arguments provides additional precision to a Command.
+
+The components of a Response are a numerical status code, an optional status text string, and optional results. The format of the results, if included, depend on the type of Response being transferred.
+
+## 1.7 Goal
+The goal of the OpenC2 Language Specification is to provide a language for interoperating between functional elements of cyber defense systems. This language used in conjunction with OpenC2 Actuator Profiles and OpenC2 Transfer Specifications allows for vendor-agnostic cybertime response to attacks.
+
+The Integrated Adaptive Cyber Defense (IACD) framework defines a collection of activities, based on the traditional OODA (Observe–Orient–Decide–Act) Loop [[IACD]](#iacd):
+
+* Sensing:  gathering of data regarding system activities
+* Sense Making:  evaluating data using analytics to understand what's happening
+* Decision Making:  determining a course-of-action to respond to system events
+* Acting:  Executing the course-of-action
+
+The goal of OpenC2 is to enable coordinated defense in cyber-relevant time between decoupled blocks that perform cyber defense functions. OpenC2 focuses on the Acting portion of the IACD framework; the assumption that underlies the design of OpenC2 is that the sensing/analytics have been provisioned and the decision to act has been made. This goal and these assumptions guide the design of OpenC2:
+
+* **Technology Agnostic:**  The OpenC2 language defines a set of abstract atomic cyber defense actions in a platform and implementation agnostic manner
+* **Concise:**  A Command is intended to convey only the essential information required to describe the action required and can be represented in a very compact form for communications-constrained environments
+* **Abstract:**  Commands and Responses are defined abstractly and can be encoded and transferred via multiple schemes as dictated by the needs of different implementation environments
+* **Extensible:**  While OpenC2 defines a core set of Actions and Targets for cyber defense, the language is expected to evolve with cyber defense technologies, and permits extensions to accommodate new cyber defense technologies.
+
+## 1.8 Purpose and Scope
 
 An 'Endpoint Detection and Response' (EDR) system is a security mechanism which identifies malicious behaviours by recording system activities and comparing them to sets of signatures or heuristics. EDR systems facilitate in digital forensics and incident response by storing and indexing said events, as well as provide functionality to respond to security incidents as they pertain to actively exploited, infected or vulnerable endpoints.
 
@@ -144,6 +264,18 @@ Cyber defense systems that are utilizing OpenC2 may require the following compon
 
 * OpenC2 Producers: Devices that send Commands, receive Responses, and manage the execution of Commands involving one or more EDR or other Actuators with EDR capability. The OpenC2 Producer needs _a prior_ knowledge of which Commands the Actuator can process and execute, therefore must understand the profiles for any device that it intends to command
 * OpenC2 Consumers: Devices or instances that provide endpoint detection and response functions. Typically these are Actuators that execute the cyber defense function, but could be orchestrators (i.e., a device or instance that forwards Commands to the Actuator)
+
+## 1.9 Glossary
+
+### 1.9.1 Definitions of terms
+Sensor: A data capturing utility within the context of an EDR.
+
+### 1.9.2 Acronyms and abbreviations
+EDR: Endpoint Detection and Response
+
+ED: Endpoint Detection
+
+ER: Endpoint Response
 
 
 -------
@@ -278,54 +410,6 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **process** 		 |     |     |      |      | valid | valid |valid|valid|      |     
 | **registry_entry** |     |     |valid |valid |       |       |     |     |valid |      
 | **features** 		 |     |valid|      |      |       |       |     |     |      |     
-
--------
-
-# 3 Conformance
-(Note: The [OASIS TC Process](https://www.oasis-open.org/policies-guidelines/tc-process#wpComponentsConfClause) requires that a specification approved by the TC at the Committee Specification Public Review Draft, Committee Specification or OASIS Standard level must include a separate section, listing a set of numbered conformance clauses, to which any implementation of the specification must adhere in order to claim conformance to the specification (or any optional portion thereof). This is done by listing the conformance clauses here.
-For the definition of "conformance clause," see [OASIS Defined Terms](https://www.oasis-open.org/policies-guidelines/oasis-defined-terms-2017-05-26#dConformanceClause).
-
-See "Guidelines to Writing Conformance Clauses":  
-http://docs.oasis-open.org/templates/TCHandbook/ConformanceGuidelines.html.
-
-Remove this note before submitting for publication.)
-
-
--------
-
-# Appendix A. References
-
-This appendix contains the normative and informative references that are used in this document. Normative references are specific (identified by date of publication and/or edition number or version number) and Informative references are either specific or non-specific.
-
-While any hyperlinks included in this appendix were valid at the time of publication, OASIS cannot guarantee their long-term validity.
-
-## A.1 Normative References
-
-The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
-
-(Reference sources:
-For references to IETF RFCs, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/ietf-rfc-list/ietf-rfc-list.html.  
-For references to W3C Recommendations, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
-Remove this note before submitting for publication.)
-
-###### [RFC2119]
-Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
-
-###### [RFC8174]
-Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-###### [OpenC2-HTTPS-v1.0]
-_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
-
-###### [Winnt.h-registry-types]
-_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
-
-## A.2 Informative References
-
-###### [RFC3552]
-Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
 
 -------
 
