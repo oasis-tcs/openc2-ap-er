@@ -379,9 +379,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name | Type | # | Description |
 | :---: | :---: | :---: | :---: | :--- |
-| 1 | **UID** | String | 1 | The unique identifier of the account.|
+| 1 | **uid** | String | 1 | The unique identifier of the account.|
 | 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
-| 3 | **Directory** | String | 1 | The path to the account's home directory) |
+| 3 | **directory** | String | 1 | The path to the account's home directory. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
