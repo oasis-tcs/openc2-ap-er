@@ -416,14 +416,14 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |Allow|Query|Delete|Update|Contain|Restart|Start|Stop |Create|Set|
-|:---                |:---:|:---:|:---: |:---: | :---: | :---: |:---:|:---:|:---: |:---:|
-| **device** 		 |valid|     |      |      | valid | valid |     |valid|      |     |    
-| **file** 			 |     |     |      |valid | valid |       |     |     |      |     |   
-| **process** 		 |     |     |      |      | valid | valid |valid|valid|      |     |  
-| **registry_entry** |     |     |valid |      |       |       |     |     |valid |valid|  
-| **features** 		 |     |valid|      |      |       |       |     |     |      |     |
-| **account** 		 |     |     |      |      |       |       |     |     |      |valid|
+|                    |query|contain|allow|start|stop |restart|set  |update|create|delete|
+|:---                |:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **device** 		 |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 		 |valid|       |     |     |     |       |     |      |      |      |
+| **file** 			 |     | valid |     |     |     |       |     |valid |      |valid |
+| **process** 		 |     | valid |     |valid|valid| valid |     |      |      |      |
+| **registry_entry** |     |       |     |     |     |       |valid|      |valid |valid |
+| **account** 		 |     |       |     |     |     |       |valid|      |      |      | 
 
 -------
 
