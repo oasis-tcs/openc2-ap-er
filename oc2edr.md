@@ -319,9 +319,10 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | 9 | **start** | Initiate a process, application, system, or activity. |
 | 10 | **stop** | Halt a system or end an activity. |
 | 11 | **restart** | Restart a device, system, or process. |
+| 15 | **set** | Change a value, configuration, or state of a managed entity (e.g., registry value, account). |
 | 16 | **update** | Instructs the Actuator to retrieve, install, process, and operate in accordance with a software update, reconfiguration, or other update. |
-| 19 | **create** | Add a new entity of a known type. (E.g., registry entry, file) |
-| 20 | **delete** | Remove an entity (E.g., registry entry, file) |
+| 19 | **create** | Add a new entity of a known type (e.g., registry entry, file). |
+| 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
 
 
@@ -352,6 +353,9 @@ The list of common Targets is extended to include the additional Targets defined
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
+| 1102 | **account** | Account | -- |
+
+
 
 
 
@@ -369,6 +373,15 @@ The list of common Targets is extended to include the additional Targets defined
 | 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
 | 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
 | 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
+
+
+**_Type: Account (--)_**
+
+| ID | Name | Type | # | Description |
+| :---: | :---: | :---: | :---: | :--- |
+| 1 | **uid** | String | 1 | The unique identifier of the account.|
+| 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
+| 3 | **directory** | String | 1 | The path to the account's home directory. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -403,13 +416,14 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |Allow|Query|Delete|Update|Contain|Restart|Start|Stop |Create|
-|:---                |:---:|:---:|:---: |:---: | :---: | :---: |:---:|:---:|:---: |
-| **device** 		 |valid|     |      |      | valid | valid |     |valid|      |     
-| **file** 			 |     |     |      |valid | valid |       |     |     |      |     
-| **process** 		 |     |     |      |      | valid | valid |valid|valid|      |     
-| **registry_entry** |     |     |valid |valid |       |       |     |     |valid |      
-| **features** 		 |     |valid|      |      |       |       |     |     |      |     
+|                    |Allow|Query|Delete|Update|Contain|Restart|Start|Stop |Create|Set|
+|:---                |:---:|:---:|:---: |:---: | :---: | :---: |:---:|:---:|:---: |:---:|
+| **device** 		 |valid|     |      |      | valid | valid |     |valid|      |     |    
+| **file** 			 |     |     |      |valid | valid |       |     |     |      |     |   
+| **process** 		 |     |     |      |      | valid | valid |valid|valid|      |     |  
+| **registry_entry** |     |     |valid |      |       |       |     |     |valid |valid|  
+| **features** 		 |     |valid|      |      |       |       |     |     |      |     |
+| **account** 		 |     |     |      |      |       |       |     |     |      |valid|
 
 -------
 
