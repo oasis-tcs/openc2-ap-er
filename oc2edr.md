@@ -368,7 +368,7 @@ The list of common Targets is extended to include the additional Targets defined
 **_Type: Registry Entry (Record{1..*})_**
 
 | ID | Name | Type | # | Description |
-| :---: | :---: | :---: | :---: | :--- |
+| :--- | :--- | :--- | :---: | :--- |
 | 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
 | 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
 | 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
@@ -379,7 +379,7 @@ The list of common Targets is extended to include the additional Targets defined
 **_Type: Account (--)_**
 
 | ID | Name | Type | # | Description |
-| :---: | :---: | :---: | :---: | :--- |
+| :--- | :--- | :--- | :---: | :--- |
 | 1 | **uid** | String | 1 | The unique identifier of the account.|
 | 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
 | 3 | **directory** | String | 1 | The path to the account's home directory. |
