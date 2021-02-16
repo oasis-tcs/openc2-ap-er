@@ -128,6 +128,9 @@ For references to W3C Recommendations, use the approved citation formats at:
 http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
 Remove this note before submitting for publication.)
 
+###### [RFC1123]
+Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
+
 ###### [RFC2119]
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
 
@@ -356,14 +359,11 @@ The list of common Targets is extended to include the additional Targets defined
 | 1102 | **account** | Account | -- |
 
 
+### 2.1.3 Type Definitions
 
+#### 2.1.3.1 Target Types
 
-
-## 2.1.3 Type Definitions
-
-### 2.1.3.1 Target Types
-
-#### 2.1.3.1.1 Registry Entry
+**Table 2.1.3-1. Registry Entry**
 
 **_Type: Registry Entry (Record{1..*})_**
 
@@ -374,6 +374,7 @@ The list of common Targets is extended to include the additional Targets defined
 | 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
 | 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
+**Table 2.1.3-1. Account**
 
 **_Type: Account (--)_**
 
@@ -385,6 +386,21 @@ The list of common Targets is extended to include the additional Targets defined
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
+
+### 2.1.5 Actuator Specifiers
+An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
+
+The Actuator Specifiers defined in this document are referenced under the edr namespace.
+
+**Table 2.1.5-1. EDR Specifiers**
+
+**_Type: Specifiers (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **hostname** | String | 0..1 | [[RFC1123]](#rfc1123) hostname (can be a domain name or IP address) for a particular device with EDR functionality |
+| 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor |
+| 3 | **sensor_group** | String | 0..1 | User defined collection of devices with EDR sensors installed |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
