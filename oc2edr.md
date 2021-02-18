@@ -387,6 +387,32 @@ The list of common Targets is extended to include the additional Targets defined
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
 
+**Table 2.1.4-1. Command Arguments applicable to SLPF**
+
+**_Type: Args (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **start_time** | Date-Time | 0..1 | The specific date/time to initiate the Action |
+| 2 | **stop_time** | Date-Time | 0..1 | The specific date/time to terminate the Action|
+| 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect |
+| 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete` |
+
+**Table 2.1.4-1. Command Arguments Unique to SLPF**
+
+**_Type: Args (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled |
+
+**_Type: Account-Status (Enumerated)_**
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **enabled** | Enable the account and render it available on the endpoint |
+| 2 | **disabled** | Disable the account and render it unavailable on the endpoint |
+
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
 
