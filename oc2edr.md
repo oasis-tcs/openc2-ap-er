@@ -358,7 +358,7 @@ The list of common Targets is extended to include the additional Targets defined
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
-| 1102 | **account** | Account | -- |
+| 1102 | **account** | Account | A user account on an endpoint |
 
 
 ### 2.1.3 Type Definitions
@@ -460,6 +460,7 @@ Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 200 | OK. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
+| 501 | Not implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
 
 ## 2.3 OpenC2 Commands
 
@@ -551,6 +552,29 @@ Case Three: the Command failed because an Argument was not supported.
   "actuator": {
     "edr": {
        "sensor_id":"5"
+    }
+  }
+}
+```
+
+### A.1.3 Allow unrestricted app execution on a group of devices
+
+**Command:**
+
+```json
+{
+  "action": "contain",
+  "target": {
+    "device": {}
+  },
+  "args": {
+    "edr": {
+      "containment":"app_restriction"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "named_group":"accounting"
     }
   }
 }
