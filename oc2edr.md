@@ -436,7 +436,8 @@ The Actuator Specifiers defined in this document are referenced under the edr na
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | **hostname** | String | 0..1 | [[RFC1123]](#rfc1123) hostname (can be a domain name or IP address) for a particular device with EDR functionality |
 | 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor |
-| 3 | **sensor_group** | String | 0..1 | User defined collection of devices with EDR sensors installed |
+| 3 | **named_group** | String | 0..1 | User defined collection of devices with EDR sensors installed |
+
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
