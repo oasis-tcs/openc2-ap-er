@@ -436,7 +436,7 @@ The Actuator Specifiers defined in this document are referenced under the edr na
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | **hostname** | String | 0..1 | [[RFC1123]](#rfc1123) hostname (can be a domain name or IP address) for a particular device with EDR functionality |
 | 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor |
-| 3 | **named_group** | String | 0..1 | User defined collection of devices with EDR sensors installed |
+| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed |
 
 
 ## 2.2 OpenC2 Response Components
@@ -601,7 +601,7 @@ Case Three: the Command failed because an Argument was not supported.
    },
   "actuator": {
     "edr": {
-       "hostname": "DESKTOP-123ABC"
+       "hostname": "edr_oslo"
     }
   }
 }
