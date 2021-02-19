@@ -382,9 +382,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **uid** | String | 1 | The unique identifier of the account.|
+| 1 | **uid** | String | 0\.\.1 | The unique identifier of the account.|
 | 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
-| 3 | **directory** | String | 1 | The path to the account's home directory. |
+| 3 | **directory** | String | 0\.\.1 | The path to the account's home directory. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -488,7 +488,7 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
 
 ## A.1 deny, contain and allow
 
-### A.1.1 Ban a binary by hash on every device
+### A.1.1 Ban a binary by hash on every endpoint
 
 **Command:**
 
@@ -532,7 +532,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.2 Port isolate a specific device
+### A.1.2 Port isolate a specific endpoint
 
 **Command:**
 
@@ -557,13 +557,13 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.3 Allow unrestricted app execution on a group of devices
+### A.1.3 Allow unrestricted app execution on a group of endpoints
 
 **Command:**
 
 ```json
 {
-  "action": "contain",
+  "action": "allow",
   "target": {
     "device": {}
   },
@@ -575,6 +575,58 @@ Case Three: the Command failed because an Argument was not supported.
   "actuator": {
     "edr": {
        "named_group":"accounting"
+    }
+  }
+}
+```
+
+## A.2 Set
+
+### A.2.1 Set an account on a specific endpoint to be enabled
+
+**Command:**
+
+```json
+{
+  "action": "set",
+  "target": {
+    "account": {
+       "uid":"S-1-5-21-7375663-6890924511-1272660413-2944159"
+    }
+  },
+  "args": {
+    "edr": {
+      "account_status":"enabled"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "hostname": "DESKTOP-123ABC"
+    }
+  }
+}
+```
+
+### A.2.1 Set accounts on a group of endpoints to be disabled
+
+**Command:**
+
+```json
+{
+  "action": "set",
+  "target": {
+    "account": {
+       "account_name":"sql_admin"
+    }
+  },
+  "args": {
+    "edr": {
+      "account_status":"disabled"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "named_group":"production"
     }
   }
 }
