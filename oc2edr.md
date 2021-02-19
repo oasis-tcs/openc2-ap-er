@@ -518,7 +518,7 @@ Case Two: the Command failed due to a syntax error in the Command. Optional stat
 ```json
 {
   "status": 400,
-  "status_text": "Validation Error: Target: "flie"
+  "status_text": "Validation Error: Target: flie"
 }
 ```
 
