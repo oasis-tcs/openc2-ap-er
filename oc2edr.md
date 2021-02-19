@@ -317,7 +317,9 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 7 | **contain** | Isolate a device from communicating with other devices on a network. |
+| 3 | **query** | Query the EDR actuator for a list of available features. |
+| 6 | **deny** | Deny a process from being executed on the endpoint. |
+| 7 | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file. |
 | 8 | **allow** | Un-isolate a previously isolated device. |
 | 9 | **start** | Initiate a process, application, system, or activity. |
 | 10 | **stop** | Halt a system or end an activity. |
@@ -343,7 +345,7 @@ Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification tha
 | :--- | :--- | :--- | :--- |
 | 3 | **device** | Device | The properties of a device |
 | 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
-| 10 | **file** | File | The properties of a file|
+| 10 | **file** | File | The properties of a file |
 | 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system |
 
 #### 2.1.2.2 ER Targets
@@ -458,14 +460,14 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |query|contain|allow|start|stop |restart|set  |update|create|delete|
-|:---                |:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
-| **device** 		 |     | valid |valid|     |valid| valid |     |      |      |      |
-| **features** 		 |valid|       |     |     |     |       |     |      |      |      |
-| **file** 			 |     | valid |     |     |     |       |     |valid |      |valid |
-| **process** 		 |     | valid |     |valid|valid| valid |     |      |      |      |
-| **registry_entry** |     |       |     |     |     |       |valid|      |valid |valid |
-| **account** 		 |     |       |     |     |     |       |valid|      |      |      | 
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
+| **file** 			 |     |valid| valid |     |     |     |       |     |valid |      |valid |
+| **process** 		 |     |valid|       |     |valid|valid| valid |     |      |      |      |
+| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
+| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
 
 -------
 
