@@ -407,6 +407,7 @@ Arguments provide additional precision to a Command by including information suc
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
 | 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled |
+| 1202 | **containment** | Containment | 1 | Specifies wheter or not to isolate the host on a VLAN or restrict application execution |
 
 **_Type: Account-Status (Enumerated)_**
 
@@ -414,6 +415,13 @@ Arguments provide additional precision to a Command by including information suc
 | :--- | :--- | :--- |
 | 1 | **enabled** | Enable the account and render it available on the endpoint |
 | 2 | **disabled** | Disable the account and render it unavailable on the endpoint |
+
+**_Type: Containment (Enumerated)_**
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **port_isolation** | Isolate the host in a VLAN |
+| 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only) |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -464,12 +472,88 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 |:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
 | **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
 | **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
-| **file** 			 |     |valid| valid |     |     |     |       |     |valid |      |valid |
+| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |
 | **process** 		 |     |valid|       |     |valid|valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
 
 -------
+# Annex A: Sample Commands
+
+_This section is non-normative_
+
+This section will summarize and provide examples of OpenC2 Commands as they pertain to SLPF firewalls. The sample Commands will be encoded in verbose JSON
+
+## A.1 deny, contain and allow
+
+### A.1.1 Ban a binary by hash on every device
+
+**Command:**
+
+```json
+{
+  "action": "deny",
+  "target": {
+    "file": {
+      "hash": "0a73291ab5607aef7db23863cf8e72f55bcb3c273bb47f00edf011515aeb5894"
+    }
+  },
+  "actuator": {
+    "edr": {}
+  }
+}
+```
+**Responses:**
+
+Case One: the Actuator successfully issued the deny.
+
+```json
+{
+  "status": 200
+}
+```
+
+Case Two: the Command failed due to a syntax error in the Command. Optional status text is ignored by the Producer, but may be added to provide error details for debugging or logging.
+
+```json
+{
+  "status": 400,
+  "status_text": "Validation Error: Target: "flie"
+}
+```
+
+Case Three: the Command failed because an Argument was not supported.
+
+```json
+{
+  "status": 501
+}
+```
+
+### A.1.2 Port isolate a specific device
+
+**Command:**
+
+```json
+{
+  "action": "contain",
+  "target": {
+    "device": {
+      "hostname": "DESKTOP-123ABC"
+    }
+  },
+  "args": {
+    "edr": {
+      "containment":"port_isolation"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "sensor_id":"5"
+    }
+  }
+}
+```
 
 # Appendix F. Notices
 
