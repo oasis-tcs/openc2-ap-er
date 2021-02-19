@@ -329,6 +329,8 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | 19 | **create** | Add a new entity of a known type (e.g., registry entry, file). |
 | 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
+**2.1.1-2 Actions Unique to EDR**
+101 - deploy: Instruct the EDR server to retrieve, deploy and run a file on an endpoint.
 
 
 ### 2.1.2 Targets
@@ -475,7 +477,7 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
 | **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
 | **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |
-| **process** 		 |     |valid|       |     |valid|valid| valid |     |      |      |      |
+| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
 
