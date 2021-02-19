@@ -389,7 +389,7 @@ The list of common Targets is extended to include the additional Targets defined
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
 
-**Table 2.1.4-1. Command Arguments applicable to SLPF**
+**Table 2.1.4-1. Command Arguments applicable to EDR**
 
 **_Type: Args (Map)_**
 
@@ -400,7 +400,7 @@ Arguments provide additional precision to a Command by including information suc
 | 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect |
 | 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete` |
 
-**Table 2.1.4-1. Command Arguments Unique to SLPF**
+**Table 2.1.4-1. Command Arguments Unique to EDR**
 
 **_Type: Args (Map)_**
 
@@ -482,7 +482,7 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 _This section is non-normative_
 
-This section will summarize and provide examples of OpenC2 Commands as they pertain to SLPF firewalls. The sample Commands will be encoded in verbose JSON
+This section will summarize and provide examples of OpenC2 Commands as they pertain to EDR systems. The sample Commands will be encoded in verbose JSON.
 
 ## A.1 deny, contain and allow
 
