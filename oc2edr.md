@@ -489,26 +489,26 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
-|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
-| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
-| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
-| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |
-| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |
-| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |
-| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |
-| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
-| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
-| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid | 
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|deploy|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
+| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |      |
+| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |      |
+| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |valid |
+| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |      |
+| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |      |
+| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |      |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
 **Table 2.3-2. Command Arguments Matrix**
-|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set registry_entry|set account|create registry_entry|delete file|delete registry_entry|delete service|
-|:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
-| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |
-| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:deploy file|
+|:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
+| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
+| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
 
 -------
