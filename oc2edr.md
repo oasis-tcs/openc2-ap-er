@@ -466,7 +466,7 @@ Responses associated with required Actions MUST be implemented. Implementations 
 ### 2.2.1 Common Results
 Table 2.2.1-1 lists the Response Results properties defined in the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) that are applicable to EDR.
 
-### 2.2.3 Response Status Codes
+### 2.2.2 Response Status Codes
 Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Specification that are applicable to EDR.
 
 **Table 2.2.1-2. Response Status Codes**
@@ -510,6 +510,57 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 | **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
 | **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
+### 2.3.1 Query
+#### 2.3.1.1 'Query features'
+
+### 2.3.2 Deny
+#### 2.3.2.1 'Deny file'
+
+### 2.3.3 Contain
+#### 2.3.3.1 'Contain device'
+#### 2.3.3.2 'Contain file'
+
+### 2.3.4 Allow
+#### 2.3.4.1 'Allow device'
+#### 2.3.4.2 'Allow file'
+
+### 2.3.5 Start
+#### 2.3.5.1 'Start process'
+
+### 2.3.6 Stop
+#### 2.3.6.1 'Stop device'
+#### 2.3.6.2 'Stop process'
+#### 2.3.6.3 'Stop service'
+The command stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
+
+### 2.3.7 Restart
+#### 2.3.7.1 'Restart device'
+#### 2.3.7.2 'Restart process'
+
+### 2.3.8 Set
+#### 2.3.8.1 'Set ipv4 net'
+The command sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
+#### 2.3.8.2 'Set ipv6 net'
+The command sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
+#### 2.3.8.3 'Set registry entry'
+#### 2.3.8.4 'Set account'
+The command sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+
+### 2.3.9 Update
+#### 2.3.9.1 'Update file'
+
+### 2.3.10 Create
+#### 2.3.10.1 'Create registry entry'
+
+### 2.3.11 Delete
+#### 2.3.11.1 'Delete file'
+#### 2.3.11.2 'Delete registry entry'
+#### 2.3.11.3 'Delete service'
+The command deletes every file and stored state information that relates to a specific service (such as registry keys or configuration files).
+
+### 2.3.12 Deploy
+#### 2.3.12.1 'Deploy file'
+The command retrieves a file from a specified location, and deploys and executes it on another. 
 
 -------
 # Annex A: Sample Commands
