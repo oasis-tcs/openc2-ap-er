@@ -501,6 +501,14 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
 | **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid | 
 
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
+
+**Table 2.3-2. Command Arguments Matrix**
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
+
 -------
 # Annex A: Sample Commands
 
