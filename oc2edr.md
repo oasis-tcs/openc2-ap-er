@@ -348,6 +348,8 @@ Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification tha
 | 3 | **device** | Device | The properties of a device |
 | 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
 | 10 | **file** | File | The properties of a file |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
 | 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system |
 
 #### 2.1.2.2 ER Targets
@@ -409,7 +411,7 @@ Arguments provide additional precision to a Command by including information suc
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
 | 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled |
-| 1202 | **containment** | Containment | 1 | Specifies wheter or not to isolate the host on a VLAN or restrict application execution |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies wheter or not to isolate the host on a VLAN or restrict application execution |
 
 **_Type: Account-Status (Enumerated)_**
 
@@ -420,10 +422,11 @@ Arguments provide additional precision to a Command by including information suc
 
 **_Type: Containment (Enumerated)_**
 
-| ID | Name | Description |
+| ID | Name | Device-Containment |
 | :--- | :--- | :--- |
 | 1 | **port_isolation** | Isolate the host in a VLAN |
 | 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only) |
+| 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -477,6 +480,8 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
 | **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
 | **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |
+| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |
+| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |
 | **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
