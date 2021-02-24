@@ -434,9 +434,9 @@ Arguments provide additional precision to a Command by including information suc
 | 1 | **enabled** | Enable the account and render it available on the endpoint |
 | 2 | **disabled** | Disable the account and render it unavailable on the endpoint |
 
-**_Type: Containment (Enumerated)_**
+**_Type: Device-Containment (Enumerated)_**
 
-| ID | Name | Device-Containment |
+| ID | Name | Description |
 | :--- | :--- | :--- |
 | 1 | **port_isolation** | Isolate the host in a VLAN |
 | 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only) |
@@ -504,9 +504,11 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
 **Table 2.3-2. Command Arguments Matrix**
-|                        |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set registry_entry|set account|create registry_entry|delete file|delete registry_entry|delete service|
+|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set registry_entry|set account|create registry_entry|delete file|delete registry_entry|delete service|
 |:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested** |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
+| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |
+| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
 
 -------
