@@ -582,9 +582,7 @@ Case Three: the Command failed because an Argument was not supported.
     }
    },
   "actuator": {
-    "edr": {
-       "sensor_id":"5"
-    }
+    "edr": {}
   }
 }
 ```
