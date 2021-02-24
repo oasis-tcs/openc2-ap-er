@@ -128,6 +128,9 @@ For references to W3C Recommendations, use the approved citation formats at:
 http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
 Remove this note before submitting for publication.)
 
+###### [RFC1123]
+Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
+
 ###### [RFC2119]
 Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
 
@@ -314,7 +317,9 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 7 | **contain** | Isolate a device from communicating with other devices on a network. |
+| 3 | **query** | Query the EDR actuator for a list of available features. |
+| 6 | **deny** | Deny a process from being executed on the endpoint. |
+| 7 | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file. |
 | 8 | **allow** | Un-isolate a previously isolated device. |
 | 9 | **start** | Initiate a process, application, system, or activity. |
 | 10 | **stop** | Halt a system or end an activity. |
@@ -324,6 +329,10 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | 19 | **create** | Add a new entity of a known type (e.g., registry entry, file). |
 | 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
+**2.1.1-2 Actions Unique to EDR**
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 101 | **deploy** | Instruct the EDR server to retrieve a file from a local machine, then deploy and run it on another. |
 
 
 ### 2.1.2 Targets
@@ -340,7 +349,9 @@ Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification tha
 | :--- | :--- | :--- | :--- |
 | 3 | **device** | Device | The properties of a device |
 | 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
-| 10 | **file** | File | The properties of a file|
+| 10 | **file** | File | The properties of a file |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
 | 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system |
 
 #### 2.1.2.2 ER Targets
@@ -353,38 +364,99 @@ The list of common Targets is extended to include the additional Targets defined
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
-| 1102 | **account** | Account | -- |
+| 1102 | **account** | Account | A user account on an endpoint |
+| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar.) |
 
 
+### 2.1.3 Type Definitions
 
+#### 2.1.3.1 Target Types
 
+**Table 2.1.3-1. Registry Entry**
 
-## 2.1.3 Type Definitions
-
-### 2.1.3.1 Target Types
-
-#### 2.1.3.1.1 Registry Entry
-
-**_Type: Registry Entry (Record{1..*})_**
+**_Type: Registry-Entry (Record{1..*})_**
 
 | ID | Name | Type | # | Description |
-| :---: | :---: | :---: | :---: | :--- |
+| :--- | :--- | :--- | :---: | :--- |
 | 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
 | 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
 | 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
 | 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
+**Table 2.1.3-2. Account**
 
 **_Type: Account (--)_**
 
 | ID | Name | Type | # | Description |
-| :---: | :---: | :---: | :---: | :--- |
-| 1 | **uid** | String | 1 | The unique identifier of the account.|
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **uid** | String | 0\.\.1 | The unique identifier of the account.|
 | 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
-| 3 | **directory** | String | 1 | The path to the account's home directory. |
+| 3 | **directory** | String | 0\.\.1 | The path to the account's home directory. |
+
+
+**Table 2.1.3-3. Service**
+
+**_Type: Service (--)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
+| 2 | **executable_path** | File | 0\.\.1 | The path to the executable. |
+| 3 | **registry_entries** | Registry-Entry | 0\.\.* | The registry entries associated with this file. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
+
+**Table 2.1.4-1. Command Arguments applicable to EDR**
+
+**_Type: Args (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **start_time** | Date-Time | 0..1 | The specific date/time to initiate the Action |
+| 2 | **stop_time** | Date-Time | 0..1 | The specific date/time to terminate the Action|
+| 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect |
+| 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete` |
+
+**Table 2.1.4-1. Command Arguments Unique to EDR**
+
+**_Type: Args (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies wheter or not to isolate the host on a VLAN or restrict application execution |
+
+**_Type: Account-Status (Enumerated)_**
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **enabled** | Enable the account and render it available on the endpoint |
+| 2 | **disabled** | Disable the account and render it unavailable on the endpoint |
+
+**_Type: Device-Containment (Enumerated)_**
+
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **port_isolation** | Isolate the host in a VLAN |
+| 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only) |
+| 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint |
+
+### 2.1.5 Actuator Specifiers
+An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
+
+The Actuator Specifiers defined in this document are referenced under the edr namespace.
+
+**Table 2.1.5-1. EDR Specifiers**
+
+**_Type: Specifiers (Map)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **hostname** | String | 0..1 | [[RFC1123]](#rfc1123) hostname (can be a domain name or IP address) for a particular device with EDR functionality |
+| 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor |
+| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed |
+
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
@@ -394,7 +466,7 @@ Responses associated with required Actions MUST be implemented. Implementations 
 ### 2.2.1 Common Results
 Table 2.2.1-1 lists the Response Results properties defined in the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) that are applicable to EDR.
 
-### 2.2.3 Response Status Codes
+### 2.2.2 Response Status Codes
 Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Specification that are applicable to EDR.
 
 **Table 2.2.1-2. Response Status Codes**
@@ -407,6 +479,7 @@ Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 200 | OK. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
+| 501 | Not implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
 
 ## 2.3 OpenC2 Commands
 
@@ -416,16 +489,229 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |Allow|Query|Delete|Update|Contain|Restart|Start|Stop |Create|Set|
-|:---                |:---:|:---:|:---: |:---: | :---: | :---: |:---:|:---:|:---: |:---:|
-| **device** 		 |valid|     |      |      | valid | valid |     |valid|      |     |    
-| **file** 			 |     |     |      |valid | valid |       |     |     |      |     |   
-| **process** 		 |     |     |      |      | valid | valid |valid|valid|      |     |  
-| **registry_entry** |     |     |valid |      |       |       |     |     |valid |valid|  
-| **features** 		 |     |valid|      |      |       |       |     |     |      |     |
-| **account** 		 |     |     |      |      |       |       |     |     |      |valid|
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|deploy|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
+| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |      |
+| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |      |
+| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |valid |
+| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |      |
+| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |      |
+| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |      |
+
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
+
+**Table 2.3-2. Command Arguments Matrix**
+|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:deploy file|
+|:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
+| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
+| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+
+### 2.3.1 Query
+#### 2.3.1.1 'Query features'
+
+### 2.3.2 Deny
+#### 2.3.2.1 'Deny file'
+
+### 2.3.3 Contain
+#### 2.3.3.1 'Contain device'
+#### 2.3.3.2 'Contain file'
+
+### 2.3.4 Allow
+#### 2.3.4.1 'Allow device'
+#### 2.3.4.2 'Allow file'
+
+### 2.3.5 Start
+#### 2.3.5.1 'Start process'
+
+### 2.3.6 Stop
+#### 2.3.6.1 'Stop device'
+#### 2.3.6.2 'Stop process'
+#### 2.3.6.3 'Stop service'
+The command stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
+
+### 2.3.7 Restart
+#### 2.3.7.1 'Restart device'
+#### 2.3.7.2 'Restart process'
+
+### 2.3.8 Set
+#### 2.3.8.1 'Set ipv4 net'
+The command sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
+#### 2.3.8.2 'Set ipv6 net'
+The command sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
+#### 2.3.8.3 'Set registry entry'
+#### 2.3.8.4 'Set account'
+The command sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+
+### 2.3.9 Update
+#### 2.3.9.1 'Update file'
+
+### 2.3.10 Create
+#### 2.3.10.1 'Create registry entry'
+
+### 2.3.11 Delete
+#### 2.3.11.1 'Delete file'
+#### 2.3.11.2 'Delete registry entry'
+#### 2.3.11.3 'Delete service'
+The command deletes every file and stored state information that relates to a specific service (such as registry keys or configuration files).
+
+### 2.3.12 Deploy
+#### 2.3.12.1 'Deploy file'
+The command retrieves a file from a specified location, and deploys and executes it on another. 
 
 -------
+# Annex A: Sample Commands
+
+_This section is non-normative_
+
+This section will summarize and provide examples of OpenC2 Commands as they pertain to EDR systems. The sample Commands will be encoded in verbose JSON.
+
+## A.1 deny, contain and allow
+
+### A.1.1 Ban a binary by hash on every endpoint
+
+**Command:**
+
+```json
+{
+  "action": "deny",
+  "target": {
+    "file": {
+      "hash": "0a73291ab5607aef7db23863cf8e72f55bcb3c273bb47f00edf011515aeb5894"
+    }
+  },
+  "actuator": {
+    "edr": {}
+  }
+}
+```
+**Responses:**
+
+Case One: the Actuator successfully issued the deny.
+
+```json
+{
+  "status": 200
+}
+```
+
+Case Two: the Command failed due to a syntax error in the Command. Optional status text is ignored by the Producer, but may be added to provide error details for debugging or logging.
+
+```json
+{
+  "status": 400,
+  "status_text": "Validation Error: Target: flie"
+}
+```
+
+Case Three: the Command failed because an Argument was not supported.
+
+```json
+{
+  "status": 501
+}
+```
+
+### A.1.2 Port isolate a specific endpoint
+
+**Command:**
+
+```json
+{
+  "action": "contain",
+  "target": {
+    "device": {
+      "hostname": "DESKTOP-123ABC"
+    }
+  },
+  "args": {
+    "edr": {
+      "containment":"port_isolation"
+    }
+   },
+  "actuator": {
+    "edr": {}
+  }
+}
+```
+
+### A.1.3 Allow unrestricted app execution on a group of endpoints
+
+**Command:**
+
+```json
+{
+  "action": "allow",
+  "target": {
+    "device": {}
+  },
+  "args": {
+    "edr": {
+      "containment":"app_restriction"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "named_group":"accounting"
+    }
+  }
+}
+```
+
+## A.2 Set
+
+### A.2.1 Set an account on a specific endpoint to be enabled
+
+**Command:**
+
+```json
+{
+  "action": "set",
+  "target": {
+    "account": {
+       "uid":"S-1-5-21-7375663-6890924511-1272660413-2944159"
+    }
+  },
+  "args": {
+    "edr": {
+      "account_status":"enabled"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "hostname": "edr_oslo"
+    }
+  }
+}
+```
+
+### A.2.1 Set accounts on a group of endpoints to be disabled
+
+**Command:**
+
+```json
+{
+  "action": "set",
+  "target": {
+    "account": {
+       "account_name":"sql_admin"
+    }
+  },
+  "args": {
+    "edr": {
+      "account_status":"disabled"
+    }
+   },
+  "actuator": {
+    "edr": {
+       "named_group":"production"
+    }
+  }
+}
+```
 
 # Appendix F. Notices
 
