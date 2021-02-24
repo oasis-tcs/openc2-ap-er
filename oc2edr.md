@@ -363,6 +363,7 @@ The list of common Targets is extended to include the additional Targets defined
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
 | 1102 | **account** | Account | A user account on an endpoint |
+| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar.) |
 
 
 ### 2.1.3 Type Definitions
@@ -371,7 +372,7 @@ The list of common Targets is extended to include the additional Targets defined
 
 **Table 2.1.3-1. Registry Entry**
 
-**_Type: Registry Entry (Record{1..*})_**
+**_Type: Registry-Entry (Record{1..*})_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
@@ -380,7 +381,7 @@ The list of common Targets is extended to include the additional Targets defined
 | 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
 | 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
-**Table 2.1.3-1. Account**
+**Table 2.1.3-2. Account**
 
 **_Type: Account (--)_**
 
@@ -389,6 +390,17 @@ The list of common Targets is extended to include the additional Targets defined
 | 1 | **uid** | String | 0\.\.1 | The unique identifier of the account.|
 | 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
 | 3 | **directory** | String | 0\.\.1 | The path to the account's home directory. |
+
+
+**Table 2.1.3-3. Service**
+
+**_Type: Service (--)_**
+
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
+| 2 | **executable_path** | File | 0\.\.1 | The path to the executable. |
+| 3 | **registry_entries** | Registry-Entry | 0\.\.* | The registry entries associated with this file. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -485,6 +497,7 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      | 
+| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid | 
 
 -------
 # Annex A: Sample Commands
