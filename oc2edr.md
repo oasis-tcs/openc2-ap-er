@@ -330,7 +330,9 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
 **2.1.1-2 Actions Unique to EDR**
-101 - deploy: Instruct the EDR server to retrieve, deploy and run a file on an endpoint.
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 101 | **deploy** | Instruct the EDR server to retrieve a file from a local machine, then deploy and run it on another. |
 
 
 ### 2.1.2 Targets
