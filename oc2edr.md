@@ -503,7 +503,7 @@ An OpenC2 Command consists of an Action/Target pair and associated Specifiers an
 
 Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
-Table 2.3-2 defines the Commands from the slpf namespace that are valied in the context of the ER profile.
+Table 2.3-2 defines the Commands from the edr namespace that are valid in the context of the ER profile.
 
 **Table 2.3-1. Command Matrix**
 
