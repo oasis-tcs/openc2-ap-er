@@ -589,6 +589,23 @@ The command deletes every file and stored state information that relates to a sp
 #### 2.3.12.1 'edr:Deploy file'
 The command retrieves a file from a specified location, and deploys and executes it on another. 
 
+# 3 Conformance statements
+_This section is normative_
+This section identifies the requirements for twenty-two conformance profiles as they pertain to two conformance targets. The two conformance targets are OpenC2 Producers and OpenC2 Consumers (as defined in [Section 1.8](#18-purpose-and-scope) of this specification).
+
+## 3.1 Clauses Pertaining to the OpenC2 Producer Conformance Target
+All OpenC2 Producers that are conformant to this specification MUST satisfy Conformance Clause 1 and MAY satisfy one or more of Conformance Clauses 2 through 11.
+
+### 3.1.1 Conformance Clause 1: Baseline OpenC2 Producer
+An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
+* 3.1.1.1 **MUST** support JSON serialization of OpenC2 Commands that are syntactically valid in accordance with the property tables presented in [Section 2.1](#21-openc2-command-components)
+* 3.1.1.2 All serializations **MUST** be implemented in a manner such that the serialization validates against and provides a one-to-one mapping to the property tables in [Section 2.1](#21-openc2-command-components) of this specification
+* 3.1.1.3 **MUST** support the use of a Transfer Specification that is capable of delivering authenticated, ordered, lossless and uniquely identified OpenC2 messages
+* 3.1.1.4 **SHOULD** support the use of one or more published OpenC2 Transfer Specifications which identify underlying transport protocols such that an authenticated, ordered, lossless, delivery of uniquely identified OpenC2 messages is provided as referenced in [Section 1](#1-introduction) of this specification
+* 3.1.1.5 **MUST** be conformant with Version 1.0 of the OpenC2 Language Specification
+* 3.1.1.6 **MUST** implement the 'query features' Command in accordance with the normative text provided in Version 1.0 of the OpenC2 Language Specification
+* 3.1.1.7 **MUST** implement the 'response_requested' Command Argument as a valid option for any Command
+
 -------
 # Annex A: Sample Commands
 
