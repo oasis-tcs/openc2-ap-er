@@ -143,6 +143,14 @@ _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by
 ###### [Winnt.h-registry-types]
 _Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
+###### [SLPF-Deny]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
+
+###### [SLPF-Allow]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
+
+###### [SLPF-Conformance]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
 
 ## 1.4 Non-Normative References
 
@@ -537,6 +545,7 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 #### 2.3.4.1 'Allow device'
 #### 2.3.4.2 'Allow file'
 #### 2.3.4.3 'slpf:Allow ipv4 net'
+Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow)
 #### 2.3.4.4 'slpf:Allow ipv6 net'
 
 ### 2.3.5 Start
@@ -545,7 +554,7 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 ### 2.3.6 Stop
 #### 2.3.6.1 'Stop device'
 #### 2.3.6.2 'Stop process'
-#### 2.3.6.3 'Stop service'
+#### 2.3.6.3 'Stop edr:service'
 The command stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
 ### 2.3.7 Restart
@@ -557,24 +566,24 @@ The command stops the running process associated with a service, and prevents it
 The command sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
 #### 2.3.8.2 'Set ipv6 net'
 The command sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
-#### 2.3.8.3 'Set registry entry'
-#### 2.3.8.4 'Set account'
+#### 2.3.8.3 'Set edr:registry entry'
+#### 2.3.8.4 'Set edr:account'
 The command sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
 ### 2.3.9 Update
 #### 2.3.9.1 'Update file'
 
 ### 2.3.10 Create
-#### 2.3.10.1 'Create registry entry'
+#### 2.3.10.1 'Create edr:registry entry'
 
 ### 2.3.11 Delete
 #### 2.3.11.1 'Delete file'
-#### 2.3.11.2 'Delete registry entry'
-#### 2.3.11.3 'Delete service'
+#### 2.3.11.2 'Delete edr:registry entry'
+#### 2.3.11.3 'Delete edr:service'
 The command deletes every file and stored state information that relates to a specific service (such as registry keys or configuration files).
 
-### 2.3.12 Deploy
-#### 2.3.12.1 'Deploy file'
+### 2.3.12 edr:Deploy
+#### 2.3.12.1 'edr:Deploy file'
 The command retrieves a file from a specified location, and deploys and executes it on another. 
 
 -------
