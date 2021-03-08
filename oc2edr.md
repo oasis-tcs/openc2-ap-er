@@ -418,7 +418,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **executable_path** | File | 0\.\.1 | The path to the executable. |
+| 2 | **root_folder** | String | 0\.\.1 | The path to the root folder containing the files and subfolders associated with the service. |
 | 3 | **registry_entries** | Registry-Entry | 0\.\.* | The registry entries associated with this file. |
 
 ### 2.1.4 Command Arguments
@@ -544,6 +544,7 @@ Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well a
 #### 2.3.3.2 'Contain file'
 
 ### 2.3.4 Allow
+'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.1.2.2](#2122-slpf-targets).
 #### 2.3.4.1 'Allow device'
 #### 2.3.4.2 'Allow file'
 #### 2.3.4.3 'slpf:Allow ipv4 net'
