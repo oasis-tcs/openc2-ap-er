@@ -535,7 +535,9 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 ### 2.3.2 Deny
 #### 2.3.2.1 'Deny file'
 #### 2.3.2.2 'slpf:Deny ipv4 net'
+Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.2.3 'slpf:Deny ipv6 net'
+Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.3 Contain
 #### 2.3.3.1 'Contain device'
@@ -545,8 +547,9 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 #### 2.3.4.1 'Allow device'
 #### 2.3.4.2 'Allow file'
 #### 2.3.4.3 'slpf:Allow ipv4 net'
-Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow)
+Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.4.4 'slpf:Allow ipv6 net'
+Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.5 Start
 #### 2.3.5.1 'Start process'
