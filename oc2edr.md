@@ -326,7 +326,7 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | ID | Name | Description |
 | :--- | :--- | :--- |
 | 3 | **query** | Query the EDR actuator for a list of available features. |
-| 6 | **deny** | Deny a process from being executed on the endpoint. |
+| 6 | **deny** | Deny a process or service from being executed on the endpoint. |
 | 7 | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file. |
 | 8 | **allow** | Un-isolate a previously isolated device. |
 | 9 | **start** | Initiate a process, application, system, or activity. |
@@ -340,7 +340,7 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 **2.1.1-2 Actions Unique to EDR**
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 101 | **deploy** | Instruct the EDR server to retrieve a file from a local machine, then deploy and run it on another. |
+| 101 | **run** | Instructs the Actuator to retrieve, install, process, and operate a file. |
 
 
 ### 2.1.2 Targets
@@ -418,8 +418,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **root_folder** | String | 0\.\.1 | The path to the root folder containing the files and subfolders associated with the service. |
-| 3 | **registry_entries** | Registry-Entry | 0\.\.* | The registry entries associated with this file. |
+| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this file. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -589,6 +588,8 @@ The command sets the status of the account to be eiter enabled or disabled. The 
 #### 2.3.11.1 'Delete file'
 #### 2.3.11.2 'Delete edr:registry entry'
 #### 2.3.11.3 'Delete edr:service'
+Deletes the registry key that executes a service on system boot.
+
 The command deletes every file and stored state information that relates to a specific service (such as registry keys or configuration files).
 
 ### 2.3.12 edr:Deploy
