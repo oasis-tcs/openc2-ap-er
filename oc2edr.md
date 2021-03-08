@@ -544,7 +544,7 @@ Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well a
 #### 2.3.3.2 'Contain file'
 
 ### 2.3.4 Allow
-'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.1.2.2](#2122-slpf-targets).
+'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
 #### 2.3.4.1 'Allow device'
 #### 2.3.4.2 'Allow file'
 #### 2.3.4.3 'slpf:Allow ipv4 net'
