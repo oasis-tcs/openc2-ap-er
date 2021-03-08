@@ -341,7 +341,7 @@ Table 2.1.2-1 summarizes the Targets defined in Version 1.0 of the [[OpenC2-Lang
 #### 2.1.2.1 Common Targets
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification that are applicable to EDR . The particular Action/Target pairs that are required or are optional are presented in [Section 2.3](#23-openc2-commands).
 
-**Table 2.1.2-1. Targets Applicable to ER**
+**Table 2.1.2-1. Language Specification Targets Applicable to ER**
 
 **_Type: Target (Choice)_**
 
@@ -366,6 +366,15 @@ The list of common Targets is extended to include the additional Targets defined
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
 | 1102 | **account** | Account | A user account on an endpoint |
 | 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar.) |
+
+#### 2.1.2.3 External Namespace Targets
+The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
+
+**Table 2.1.2-3 Stateless Packet Filter Targets Applicable to ER**
+| ID | Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
 
 
 ### 2.1.3 Type Definitions
@@ -487,19 +496,21 @@ An OpenC2 Command consists of an Action/Target pair and associated Specifiers an
 
 Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
+Table 2.3-2 defines the Commands from the slpf namespace that are valied in the context of the ER profile.
+
 **Table 2.3-1. Command Matrix**
 
-|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|deploy|
-|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
-| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |      |
-| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |      |
-| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |valid |
-| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
-| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
-| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |      |
-| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |      |
-| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |      |
-| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |      |
+|                    |query|deny  |contain|allow |start|stop |restart|set  |update|create|delete|deploy|
+|:---                |:---:|:---: |:---:  |:---: |:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
+| **device** 		 |     |      | valid |valid |     |valid| valid |     |      |      |      |      |
+| **features** 		 |valid|      |       |      |     |     |       |     |      |      |      |      |
+| **file** 			 |     |valid | valid |valid |     |     |       |     |valid |      |valid |valid |
+| **ipv4_net**		 |     |valid*|       |valid*|     |     |       |valid|      |      |      |      |
+| **ipv6_net**		 |     |valid*|       |valid*|     |     |       |valid|      |      |      |      |
+| **process** 		 |     |      |       |      |valid|valid| valid |     |      |      |      |      |
+| **registry_entry** |     |      |       |      |     |     |       |valid|      |valid |valid |      |
+| **account** 		 |     |      |       |      |     |     |       |valid|      |      |      |      |
+| **service** 		 |     |      |       |      |     |valid|       |     |      |      |valid |      |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
@@ -515,6 +526,8 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 
 ### 2.3.2 Deny
 #### 2.3.2.1 'Deny file'
+#### 2.3.2.2 'slpf:Deny ipv4 net'
+#### 2.3.2.3 'slpf:Deny ipv6 net'
 
 ### 2.3.3 Contain
 #### 2.3.3.1 'Contain device'
@@ -523,6 +536,8 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 ### 2.3.4 Allow
 #### 2.3.4.1 'Allow device'
 #### 2.3.4.2 'Allow file'
+#### 2.3.4.3 'slpf:Allow ipv4 net'
+#### 2.3.4.4 'slpf:Allow ipv6 net'
 
 ### 2.3.5 Start
 #### 2.3.5.1 'Start process'
