@@ -402,7 +402,7 @@ The list of external namespace Targets extend the Target list to include Targets
 
 **Table 2.1.3-2. Account**
 
-**_Type: Account (--)_**
+**_Type: Account (Map[1..*])_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
@@ -413,7 +413,7 @@ The list of external namespace Targets extend the Target list to include Targets
 
 **Table 2.1.3-3. Service**
 
-**_Type: Service (--)_**
+**_Type: Service (Map[1..*])_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
