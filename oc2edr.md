@@ -534,6 +534,7 @@ Table 2.3-2 defines the Command Arguments that are allowed for a particular Comm
 
 ### 2.3.2 Deny
 #### 2.3.2.1 'Deny file'
+Prevents the execution of a file.
 #### 2.3.2.2 'slpf:Deny ipv4 net'
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.2.3 'slpf:Deny ipv6 net'
@@ -541,12 +542,16 @@ Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well a
 
 ### 2.3.3 Contain
 #### 2.3.3.1 'Contain device'
+Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The producer and consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 #### 2.3.3.2 'Contain file'
+Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
 
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
 #### 2.3.4.1 'Allow device'
+Un-contains a device.
 #### 2.3.4.2 'Allow file'
+Removes execution prevention from a file.
 #### 2.3.4.3 'slpf:Allow ipv4 net'
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.4.4 'slpf:Allow ipv6 net'
