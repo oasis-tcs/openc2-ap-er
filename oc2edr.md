@@ -143,6 +143,14 @@ _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by
 ###### [Winnt.h-registry-types]
 _Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
+###### [SLPF-Deny]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
+
+###### [SLPF-Allow]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
+
+###### [SLPF-Conformance]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
 
 ## 1.4 Non-Normative References
 
@@ -318,7 +326,7 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | ID | Name | Description |
 | :--- | :--- | :--- |
 | 3 | **query** | Query the EDR actuator for a list of available features. |
-| 6 | **deny** | Deny a process from being executed on the endpoint. |
+| 6 | **deny** | Deny a process or service from being executed on the endpoint. |
 | 7 | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file. |
 | 8 | **allow** | Un-isolate a previously isolated device. |
 | 9 | **start** | Initiate a process, application, system, or activity. |
@@ -332,7 +340,7 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 **2.1.1-2 Actions Unique to EDR**
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 101 | **deploy** | Instruct the EDR server to retrieve a file from a local machine, then deploy and run it on another. |
+| 101 | **run** | Instructs the Actuator to retrieve, install, process, and operate a file. |
 
 
 ### 2.1.2 Targets
@@ -341,7 +349,7 @@ Table 2.1.2-1 summarizes the Targets defined in Version 1.0 of the [[OpenC2-Lang
 #### 2.1.2.1 Common Targets
 Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification that are applicable to EDR . The particular Action/Target pairs that are required or are optional are presented in [Section 2.3](#23-openc2-commands).
 
-**Table 2.1.2-1. Targets Applicable to ER**
+**Table 2.1.2-1. Language Specification Targets Applicable to ER**
 
 **_Type: Target (Choice)_**
 
@@ -367,6 +375,15 @@ The list of common Targets is extended to include the additional Targets defined
 | 1102 | **account** | Account | A user account on an endpoint |
 | 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar.) |
 
+#### 2.1.2.3 External Namespace Targets
+The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
+
+**Table 2.1.2-3 Stateless Packet Filter Targets Applicable to ER**
+| ID | Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
+
 
 ### 2.1.3 Type Definitions
 
@@ -385,7 +402,7 @@ The list of common Targets is extended to include the additional Targets defined
 
 **Table 2.1.3-2. Account**
 
-**_Type: Account (--)_**
+**_Type: Account (Map[1..*])_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
@@ -396,13 +413,12 @@ The list of common Targets is extended to include the additional Targets defined
 
 **Table 2.1.3-3. Service**
 
-**_Type: Service (--)_**
+**_Type: Service (Map[1..*])_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **executable_path** | File | 0\.\.1 | The path to the executable. |
-| 3 | **registry_entries** | Registry-Entry | 0\.\.* | The registry entries associated with this file. |
+| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this file. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -487,15 +503,16 @@ An OpenC2 Command consists of an Action/Target pair and associated Specifiers an
 
 Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
-**Table 2.3-1. Command Matrix**
+Table 2.3-2 defines the Commands from the edr namespace that are valid in the context of the ER profile.
 
-|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|deploy|
-|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
+**Table 2.3-1. Command Matrix**
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|run|
+|:---                |:---:|:---: |:---:  |:---: |:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
 | **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |      |
 | **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |      |
 | **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |valid |
-| **ipv4_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
-| **ipv6_net**		 |     |     |       |     |     |     |       |valid|      |      |      |      |
+| **ipv4_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |      |
+| **ipv6_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |      |
 | **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |      |
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |      |
@@ -504,63 +521,129 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
 **Table 2.3-2. Command Arguments Matrix**
-|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:deploy file|
+|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:run file|
 |:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
 | **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
 | **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 
 ### 2.3.1 Query
-#### 2.3.1.1 'Query features'
+The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
+
+#### 2.3.1.1 Query features
+The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 
 ### 2.3.2 Deny
 #### 2.3.2.1 'Deny file'
+Prevents the execution of a file.
+#### 2.3.2.2 'slpf:Deny ipv4 net'
+Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.2.3 'slpf:Deny ipv6 net'
+Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.3 Contain
 #### 2.3.3.1 'Contain device'
+Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The producer and consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 #### 2.3.3.2 'Contain file'
+Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
 
 ### 2.3.4 Allow
+'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
 #### 2.3.4.1 'Allow device'
+Removes a device from containment.
 #### 2.3.4.2 'Allow file'
+Removes execution prevention from a file.
+#### 2.3.4.3 'slpf:Allow ipv4 net'
+Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.4.4 'slpf:Allow ipv6 net'
+Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.5 Start
 #### 2.3.5.1 'Start process'
+Executes a process.
 
 ### 2.3.6 Stop
 #### 2.3.6.1 'Stop device'
+Shuts down an endpoint.
 #### 2.3.6.2 'Stop process'
-#### 2.3.6.3 'Stop service'
-The command stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
+Stops an active process.
+#### 2.3.6.3 'Stop edr:service'
+Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
 ### 2.3.7 Restart
 #### 2.3.7.1 'Restart device'
+Restarts an endpoint.
 #### 2.3.7.2 'Restart process'
+Restarts a process.
 
 ### 2.3.8 Set
 #### 2.3.8.1 'Set ipv4 net'
-The command sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
+Sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
 #### 2.3.8.2 'Set ipv6 net'
-The command sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
-#### 2.3.8.3 'Set registry entry'
-#### 2.3.8.4 'Set account'
-The command sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+Sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
+#### 2.3.8.3 'Set edr:registry entry'
+Sets the 'value' property of a Registry Entry. 
+#### 2.3.8.4 'Set edr:account'
+Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
 ### 2.3.9 Update
 #### 2.3.9.1 'Update file'
+Instructs the EDR sensor on the endpoint(s) to update to a new version.
 
 ### 2.3.10 Create
-#### 2.3.10.1 'Create registry entry'
+#### 2.3.10.1 'Create edr:registry entry'
+Creates a registry entry in the specified path. If the key is not included in the 'path' property of the Target Type the 'key' property MUST be populated. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
 ### 2.3.11 Delete
 #### 2.3.11.1 'Delete file'
-#### 2.3.11.2 'Delete registry entry'
-#### 2.3.11.3 'Delete service'
-The command deletes every file and stored state information that relates to a specific service (such as registry keys or configuration files).
+Deletes the specified file from an endpoint.
+#### 2.3.11.2 'Delete edr:registry entry'
+Deletes a registry entry.
+#### 2.3.11.3 'Delete edr:service'
+Deletes the registry key that executes a service on system boot.
 
-### 2.3.12 Deploy
-#### 2.3.12.1 'Deploy file'
-The command retrieves a file from a specified location, and deploys and executes it on another. 
+### 2.3.12 edr:Run
+#### 2.3.12.1 'edr:Run file'
+Retrieves, installs, processes, and operates a file. 
+
+# 3 Conformance statements
+_This section is normative_
+This section identifies the requirements for twenty-two conformance profiles as they pertain to two conformance targets. The two conformance targets are OpenC2 Producers and OpenC2 Consumers (as defined in [Section 1.8](#18-purpose-and-scope) of this specification).
+
+## 3.1 Clauses Pertaining to the OpenC2 Producer Conformance Target
+All OpenC2 Producers that are conformant to this specification MUST satisfy Conformance Clause 1 and MAY satisfy one or more of Conformance Clauses 2 through 11.
+
+### 3.1.1 Conformance Clause 1: Baseline OpenC2 Producer
+An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
+* 3.1.1.1 **MUST** support JSON serialization of OpenC2 Commands that are syntactically valid in accordance with the property tables presented in [Section 2.1](#21-openc2-command-components)
+* 3.1.1.2 All serializations **MUST** be implemented in a manner such that the serialization validates against and provides a one-to-one mapping to the property tables in [Section 2.1](#21-openc2-command-components) of this specification
+* 3.1.1.3 **MUST** support the use of a Transfer Specification that is capable of delivering authenticated, ordered, lossless and uniquely identified OpenC2 messages
+* 3.1.1.4 **SHOULD** support the use of one or more published OpenC2 Transfer Specifications which identify underlying transport protocols such that an authenticated, ordered, lossless, delivery of uniquely identified OpenC2 messages is provided as referenced in [Section 1](#1-introduction) of this specification
+* 3.1.1.5 **MUST** be conformant with Version 1.0 of the OpenC2 Language Specification
+* 3.1.1.6 **MUST** implement the 'query features' Command in accordance with the normative text provided in Version 1.0 of the OpenC2 Language Specification
+* 3.1.1.7 **MUST** implement the 'response_requested' Command Argument as a valid option for any Command
+* * 3.1.1.8 **MUST** conform to at least one of the following conformance clauses in this specification:
+   * TBD
+   * TBD
+
+
+## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
+All OpenC2 Consumers that are conformant to this specification MUST satisfy Conformance Clause 12 and MAY satisfy one or more of Conformance Clauses 13 through 22.
+
+### 3.2.1 Conformance Clause 2: Baseline OpenC2 Consumer
+An OpenC2 Consumer satisfies Baseline OpenC2 Consumer conformance if:
+* 3.2.1.1 **MUST** support JSON serialization of OpenC2 Commands that are syntactically valid in accordance with the property tables presented in [Section 2.1](#21-openc2-command-components)
+* 3.2.1.2 All serializations **MUST** be implemented in a manner such that the serialization validates against and provides a one-to-one mapping to the property tables in [Section 2.1](#21-openc2-command-components) of this specification
+* 3.2.1.3 **MUST** support the use of a Transfer Specification that is capable of delivering authenticated, ordered, lossless and uniquely identified OpenC2 messages
+* 3.2.1.4 **SHOULD** support the use of one or more published OpenC2 Transfer Specifications which identify underlying transport protocols such that an authenticated, ordered, lossless, delivery of uniquely identified OpenC2 messages is provided as referenced in [Section 1](#1-introduction) of this specification
+* 3.2.1.5 **MUST** be conformant with Version 1.0 of the OpenC2 Language Specification
+* 3.2.1.6 **MUST** implement the 'query features' Command in accordance with the normative text provided in version 1.0 of the OpenC2 Language Specification
+* 3.2.1.7 **MUST** implement the 'response_requested' Command Argument as a valid option for any Command
+    * 3.2.1.7.1 All Commands received with a 'response_requested' argument set to 'none' **MUST** process the Command and **MUST NOT** send a Response. This criteria supersedes all other normative text as it pertains to Responses
+    * 3.2.1.7.2 All Commands received without the 'response_requested' argument **MUST** process the Command and Response in a manner that is consistent with "response_requested":"complete"
+* 3.2.1.8 **MUST** conform to at least one of the following conformance clauses in this specification:
+    * TBD
+    * TBD
 
 -------
 # Annex A: Sample Commands
