@@ -337,11 +337,6 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language
 | 19 | **create** | Add a new entity of a known type (e.g., registry entry, file). |
 | 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
-**2.1.1-2 Actions Unique to EDR**
-| ID | Name | Description |
-| :--- | :--- | :--- |
-| 101 | **run** | Instructs the Actuator to retrieve, install, process, and operate a file. |
-
 
 ### 2.1.2 Targets
 Table 2.1.2-1 summarizes the Targets defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to EDR functionality. Table 2.1.2-2 summarizes the Targets that are defined in this specification.
@@ -506,17 +501,17 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 Table 2.3-2 defines the Commands from the edr namespace that are valid in the context of the ER profile.
 
 **Table 2.3-1. Command Matrix**
-|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|run|
-|:---                |:---:|:---: |:---:  |:---: |:---:|:---:| :---: |:---:|:---: |:---: |:---: |:---: |
-| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |      |
-| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |      |
-| **file** 			 |     |valid| valid |valid|     |     |       |     |valid |      |valid |valid |
-| **ipv4_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |      |
-| **ipv6_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |      |
-| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |      |
-| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |      |
-| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |      |
-| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |      |
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **device** 		 |     |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 		 |valid|     |       |     |     |     |       |     |      |      |      |
+| **file** 			 |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
+| **ipv4_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |
+| **ipv6_net**		 |     |valid|       |valid|     |     |       |valid|      |      |      |
+| **process** 		 |     |     |       |     |valid|valid| valid |     |      |      |      |
+| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
+| **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |
+| **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
@@ -534,16 +529,56 @@ The valid Target type, associated Specifiers, and Options are summarized in [Sec
 The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 
 ### 2.3.2 Deny
+OpenC2 Consumers that receive a 'deny <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'deny <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.2.1 Deny file
 Prevents the execution of a file.
+
+OpenC2 Consumers that receive the 'deny file' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'deny file' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+* but cannot access the file specified in the file Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 #### 2.3.2.2 slpf:Deny ipv4 net
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.2.3 slpf:Deny ipv6 net
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.3 Contain
+OpenC2 Consumers that receive a 'contain <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.3.1 Contain device
-Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The producer and consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The Producer and Consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
 OpenC2 Producers that send 'Contain device' commands
 * MUST populate the Command Arguments field with a Device-Containment argument
@@ -559,11 +594,11 @@ OpenC2 Consumers that receive 'Contain Device' commands
 Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
 
 ### 2.3.4 Allow
-'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
+'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer SHOULD have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
 #### 2.3.4.1 Allow device
-Removes a device from containment.
+Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'Contain device' command first.
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file.
+Removes execution prevention from a file. This command SHOULD NOT be issued towards a file which has not previousle received a 'Deny file' or a 'Contain file' command first. 
 #### 2.3.4.3 slpf:Allow ipv4 net
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.4.4 slpf:Allow ipv6 net
@@ -572,6 +607,9 @@ Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well
 ### 2.3.5 Start
 #### 2.3.5.1 Start process
 Executes a process.
+
+#### 2.3.5.2 Start file
+Instructs the Actuator to retrieve, install, process, and operate a file.
 
 ### 2.3.6 Stop
 #### 2.3.6.1 Stop device
@@ -589,9 +627,32 @@ Restarts a process.
 
 ### 2.3.8 Set
 #### 2.3.8.1 Set ipv4 net
-Sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
+Sets the IPv4 address of the endpoint to the specified Target value.
+
+OpenC2 Producers that send 'Set ipv4 net' Commands:
+* MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
+
+OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+* But the CIDR prefix-length is set to a value other than 32
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'IPv4 address not set to a single address' in the status text
+
 #### 2.3.8.2 Set ipv6 net
-Sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
+Sets the IPv6 address of the endpoint to the specified Target value.
+
+OpenC2 Producers that send 'Set ipv4 net' Commands:
+* MUST include an IPv4 address withouth the prefix-length, or have it set to 128
+
+OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+* But the CIDR prefix-length is set to a value other than 128
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'IPv6 address not set to a single address' in the status text
+
+
 #### 2.3.8.3 Set edr:registry entry
 Sets the 'value' property of a Registry Entry. 
 #### 2.3.8.4 Set edr:account
