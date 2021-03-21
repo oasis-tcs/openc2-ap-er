@@ -546,15 +546,6 @@ Prevents the execution of a file.
 
 OpenC2 Consumers that receive the 'deny file' Command:
 
-* but cannot parse or process the Command
-    * MUST NOT respond with a OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with the 500 status code
-* but do not support the 'deny file' Command
-    * MUST NOT respond with a OK/200
-    * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
-    * MAY respond with status code 500
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -590,8 +581,18 @@ OpenC2 Consumers that receive 'Contain Device' commands
     * MAY respond with status code 500
     * SHOULD respond with 'Containment type argument not populated' in the status text
 
+* but cannot access the device specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access device' in the status text
+
 #### 2.3.3.2 Contain file
 Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
+
+OpenC2 Consumers that receive the 'contain file' Command:
+
+* but cannot access the file specified in the file Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
 
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer SHOULD have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
