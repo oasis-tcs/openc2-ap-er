@@ -534,76 +534,87 @@ The valid Target type, associated Specifiers, and Options are summarized in [Sec
 The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 
 ### 2.3.2 Deny
-#### 2.3.2.1 'Deny file'
+#### 2.3.2.1 Deny file
 Prevents the execution of a file.
-#### 2.3.2.2 'slpf:Deny ipv4 net'
+#### 2.3.2.2 slpf:Deny ipv4 net
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.2.3 'slpf:Deny ipv6 net'
+#### 2.3.2.3 slpf:Deny ipv6 net
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.3 Contain
-#### 2.3.3.1 'Contain device'
+#### 2.3.3.1 Contain device
 Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The producer and consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
-#### 2.3.3.2 'Contain file'
+
+OpenC2 Producers that send 'Contain device' commands
+* MUST populate the Command Arguments field with a Device-Containment argument
+
+OpenC2 Consumers that receive 'Contain Device' commands
+* But the Command Arguments field is not populated with a Device-Containment argument
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Containment type argument not populated' in the status text
+
+#### 2.3.3.2 Contain file
 Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
 
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer MUST have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
-#### 2.3.4.1 'Allow device'
+#### 2.3.4.1 Allow device
 Removes a device from containment.
-#### 2.3.4.2 'Allow file'
+#### 2.3.4.2 Allow file
 Removes execution prevention from a file.
-#### 2.3.4.3 'slpf:Allow ipv4 net'
+#### 2.3.4.3 slpf:Allow ipv4 net
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.4.4 'slpf:Allow ipv6 net'
+#### 2.3.4.4 slpf:Allow ipv6 net
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.5 Start
-#### 2.3.5.1 'Start process'
+#### 2.3.5.1 Start process
 Executes a process.
 
 ### 2.3.6 Stop
-#### 2.3.6.1 'Stop device'
+#### 2.3.6.1 Stop device
 Shuts down an endpoint.
-#### 2.3.6.2 'Stop process'
+#### 2.3.6.2 Stop process
 Stops an active process.
-#### 2.3.6.3 'Stop edr:service'
+#### 2.3.6.3 'top edr:service
 Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
 ### 2.3.7 Restart
-#### 2.3.7.1 'Restart device'
+#### 2.3.7.1 Restart device
 Restarts an endpoint.
-#### 2.3.7.2 'Restart process'
+#### 2.3.7.2 Restart process
 Restarts a process.
 
 ### 2.3.8 Set
-#### 2.3.8.1 'Set ipv4 net'
+#### 2.3.8.1 Set ipv4 net
 Sets the IPv4 address of the endpoint to the specified Target value. The Target type MUST NOT include the CIDR prefix-length.
-#### 2.3.8.2 'Set ipv6 net'
+#### 2.3.8.2 Set ipv6 net
 Sets the IPv6 address of the endpoint to the specified Target value. The Target type MUST NOT include the prefix-length.
-#### 2.3.8.3 'Set edr:registry entry'
+#### 2.3.8.3 Set edr:registry entry
 Sets the 'value' property of a Registry Entry. 
-#### 2.3.8.4 'Set edr:account'
+#### 2.3.8.4 Set edr:account
 Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
 ### 2.3.9 Update
-#### 2.3.9.1 'Update file'
+#### 2.3.9.1 Update file
 Instructs the EDR sensor on the endpoint(s) to update to a new version.
 
 ### 2.3.10 Create
-#### 2.3.10.1 'Create edr:registry entry'
+#### 2.3.10.1 Create edr:registry entry
 Creates a registry entry in the specified path. If the key is not included in the 'path' property of the Target Type the 'key' property MUST be populated. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
 ### 2.3.11 Delete
-#### 2.3.11.1 'Delete file'
+#### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
-#### 2.3.11.2 'Delete edr:registry entry'
+#### 2.3.11.2 Delete edr:registry entry
 Deletes a registry entry.
-#### 2.3.11.3 'Delete edr:service'
+#### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
 
 ### 2.3.12 edr:Run
-#### 2.3.12.1 'edr:Run file'
+#### 2.3.12.1 edr:Run file
 Retrieves, installs, processes, and operates a file. 
 
 # 3 Conformance statements
