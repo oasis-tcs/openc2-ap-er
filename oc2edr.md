@@ -595,29 +595,112 @@ OpenC2 Consumers that receive the 'contain file' Command:
     * SHOULD respond with 'cannot access file' in the status text
 
 ### 2.3.4 Allow
-'Allow' can be treated as the mathematical complement to 'Deny' as well as 'Contain'. In order for an Allow Command to be sent to a Consumer, the consumer SHOULD have received a Deny or a Contain command as specified in [Section 2.3.2](#232-deny) or [Section 2.3.3](#233-contain).
+'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
+
+OpenC2 Consumers that receive a 'allow <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
+
 #### 2.3.4.1 Allow device
 Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'Contain device' command first.
+
+OpenC2 Consumers that receive 'Allow device' commands
+
+* but the device is not contained
+    * SHOULD respond with status code 400
+    * SHOULD respond with 'device not contained' in the status text
+
+* but cannot access the device specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access device' in the status text
+
+
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file. This command SHOULD NOT be issued towards a file which has not previousle received a 'Deny file' or a 'Contain file' command first. 
+Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previousle received a 'Deny file' or a 'Contain file' command first. 
+
+OpenC2 Consumers that receive 'Allow file' commands
+
+* but the file is not contained
+    * SHOULD respond with status code 400
+    * SHOULD respond with 'file not contained' in the status text
+
+* but the file is not denied
+    * SHOULD respond with status code 400
+    * SHOULD respond with 'file not denied' in the status text
+
+* but cannot access the file specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 #### 2.3.4.3 slpf:Allow ipv4 net
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 #### 2.3.4.4 slpf:Allow ipv6 net
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.5 Start
+OpenC2 Consumers that receive a 'start <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.5.1 Start process
 Executes a process.
+
+OpenC2 Producers that send 'Start process' commands
+* MUST populate the 'executable' property of the Command Target
+
+OpenC2 Consumers that receive 'Start process' commands
+* but the 'executable' property of the Command Target is not populated
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'executable Target property not specified' in the status text
+* but cannot access the file specified in the device 'executable' property
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
 
 #### 2.3.5.2 Start file
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
+OpenC2 Consumers that receive 'Start file' commands
+* but cannot access the file specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 ### 2.3.6 Stop
+OpenC2 Consumers that receive a 'stop <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.6.1 Stop device
 Shuts down an endpoint.
 #### 2.3.6.2 Stop process
 Stops an active process.
-#### 2.3.6.3 'top edr:service
+#### 2.3.6.3 'Stop edr:service
 Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
 ### 2.3.7 Restart
@@ -675,9 +758,6 @@ Deletes a registry entry.
 #### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
 
-### 2.3.12 edr:Run
-#### 2.3.12.1 edr:Run file
-Retrieves, installs, processes, and operates a file. 
 
 # 3 Conformance statements
 _This section is normative_
