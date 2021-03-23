@@ -777,7 +777,20 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 
 
 #### 2.3.8.3 Set edr:registry entry
-Sets the 'value' property of a Registry Entry. 
+Sets the 'value' property of a Registry Entry.
+
+OpenC2 Producers that send 'Set edr:registry entry' Commands
+* MUST include the 'path' property of the edr:registry entry Target
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
+
+OpenC2 Consumers that receive 'Set edr:registry entry' Commands
+* But cannot access the registry entry specified in the registry entry Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access registry entry' in the status text
+
+
 #### 2.3.8.4 Set edr:account
 Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
