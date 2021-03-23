@@ -414,6 +414,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
 | 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this file. |
+| 3 | **process** | process | 0\.\.1 | The process associated with the service (if it is running). |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -637,7 +638,7 @@ OpenC2 Consumers that receive 'Allow file' commands
     * SHOULD respond with status code 400
     * SHOULD respond with 'file not denied' in the status text
 
-* but cannot access the file specified in the device Target
+* but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
@@ -671,7 +672,7 @@ OpenC2 Consumers that receive 'Start process' commands
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with 'executable Target property not specified' in the status text
-* but cannot access the file specified in the device 'executable' property
+* but cannot access the file specified in the process 'executable' property
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
@@ -679,7 +680,7 @@ OpenC2 Consumers that receive 'Start process' commands
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
 OpenC2 Consumers that receive 'Start file' commands
-* but cannot access the file specified in the device Target
+* but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
@@ -698,18 +699,56 @@ OpenC2 Consumers that receive a 'stop <target>' Command:
 
 #### 2.3.6.1 Stop device
 Shuts down an endpoint.
+
+OpenC2 Consumers that receive 'Stop device' commands
+* but cannot access the device specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 #### 2.3.6.2 Stop process
-Stops an active process.
+Stops an active process. A 'Process' Target MUST contain at least one property.
 #### 2.3.6.3 'Stop edr:service
 Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
+OpenC2 Consumers that choose to implement the 'Stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
+
 ### 2.3.7 Restart
+OpenC2 Consumers that receive a 'start <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.7.1 Restart device
 Restarts an endpoint.
+
+OpenC2 Consumers that receive 'Restart device' commands
+* but cannot access the device specified in the device Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 #### 2.3.7.2 Restart process
-Restarts a process.
+Restarts a process. A 'Process' Target MUST contain at least one property.
 
 ### 2.3.8 Set
+OpenC2 Consumers that receive a 'Set <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'contain <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.8.1 Set ipv4 net
 Sets the IPv4 address of the endpoint to the specified Target value.
 
@@ -744,7 +783,7 @@ Sets the status of the account to be eiter enabled or disabled. The producer and
 
 ### 2.3.9 Update
 #### 2.3.9.1 Update file
-Instructs the EDR sensor on the endpoint(s) to update to a new version.
+The 'update file' Command is used to replace or update files such as configuration files, rule sets, etc. Implementation of the update file Command is OPTIONAL. OpenC2 Consumers that choose to implement the 'update file' Command MUST include all steps that are required for the update file procedure such as retrieving the file(s), install the file(s), restart/ reboot the device etc. The end state shall be that the EDR operates with the new file at the conclusion of the 'update file' Command. The atomic steps that take place are implementation specific.
 
 ### 2.3.10 Create
 #### 2.3.10.1 Create edr:registry entry
