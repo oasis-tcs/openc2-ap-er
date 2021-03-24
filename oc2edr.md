@@ -581,7 +581,6 @@ OpenC2 Consumers that receive 'Contain Device' commands
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with 'Containment type argument not populated' in the status text
-
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
@@ -619,7 +618,6 @@ OpenC2 Consumers that receive 'Allow device' commands
 * but the device is not contained
     * SHOULD respond with status code 400
     * SHOULD respond with 'device not contained' in the status text
-
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
@@ -633,11 +631,9 @@ OpenC2 Consumers that receive 'Allow file' commands
 * but the file is not contained
     * SHOULD respond with status code 400
     * SHOULD respond with 'file not contained' in the status text
-
 * but the file is not denied
     * SHOULD respond with status code 400
     * SHOULD respond with 'file not denied' in the status text
-
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -719,7 +715,7 @@ OpenC2 Consumers that receive a 'start <target>' Command:
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'start <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'Command not supported' in the status text
@@ -777,7 +773,7 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 
 
 #### 2.3.8.3 Set edr:registry entry
-Sets the 'value' property of a Registry Entry.
+Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
 OpenC2 Producers that send 'Set edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
@@ -800,15 +796,57 @@ The 'update file' Command is used to replace or update files such as configurati
 
 ### 2.3.10 Create
 #### 2.3.10.1 Create edr:registry entry
-Creates a registry entry in the specified path. If the key is not included in the 'path' property of the Target Type the 'key' property MUST be populated. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+Creates a registry entry in the specified path. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+
+OpenC2 Producers that send 'Create edr:registry entry' Commands
+* MUST include the 'path' property of the edr:registry entry Target
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
+
+OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+* But cannot access the registry entry specified in the registry entry Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access registry entry' in the status text
 
 ### 2.3.11 Delete
+OpenC2 Consumers that receive a 'delete <target>' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'delete <target>' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with 'Command not supported' in the status text
+    * MAY respond with status code 500
+
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
+
+OpenC2 Consumers that receive 'Delete file' commands
+* but cannot access the file specified in the file Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access file' in the status text
+
 #### 2.3.11.2 Delete edr:registry entry
-Deletes a registry entry.
+Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+
+OpenC2 Producers that send 'Create edr:registry entry' Commands
+* MUST include the 'path' property of the edr:registry entry Target
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
+
+OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+* But cannot access the registry entry specified in the registry entry Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access registry entry' in the status text
 #### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
+
+OpenC2 Consumers that choose to implement the 'Delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
 
 
 # 3 Conformance statements
