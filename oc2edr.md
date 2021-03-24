@@ -790,6 +790,19 @@ OpenC2 Consumers that receive 'Set edr:registry entry' Commands
 #### 2.3.8.4 Set edr:account
 Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
+OpenC2 Producers that send 'Set edr:account' commands
+* MUST populate the Command Arguments field with a Account-Status argument
+
+OpenC2 Consumers that receive 'Set edr:account' commands
+* But the Command Arguments field is not populated with a Account-Status argument
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Account-Status type argument not populated' in the status text
+* but cannot access the account specified in the edr:account Target
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access account' in the status text
+
 ### 2.3.9 Update
 #### 2.3.9.1 Update file
 The 'update file' Command is used to replace or update files such as configuration files, rule sets, etc. Implementation of the update file Command is OPTIONAL. OpenC2 Consumers that choose to implement the 'update file' Command MUST include all steps that are required for the update file procedure such as retrieving the file(s), install the file(s), restart/ reboot the device etc. The end state shall be that the EDR operates with the new file at the conclusion of the 'update file' Command. The atomic steps that take place are implementation specific.
