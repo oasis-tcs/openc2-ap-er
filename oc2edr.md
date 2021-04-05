@@ -98,7 +98,6 @@ For complete copyright information please see the Notices section in the Appendi
   - [1.8 Purpose and Scope](#18-purpose-and-scope)
   - [1.9 Glossary](#19-glossary)
     - [1.9.1 Definitions of terms](#191-definitions-of-terms)
-    - [1.9.2 Acronyms and abbreviations](#192-acronyms-and-abbreviations)
 - [2 OpenC2 Language Binding for Endpoint Response](#2-openc2-language-binding-for-endpoint-response)
   - [2.1 OpenC2 Command Components](#21-openc2-command-components)
     - [2.1.1 Actions](#211-actions)
@@ -164,7 +163,8 @@ For complete copyright information please see the Notices section in the Appendi
   - [A.2 Set](#a2-set)
     - [A.2.1 Set an account on a specific endpoint to be enabled](#a21-set-an-account-on-a-specific-endpoint-to-be-enabled)
     - [A.2.1 Set accounts on a group of endpoints to be disabled](#a21-set-accounts-on-a-group-of-endpoints-to-be-disabled)
-- [Appendix F. Notices](#appendix-f-notices)
+- [Annex B: Acronyms](#annex-b-acronyms)
+- [Annex F. Notices](#appendix-f-notices)
 
 -------
 
@@ -359,14 +359,6 @@ Cyber defense systems that are utilizing OpenC2 may require the following compon
 
 ### 1.9.1 Definitions of terms
 Sensor: A data capturing utility within the context of an EDR.
-
-### 1.9.2 Acronyms and abbreviations
-EDR: Endpoint Detection and Response
-
-ED: Endpoint Detection
-
-ER: Endpoint Response
-
 
 -------
 
@@ -1300,6 +1292,18 @@ Case Three: the Command failed because an Argument was not supported.
   }
 }
 ```
+
+# Annex B: Acronyms
+_This section is non-normative_
+
+| Term | Expansion |
+|:---|:---|
+| EDR | Endpoint Detection and Response |
+| ED | Endpoint Detection |
+| ER | Endpoint Response |
+
+---
+
 
 # Appendix F. Notices
 
