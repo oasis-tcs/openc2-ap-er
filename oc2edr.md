@@ -955,14 +955,14 @@ An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
 
 ### 3.1.2 Conformance Clause 2: Contain Device Producer
 An OpenC2 Producer satisfies 'Contain Device Producer' conformance if:
-#### 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.2.2 **MUST** implement the 'contain device' Command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
-#### 3.1.2.3 **MUST** implement the 'allow device' Command in accordance with [Section 2.3.4.1](#2341-allow-device) of this specification
+* 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.2.2 **MUST** implement the 'contain device' Command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+* 3.1.2.3 **MUST** implement the 'allow device' Command in accordance with [Section 2.3.4.1](#2341-allow-device) of this specification
 
 ### 3.1.3 Conformance Clause 3: device-containment Producer
 An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
-#### 3.1.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+* 3.1.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
 
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
@@ -971,72 +971,72 @@ An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
 
 ### 3.1.5 Conformance Clause 5: Restart Device Producer
 An OpenC2 Producer satisfies 'Restart Device Producer' conformance if:
-#### 3.1.5.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.5.2 **MUST** implement the 'restart device' Command in accordance with [Section 2.3.7.1](#2371-restart-device) of this specification
+* 3.1.5.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.5.2 **MUST** implement the 'restart device' Command in accordance with [Section 2.3.7.1](#2371-restart-device) of this specification
 
 ### 3.1.6 Conformance Clause 6: Deny File Producer
 An OpenC2 Producer satisfies 'Deny File Producer' conformance if:
-#### 3.1.6.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.6.2 **MUST** implement the 'deny file' Command in accordance with [Section 2.3.2.1](#2321-deny-file) of this specification
-#### 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.1.6.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.6.2 **MUST** implement the 'deny file' Command in accordance with [Section 2.3.2.1](#2321-deny-file) of this specification
+* 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
 
 ### 3.1.7 Conformance Clause 7: Contain File Producer
 An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
-#### 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
-#### 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
+* 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
-#### 3.1.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-#### 3.1.8.2 MUST implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-#### 3.1.8.3 MUST implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* 3.1.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.1.8.2 MUST implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.1.8.3 MUST implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
 
 ### 3.1.9 Conformance Clause 9: Allow/Deny IPv6 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
-#### 3.1.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-#### 3.1.9.2 MUST implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-#### 3.1.9.3 MUST implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* 3.1.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.1.9.2 MUST implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.1.9.3 MUST implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
 
 ### 3.1.10 Conformance Clause 10: Set IPv4 Net Producer
 An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
-#### 3.1.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.1.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
 
 ### 3.1.11 Conformance Clause 11: Set IPv6 Net Producer
 An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
-#### 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
 ### 3.1.12 Conformance Clause 12: Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
-#### 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-#### 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-#### 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
+* 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
-#### 3.1.13.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-edrregistry-entry) of this specification
-#### 3.1.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-edrregistry-entry) of this specification
-#### 3.1.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-edrregistry-entry) of this specification
+* 3.1.13.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-edrregistry-entry) of this specification
+* 3.1.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-edrregistry-entry) of this specification
+* 3.1.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-edrregistry-entry) of this specification
 
 ### 3.1.14 Conformance Clause 14: Account Producer
 An OpenC2 Producer satisfies 'Account Producer' conformance if:
-#### 3.1.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+* 3.1.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
 
 ### 3.1.15 Conformance Clause 15: Account-Status Producers
 An OpenC2 Producer satisfies 'Account-Status Producers' conformance if:
-#### 3.1.15.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.15.2 **MUST** implement the 'account-status' Command Argument as a valid option for the 'set account' command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+* 3.1.15.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.15.2 **MUST** implement the 'account-status' Command Argument as a valid option for the 'set account' command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
 
 ### 3.1.16 Conformance Clause 16: Service Producer
 An OpenC2 Producer satisfies 'Service Producer' conformance if:
-#### 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-#### 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
-#### 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
+* 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
+* 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
 
 
 ## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
