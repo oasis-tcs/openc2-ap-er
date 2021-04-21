@@ -643,10 +643,10 @@ OpenC2 Consumers that receive a 'contain <target>' Command:
 #### 2.3.3.1 Contain device
 Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The Producer and Consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'Contain device' commands
+OpenC2 Producers that send 'contain device' commands
 * MUST populate the Command Arguments field with a Device-Containment argument
 
-OpenC2 Consumers that receive 'Contain Device' commands
+OpenC2 Consumers that receive 'contain Device' commands
 * But the Command Arguments field is not populated with a Device-Containment argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -668,23 +668,23 @@ OpenC2 Consumers that receive the 'contain file' Command:
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
 
-OpenC2 Consumers that receive a 'allow <target>' Command:
+OpenC2 Consumers that receive an 'allow <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'allow <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 
 #### 2.3.4.1 Allow device
 Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'Contain device' command first.
 
-OpenC2 Consumers that receive 'Allow device' commands
+OpenC2 Consumers that receive 'allow device' commands
 
 * but the device is not contained
     * SHOULD respond with status code 400
@@ -695,9 +695,9 @@ OpenC2 Consumers that receive 'Allow device' commands
 
 
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previousle received a 'Deny file' or a 'Contain file' command first. 
+Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first. 
 
-OpenC2 Consumers that receive 'Allow file' commands
+OpenC2 Consumers that receive 'allow file' commands
 
 * but the file is not contained
     * SHOULD respond with status code 400
@@ -721,19 +721,19 @@ OpenC2 Consumers that receive a 'start <target>' Command:
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'start <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.5.1 Start process
 Executes a process.
 
-OpenC2 Producers that send 'Start process' commands
+OpenC2 Producers that send 'start process' commands
 * MUST populate the 'executable' property of the Command Target
 
-OpenC2 Consumers that receive 'Start process' commands
+OpenC2 Consumers that receive 'start process' commands
 * but the 'executable' property of the Command Target is not populated
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -746,7 +746,7 @@ OpenC2 Consumers that receive 'Start process' commands
 #### 2.3.5.2 Start file
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
-OpenC2 Consumers that receive 'Start file' commands
+OpenC2 Consumers that receive 'start file' commands
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -758,71 +758,71 @@ OpenC2 Consumers that receive a 'stop <target>' Command:
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'stop <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.6.1 Stop device
 Shuts down an endpoint.
 
-OpenC2 Consumers that receive 'Stop device' commands
+OpenC2 Consumers that receive 'stop device' commands
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.6.2 Stop process
-Stops an active process. A 'Process' Target MUST contain at least one property.
+Stops an active process. A 'process' Target MUST contain at least one property.
 #### 2.3.6.3 'Stop edr:service
 Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
-OpenC2 Consumers that choose to implement the 'Stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
+OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
 
 ### 2.3.7 Restart
-OpenC2 Consumers that receive a 'start <target>' Command:
+OpenC2 Consumers that receive a 'restart <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'start <target>' Command
+* but do not support the 'restart <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.7.1 Restart device
 Restarts an endpoint.
 
-OpenC2 Consumers that receive 'Restart device' commands
+OpenC2 Consumers that receive 'restart device' commands
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
-    * SHOULD respond with 'cannot access file' in the status text
+    * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.7.2 Restart process
-Restarts a process. A 'Process' Target MUST contain at least one property.
+Restarts a process. A 'process' Target MUST contain at least one property.
 
 ### 2.3.8 Set
-OpenC2 Consumers that receive a 'Set <target>' Command:
+OpenC2 Consumers that receive a 'set <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'set <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.8.1 Set ipv4 net
 Sets the IPv4 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'Set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4 net' Commands:
 * MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
 
-OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+OpenC2 Consumers thet receive 'set ipv4 net' Commands
 * But the CIDR prefix-length is set to a value other than 32
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -832,10 +832,10 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 #### 2.3.8.2 Set ipv6 net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'Set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4 net' Commands:
 * MUST include an IPv4 address withouth the prefix-length, or have it set to 128
 
-OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+OpenC2 Consumers thet receive 'set ipv4 net' Commands
 * But the CIDR prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -846,30 +846,30 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 #### 2.3.8.3 Set edr:registry entry
 Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Set edr:registry entry' Commands
+OpenC2 Producers that send 'set edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Set edr:registry entry' Commands
+OpenC2 Consumers that receive 'set edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 
 
 #### 2.3.8.4 Set edr:account
-Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+Sets the status of the account to be either enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'Set edr:account' commands
+OpenC2 Producers that send 'set edr:account' commands
 * MUST populate the Command Arguments field with a Account-Status argument
 
-OpenC2 Consumers that receive 'Set edr:account' commands
+OpenC2 Consumers that receive 'set edr:account' commands
 * But the Command Arguments field is not populated with a Account-Status argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
-    * SHOULD respond with 'Account-Status type argument not populated' in the status text
+    * SHOULD respond with 'account-Status type argument not populated' in the status text
 * but cannot access the account specified in the edr:account Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access account' in the status text
@@ -882,13 +882,13 @@ The 'update file' Command is used to replace or update files such as configurati
 #### 2.3.10.1 Create edr:registry entry
 Creates a registry entry in the specified path. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+OpenC2 Consumers that receive 'create edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -903,13 +903,13 @@ OpenC2 Consumers that receive a 'delete <target>' Command:
 * but do not support the 'delete <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
 
-OpenC2 Consumers that receive 'Delete file' commands
+OpenC2 Consumers that receive 'delete file' commands
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -917,20 +917,20 @@ OpenC2 Consumers that receive 'Delete file' commands
 #### 2.3.11.2 Delete edr:registry entry
 Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+OpenC2 Consumers that receive 'create edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 #### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
 
-OpenC2 Consumers that choose to implement the 'Delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
+OpenC2 Consumers that choose to implement the 'delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
 
 
 # 3 Conformance statements
