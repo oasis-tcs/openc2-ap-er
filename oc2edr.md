@@ -85,7 +85,86 @@ For complete copyright information please see the Notices section in the Appendi
 -------
 
 # Table of Contents
-[[TOC will be inserted here]]
+- [1 Introduction](#1-introduction)
+  - [1.1 IPR Policy](#11-ipr-policy)
+  - [1.2 Terminology](#12-terminology)
+  - [1.3 Normative References](#13-normative-references)
+  - [1.4 Non-Normative References](#14-non-normative-references)
+  - [1.5 Document Conventions](#15-document-conventions)
+    - [1.5.1 Naming Conventions](#151-naming-conventions)
+    - [1.5.2 Font Colors and Style](#152-font-colors-and-style)
+  - [1.6 Overview](#16-overview)
+  - [1.7 Goal](#17-goal)
+  - [1.8 Purpose and Scope](#18-purpose-and-scope)
+  - [1.9 Glossary](#19-glossary)
+    - [1.9.1 Definitions of terms](#191-definitions-of-terms)
+- [2 OpenC2 Language Binding for Endpoint Response](#2-openc2-language-binding-for-endpoint-response)
+  - [2.1 OpenC2 Command Components](#21-openc2-command-components)
+    - [2.1.1 Actions](#211-actions)
+    - [2.1.2 Targets](#212-targets)
+    - [2.1.3 Type Definitions](#213-type-definitions)
+    - [2.1.4 Command Arguments](#214-command-arguments)
+    - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
+  - [2.2 OpenC2 Response Components](#22-openc2-response-components)
+    - [2.2.1 Common Results](#221-common-results)
+    - [2.2.2 Response Status Codes](#222-response-status-codes)
+  - [2.3 OpenC2 Commands](#23-openc2-commands)
+    - [2.3.1 Query](#231-query)
+    - [2.3.2 Deny](#232-deny)
+    - [2.3.3 Contain](#233-contain)
+    - [2.3.4 Allow](#234-allow)
+    - [2.3.5 Start](#235-start)
+    - [2.3.6 Stop](#236-stop)
+    - [2.3.7 Restart](#237-restart)
+    - [2.3.8 Set](#238-set)
+    - [2.3.9 Update](#239-update)
+    - [2.3.10 Create](#2310-create)
+    - [2.3.11 Delete](#2311-delete)
+- [3 Conformance statements](#3-conformance-statements)
+  - [3.1 Clauses Pertaining to the OpenC2 Producer Conformance Target](#31-clauses-pertaining-to-the-openc2-producer-conformance-target)
+    - [3.1.1 Conformance Clause 1: Baseline OpenC2 Producer](#311-conformance-clause-1-baseline-openc2-producer)
+    - [3.1.2 Conformance Clause 2: Contain Device Producer](#312-conformance-clause-2-contain-device-producer)
+    - [3.1.3 Conformance Clause 3: device-containment Producer](#313-conformance-clause-3-device-containment-producer)
+    - [3.1.4 Conformance Clause 4: Stop Device Producer](#314-conformance-clause-4-stop-device-producer)
+    - [3.1.5 Conformance Clause 5: Restart Device Producer](#315-conformance-clause-5-restart-device-producer)
+    - [3.1.6 Conformance Clause 6: Deny File Producer](#316-conformance-clause-6-deny-file-producer)
+    - [3.1.7 Conformance Clause 7: Contain File Producer](#317-conformance-clause-7-contain-file-producer)
+    - [3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer](#318-conformance-clause-8-allowdeny-ipv4-net-producer)
+    - [3.1.9 Conformance Clause 9: Allow/Deny IPv6 Net Producer](#319-conformance-clause-9-allowdeny-ipv6-net-producer)
+    - [3.1.10 Conformance Clause 10: Set IPv4 Net Producer](#3110-conformance-clause-10-set-ipv4-net-producer)
+    - [3.1.11 Conformance Clause 11: Set IPv6 Net Producer](#3111-conformance-clause-11-set-ipv6-net-producer)
+    - [3.1.12 Conformance Clause 12: Process Producer](#3112-conformance-clause-12-process-producer)
+    - [3.1.13 Conformance Clause 13: Registry Entry Producer](#3113-conformance-clause-13-registry-entry-producer)
+    - [3.1.14 Conformance Clause 14: Account Producer](#3114-conformance-clause-14-account-producer)
+    - [3.1.15 Conformance Clause 15: Account-Status Producers](#3115-conformance-clause-15-account-status-producers)
+    - [3.1.16 Conformance Clause 16: Service Producer](#3116-conformance-clause-16-service-producer)
+  - [3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target](#32-clauses-pertaining-to-the-openc2-consumer-conformance-target)
+    - [3.2.1 Conformance Clause 17: Baseline OpenC2 Consumer](#321-conformance-clause-17-baseline-openc2-consumer)
+    - [3.2.2 Conformance Clause 18: Contain Device Consumer](#322-conformance-clause-18-contain-device-consumer)
+    - [3.2.3 Conformance Clause 19: device-containment Consumer](#323-conformance-clause-19-device-containment-consumer)
+    - [3.2.4 Conformance Clause 20: Stop Device Consumer](#324-conformance-clause-20-stop-device-consumer)
+    - [3.2.5 Conformance Clause 21: Restart Device Consumer](#325-conformance-clause-21-restart-device-consumer)
+    - [3.2.6 Conformance Clause 22: Deny File Consumer](#326-conformance-clause-22-deny-file-consumer)
+    - [3.2.7 Conformance Clause 23: Contain File Consumer](#327-conformance-clause-23-contain-file-consumer)
+    - [3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer](#328-conformance-clause-24-allowdeny-ipv4-net-consumer)
+    - [3.2.9 Conformance Clause 25: Allow/Deny IPv6 Net Consumer](#329-conformance-clause-25-allowdeny-ipv6-net-consumer)
+    - [3.2.10 Conformance Clause 26: Set IPv4 Net Consumer](#3210-conformance-clause-26-set-ipv4-net-consumer)
+    - [3.2.11 Conformance Clause 27: Set IPv6 Net Consumer](#3211-conformance-clause-27-set-ipv6-net-consumer)
+    - [3.2.12 Conformance Clause 28: Process Consumer](#3212-conformance-clause-28-process-consumer)
+    - [3.2.13 Conformance Clause 29: Registry Entry Consumer](#3213-conformance-clause-29-registry-entry-consumer)
+    - [3.2.14 Conformance Clause 30: Account Consumer](#3214-conformance-clause-30-account-consumer)
+    - [3.2.15 Conformance Clause 31: Account-Status Consumer](#3215-conformance-clause-31-account-status-consumer)
+    - [3.2.16 Conformance Clause 32: Service Consumer](#3216-conformance-clause-32-service-consumer)
+- [Annex A: Sample Commands](#annex-a-sample-commands)
+  - [A.1 deny, contain and allow](#a1-deny-contain-and-allow)
+    - [A.1.1 Ban a binary by hash on every endpoint](#a11-ban-a-binary-by-hash-on-every-endpoint)
+    - [A.1.2 Port isolate a specific endpoint](#a12-port-isolate-a-specific-endpoint)
+    - [A.1.3 Allow unrestricted app execution on a group of endpoints](#a13-allow-unrestricted-app-execution-on-a-group-of-endpoints)
+  - [A.2 Set](#a2-set)
+    - [A.2.1 Set an account on a specific endpoint to be enabled](#a21-set-an-account-on-a-specific-endpoint-to-be-enabled)
+    - [A.2.1 Set accounts on a group of endpoints to be disabled](#a21-set-accounts-on-a-group-of-endpoints-to-be-disabled)
+- [Annex B: Acronyms](#annex-b-acronyms)
+- [Annex F. Notices](#appendix-f-notices)
 
 -------
 
@@ -280,14 +359,6 @@ Cyber defense systems that are utilizing OpenC2 may require the following compon
 
 ### 1.9.1 Definitions of terms
 Sensor: A data capturing utility within the context of an EDR.
-
-### 1.9.2 Acronyms and abbreviations
-EDR: Endpoint Detection and Response
-
-ED: Endpoint Detection
-
-ER: Endpoint Response
-
 
 -------
 
@@ -572,10 +643,10 @@ OpenC2 Consumers that receive a 'contain <target>' Command:
 #### 2.3.3.1 Contain device
 Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The Producer and Consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'Contain device' commands
+OpenC2 Producers that send 'contain device' commands
 * MUST populate the Command Arguments field with a Device-Containment argument
 
-OpenC2 Consumers that receive 'Contain Device' commands
+OpenC2 Consumers that receive 'contain Device' commands
 * But the Command Arguments field is not populated with a Device-Containment argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -597,23 +668,23 @@ OpenC2 Consumers that receive the 'contain file' Command:
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
 
-OpenC2 Consumers that receive a 'allow <target>' Command:
+OpenC2 Consumers that receive an 'allow <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'allow <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 
 #### 2.3.4.1 Allow device
 Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'Contain device' command first.
 
-OpenC2 Consumers that receive 'Allow device' commands
+OpenC2 Consumers that receive 'allow device' commands
 
 * but the device is not contained
     * SHOULD respond with status code 400
@@ -624,9 +695,9 @@ OpenC2 Consumers that receive 'Allow device' commands
 
 
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previousle received a 'Deny file' or a 'Contain file' command first. 
+Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first. 
 
-OpenC2 Consumers that receive 'Allow file' commands
+OpenC2 Consumers that receive 'allow file' commands
 
 * but the file is not contained
     * SHOULD respond with status code 400
@@ -650,19 +721,19 @@ OpenC2 Consumers that receive a 'start <target>' Command:
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'start <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.5.1 Start process
 Executes a process.
 
-OpenC2 Producers that send 'Start process' commands
+OpenC2 Producers that send 'start process' commands
 * MUST populate the 'executable' property of the Command Target
 
-OpenC2 Consumers that receive 'Start process' commands
+OpenC2 Consumers that receive 'start process' commands
 * but the 'executable' property of the Command Target is not populated
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -675,7 +746,7 @@ OpenC2 Consumers that receive 'Start process' commands
 #### 2.3.5.2 Start file
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
-OpenC2 Consumers that receive 'Start file' commands
+OpenC2 Consumers that receive 'start file' commands
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -687,71 +758,71 @@ OpenC2 Consumers that receive a 'stop <target>' Command:
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'stop <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.6.1 Stop device
 Shuts down an endpoint.
 
-OpenC2 Consumers that receive 'Stop device' commands
+OpenC2 Consumers that receive 'stop device' commands
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
-    * SHOULD respond with 'cannot access file' in the status text
+    * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.6.2 Stop process
-Stops an active process. A 'Process' Target MUST contain at least one property.
+Stops an active process. A 'process' Target MUST contain at least one property.
 #### 2.3.6.3 'Stop edr:service
 Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
 
-OpenC2 Consumers that choose to implement the 'Stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
+OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
 
 ### 2.3.7 Restart
-OpenC2 Consumers that receive a 'start <target>' Command:
+OpenC2 Consumers that receive a 'restart <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'start <target>' Command
+* but do not support the 'restart <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.7.1 Restart device
 Restarts an endpoint.
 
-OpenC2 Consumers that receive 'Restart device' commands
+OpenC2 Consumers that receive 'restart device' commands
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
-    * SHOULD respond with 'cannot access file' in the status text
+    * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.7.2 Restart process
-Restarts a process. A 'Process' Target MUST contain at least one property.
+Restarts a process. A 'process' Target MUST contain at least one property.
 
 ### 2.3.8 Set
-OpenC2 Consumers that receive a 'Set <target>' Command:
+OpenC2 Consumers that receive a 'set <target>' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'set <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.8.1 Set ipv4 net
 Sets the IPv4 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'Set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4 net' Commands:
 * MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
 
-OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+OpenC2 Consumers thet receive 'set ipv4 net' Commands
 * But the CIDR prefix-length is set to a value other than 32
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -761,10 +832,10 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 #### 2.3.8.2 Set ipv6 net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'Set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4 net' Commands:
 * MUST include an IPv4 address withouth the prefix-length, or have it set to 128
 
-OpenC2 Consumers thet receive 'Set ipv4 net' Commands
+OpenC2 Consumers thet receive 'set ipv4 net' Commands
 * But the CIDR prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -775,30 +846,30 @@ OpenC2 Consumers thet receive 'Set ipv4 net' Commands
 #### 2.3.8.3 Set edr:registry entry
 Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Set edr:registry entry' Commands
+OpenC2 Producers that send 'set edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Set edr:registry entry' Commands
+OpenC2 Consumers that receive 'set edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 
 
 #### 2.3.8.4 Set edr:account
-Sets the status of the account to be eiter enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
+Sets the status of the account to be either enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'Set edr:account' commands
+OpenC2 Producers that send 'set edr:account' commands
 * MUST populate the Command Arguments field with a Account-Status argument
 
-OpenC2 Consumers that receive 'Set edr:account' commands
+OpenC2 Consumers that receive 'set edr:account' commands
 * But the Command Arguments field is not populated with a Account-Status argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
-    * SHOULD respond with 'Account-Status type argument not populated' in the status text
+    * SHOULD respond with 'account-Status type argument not populated' in the status text
 * but cannot access the account specified in the edr:account Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access account' in the status text
@@ -811,13 +882,13 @@ The 'update file' Command is used to replace or update files such as configurati
 #### 2.3.10.1 Create edr:registry entry
 Creates a registry entry in the specified path. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+OpenC2 Consumers that receive 'create edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -832,13 +903,13 @@ OpenC2 Consumers that receive a 'delete <target>' Command:
 * but do not support the 'delete <target>' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
-    * SHOULD respond with 'Command not supported' in the status text
+    * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
 
-OpenC2 Consumers that receive 'Delete file' commands
+OpenC2 Consumers that receive 'delete file' commands
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
@@ -846,20 +917,20 @@ OpenC2 Consumers that receive 'Delete file' commands
 #### 2.3.11.2 Delete edr:registry entry
 Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'Create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry entry' Commands
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'Create edr:registry entry' Commands
+OpenC2 Consumers that receive 'create edr:registry entry' Commands
 * But cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 #### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
 
-OpenC2 Consumers that choose to implement the 'Delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
+OpenC2 Consumers that choose to implement the 'delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
 
 
 # 3 Conformance statements
@@ -882,11 +953,96 @@ An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
    * TBD
    * TBD
 
+### 3.1.2 Conformance Clause 2: Contain Device Producer
+An OpenC2 Producer satisfies 'Contain Device Producer' conformance if:
+* 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.2.2 **MUST** implement the 'contain device' Command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+* 3.1.2.3 **MUST** implement the 'allow device' Command in accordance with [Section 2.3.4.1](#2341-allow-device) of this specification
+
+### 3.1.3 Conformance Clause 3: device-containment Producer
+An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
+* 3.1.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+
+### 3.1.4 Conformance Clause 4: Stop Device Producer
+An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
+#### 3.1.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+#### 3.1.4.2 **MUST** implement the 'stop device' Command in accordance with [Section 2.3.6.1](#2361-stop-device) of this specification
+
+### 3.1.5 Conformance Clause 5: Restart Device Producer
+An OpenC2 Producer satisfies 'Restart Device Producer' conformance if:
+* 3.1.5.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.5.2 **MUST** implement the 'restart device' Command in accordance with [Section 2.3.7.1](#2371-restart-device) of this specification
+
+### 3.1.6 Conformance Clause 6: Deny File Producer
+An OpenC2 Producer satisfies 'Deny File Producer' conformance if:
+* 3.1.6.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.6.2 **MUST** implement the 'deny file' Command in accordance with [Section 2.3.2.1](#2321-deny-file) of this specification
+* 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+
+### 3.1.7 Conformance Clause 7: Contain File Producer
+An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
+* 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
+* 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+
+### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
+An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
+* 3.1.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.1.8.2 MUST implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.1.8.3 MUST implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+
+### 3.1.9 Conformance Clause 9: Allow/Deny IPv6 Net Producer
+An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
+* 3.1.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.1.9.2 MUST implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.1.9.3 MUST implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+
+### 3.1.10 Conformance Clause 10: Set IPv4 Net Producer
+An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
+* 3.1.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+
+### 3.1.11 Conformance Clause 11: Set IPv6 Net Producer
+An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
+* 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+
+### 3.1.12 Conformance Clause 12: Process Producer
+An OpenC2 Producer satisfies 'Process Producer' conformance if:
+* 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
+* 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+
+### 3.1.13 Conformance Clause 13: Registry Entry Producer
+An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
+* 3.1.13.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-edrregistry-entry) of this specification
+* 3.1.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-edrregistry-entry) of this specification
+* 3.1.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-edrregistry-entry) of this specification
+
+### 3.1.14 Conformance Clause 14: Account Producer
+An OpenC2 Producer satisfies 'Account Producer' conformance if:
+* 3.1.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+
+### 3.1.15 Conformance Clause 15: Account-Status Producers
+An OpenC2 Producer satisfies 'Account-Status Producers' conformance if:
+* 3.1.15.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.15.2 **MUST** implement the 'account-status' Command Argument as a valid option for the 'set account' command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+
+### 3.1.16 Conformance Clause 16: Service Producer
+An OpenC2 Producer satisfies 'Service Producer' conformance if:
+* 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
+* 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
+
 
 ## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
 All OpenC2 Consumers that are conformant to this specification MUST satisfy Conformance Clause 12 and MAY satisfy one or more of Conformance Clauses 13 through 22.
 
-### 3.2.1 Conformance Clause 2: Baseline OpenC2 Consumer
+### 3.2.1 Conformance Clause 17: Baseline OpenC2 Consumer
 An OpenC2 Consumer satisfies Baseline OpenC2 Consumer conformance if:
 * 3.2.1.1 **MUST** support JSON serialization of OpenC2 Commands that are syntactically valid in accordance with the property tables presented in [Section 2.1](#21-openc2-command-components)
 * 3.2.1.2 All serializations **MUST** be implemented in a manner such that the serialization validates against and provides a one-to-one mapping to the property tables in [Section 2.1](#21-openc2-command-components) of this specification
@@ -900,6 +1056,91 @@ An OpenC2 Consumer satisfies Baseline OpenC2 Consumer conformance if:
 * 3.2.1.8 **MUST** conform to at least one of the following conformance clauses in this specification:
     * TBD
     * TBD
+
+### 3.2.2 Conformance Clause 18: Contain Device Consumer
+An OpenC2 Producer satisfies 'Contain Device Consumer' conformance if:
+* 3.2.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 17 of this specification
+* 3.2.2.2 **MUST** implement the 'contain device' Command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+* 3.2.2.3 **MUST** implement the 'allow device' Command in accordance with [Section 2.3.4.1](#2341-allow-device) of this specification
+
+### 3.2.3 Conformance Clause 19: device-containment Consumer
+An OpenC2 Producer satisfies 'Device-Containment Consumer' conformance if:
+* 3.2.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+
+### 3.2.4 Conformance Clause 20: Stop Device Consumer
+An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
+* 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.4.2 **MUST** implement the 'stop device' Command in accordance with [Section 2.3.6.1](#2361-stop-device) of this specification
+
+### 3.2.5 Conformance Clause 21: Restart Device Consumer
+An OpenC2 Producer satisfies 'Restart Device Consumer' conformance if:
+* 3.2.5.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.5.2 **MUST** implement the 'restart device' Command in accordance with [Section 2.3.7.1](#2371-restart-device) of this specification
+
+### 3.2.6 Conformance Clause 22: Deny File Consumer
+An OpenC2 Producer satisfies 'Deny File Consumer' conformance if:
+* 3.2.6.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.6.2 **MUST** implement the 'deny file' Command in accordance with [Section 2.3.2.1](#2321-deny-file) of this specification
+* 3.2.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+
+### 3.2.7 Conformance Clause 23: Contain File Consumer
+An OpenC2 Producer satisfies 'Contain File Consumer' conformance if:
+* 3.2.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
+* 3.2.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+
+### 3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer
+An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Consumer' conformance if:
+* 3.2.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.2.8.2 MUST implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.2.8.3 MUST implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+
+### 3.2.9 Conformance Clause 25: Allow/Deny IPv6 Net Consumer
+An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Consumer' conformance if:
+* 3.2.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
+* 3.2.9.2 MUST implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
+* 3.2.9.3 MUST implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+
+### 3.2.10 Conformance Clause 26: Set IPv4 Net Consumer
+An OpenC2 Producer satisfies 'Set IPv4 Net Consumer' conformance if:
+* 3.2.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+
+### 3.2.11 Conformance Clause 27: Set IPv6 Net Consumer
+An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
+* 3.2.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+
+### 3.2.12 Conformance Clause 28: Process Consumer
+An OpenC2 Producer satisfies 'Process Consumer' conformance if:
+* 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
+* 3.2.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.2.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+
+### 3.2.13 Conformance Clause 29: Registry Entry Consumer
+An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
+* 3.2.13.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-edrregistry-entry) of this specification
+* 3.2.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-edrregistry-entry) of this specification
+* 3.2.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-edrregistry-entry) of this specification
+
+### 3.2.14 Conformance Clause 30: Account Consumer
+An OpenC2 Producer satisfies 'Account Consumer' conformance if:
+* 3.2.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+
+### 3.2.15 Conformance Clause 31: Account-Status Consumer
+An OpenC2 Producer satisfies 'Account-Status Consumer' conformance if:
+* 3.2.15.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.15.2 **MUST** implement the 'account-status' Command Argument as a valid option for the 'set account' command in accordance with [Section 2.3.8.4](#2384-set-edraccount) of this specification
+
+### 3.2.16 Conformance Clause 32: Service Consumer
+An OpenC2 Producer satisfies 'Service Consumer' conformance if:
+* 3.2.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
+* 3.2.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
 
 -------
 # Annex A: Sample Commands
@@ -1051,6 +1292,18 @@ Case Three: the Command failed because an Argument was not supported.
   }
 }
 ```
+
+# Annex B: Acronyms
+_This section is non-normative_
+
+| Term | Expansion |
+|:---|:---|
+| EDR | Endpoint Detection and Response |
+| ED | Endpoint Detection |
+| ER | Endpoint Response |
+
+---
+
 
 # Appendix F. Notices
 
