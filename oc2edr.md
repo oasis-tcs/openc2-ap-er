@@ -214,7 +214,7 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
 
 ###### [Winnt.h-registry-types]
-_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
+Microsoft, "Registry Value Types", 2018. Accessed: Apr. 2021. [Online]. Available: <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
 ###### [SLPF-Deny]
 https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
