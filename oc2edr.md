@@ -36,9 +36,6 @@ Vasileios Mavroeidis (vasileim@ifi.uio.no), [University of Oslo](https://www.uio
 Martin Evandt (martifev@ifi.uio.no), [University of Oslo](https://www.uio.no/english/)
 
 #### Related work:
-This specification replaces or supersedes:
-* Specifications replaced by this specification (include hyperlink, preferably to HTML format)
-
 This specification is related to:
 * Related specifications (include hyperlink, preferably to HTML format) \
 `(remove "Related work" section or the "replaces" or "related" subsections if no entries)`
@@ -366,7 +363,7 @@ Extensions to the Language Specification are defined in accordance with [[OpenC2
 
 1. The unique name of the EDR schema is `oasis-open.org/openc2/v1.0/ap-edr`
 2. The namespace identifier (nsid) referring to the EDR schema is:  `edr`
-3. The definitions of and conformance requirements for these types are contained in this document
+3. The definitions and conformance requirements for these types are contained in this document
 
 ## 2.1 OpenC2 Command Components
 The components of an OpenC2 Command include Actions, Targets, Actuators and associated Arguments and Specifiers. Appropriate aggregation of the components will define a Command-body that is meaningful in the context of an EDR.
@@ -377,12 +374,12 @@ This specification identifies the applicable components of an OpenC2 Command. Th
     * This profile SHALL NOT define Actions that are external to Version 1.0 of the [OpenC2 Language Specification](#openc2-lang-v10)
     * This profile MAY augment the definition of the Actions in the context of an EDR
     * This profile SHALL NOT define Actions in a manner that is inconsistent with version 1.0 of the OpenC2 Language Specification
-* Target:  A subset of the Targets and Target-Specifiers defined in Version 1.0 of the OpenC2 Language Specification that are meaningful in the context of EDR and one Target (and its associated Specifier) that is defined in this specification
+* Target:  A subset of the Targets and Target-Specifiers defined in Version 1.0 of the OpenC2 Language Specification that are meaningful in the context of EDR and three Targets (and their associated Specifiers) that are defined in this specification
 * Arguments:  A subset of the Arguments defined in the Language Specification and a set of Arguments defined in this specification
 * Actuator:  A set of specifiers defined in this specification that are meaningful in the context of EDR
 
 ### 2.1.1 Actions
-Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language Specification which are meaningful in the context of an ER Actuator. The particular Action/Target pairs that are required or are optional are presented in [Section 2.3](#23-openc2-commands).
+Table 2.1.1-1 presents the OpenC2 Actions defined in Version 1.0 of the Language Specification which are meaningful in the context of an ER Actuator. The combinations of Action/Target pairs that are valid for Endpoint Response purposes are presented in [Section 2.3](#23-openc2-commands).
 
 **Table 2.1.1-1. Actions Applicable to ER**
 
