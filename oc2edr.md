@@ -35,22 +35,13 @@ Duncan Sparrell (duncan@sfractal.com), [sFractal Consulting LLC](http://www.sfra
 Vasileios Mavroeidis (vasileim@ifi.uio.no), [University of Oslo](https://www.uio.no/english/) \
 Martin Evandt (martifev@ifi.uio.no), [University of Oslo](https://www.uio.no/english/)
 
-#### Additional artifacts:
-This prose specification is one component of a Work Product that also includes:
-* XML schemas: (list file names or directory name)
-* Other parts (list titles and/or file names)
-* `(Note: Any normative computer language definitions that are part of the Work Product, such as XML instances, schemas and Java(TM) code, including fragments of such, must be (a) well formed and valid, (b) provided in separate plain text files, (c) referenced from the Work Product; and (d) where any definition in these separate files disagrees with the definition found in the specification, the definition in the separate file prevails. Remove this note before submitting for publication.)`
-
 #### Related work:
-This specification replaces or supersedes:
-* Specifications replaced by this specification (include hyperlink, preferably to HTML format)
-
 This specification is related to:
 * Related specifications (include hyperlink, preferably to HTML format) \
 `(remove "Related work" section or the "replaces" or "related" subsections if no entries)`
 
 #### Abstract:
-Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint detection and response technologies provide a means for continuous monitoring and analysis to more readily identify, detect, and prevent advanced threats. This OpenC2 Actuator Profile defines the Actions, Targets, Specifiers and Options that are consistent with the Version 1.0 of the OpenC2 Language Specification ([OpenC2-Lang-v1.0]) in the context of command and control of various endpoint detection and response technologies.
+Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint Detection and Response (EDR) technologies provide a means for continuous endpoint monitoring and analysis to more readily identify, detect, mitigate and remediate, or prevent advanced threats. This Actuator Profile defines OpenC2 Actions, Targets, Specifiers, and Command Arguments in the context of command and control of EDR technologies. The EDR specification is consistent with Version 1.0 of the OpenC2 Language Specification ([OpenC2-Lang-v1.0]).
 
 #### Status:
 This document was last revised or approved by the OASIS Open Command and Control (OpenC2) TC on the above date. The level of approval is also listed above. Check the "Latest version" location noted above for possible later revisions of this document. Any other numbered Versions and other technical work produced by the Technical Committee (TC) are listed at https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2#technical.
@@ -220,7 +211,7 @@ Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, 
 _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
 
 ###### [Winnt.h-registry-types]
-_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
+Microsoft, "Registry Value Types", 2018. Accessed: Apr. 2021. [Online]. Available: <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
 ###### [SLPF-Deny]
 https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
@@ -372,7 +363,7 @@ Extensions to the Language Specification are defined in accordance with [[OpenC2
 
 1. The unique name of the EDR schema is `oasis-open.org/openc2/v1.0/ap-edr`
 2. The namespace identifier (nsid) referring to the EDR schema is:  `edr`
-3. The definitions of and conformance requirements for these types are contained in this document
+3. The definitions and conformance requirements for these types are contained in this document
 
 ## 2.1 OpenC2 Command Components
 The components of an OpenC2 Command include Actions, Targets, Actuators and associated Arguments and Specifiers. Appropriate aggregation of the components will define a Command-body that is meaningful in the context of an EDR.
@@ -383,12 +374,12 @@ This specification identifies the applicable components of an OpenC2 Command. Th
     * This profile SHALL NOT define Actions that are external to Version 1.0 of the [OpenC2 Language Specification](#openc2-lang-v10)
     * This profile MAY augment the definition of the Actions in the context of an EDR
     * This profile SHALL NOT define Actions in a manner that is inconsistent with version 1.0 of the OpenC2 Language Specification
-* Target:  A subset of the Targets and Target-Specifiers defined in Version 1.0 of the OpenC2 Language Specification that are meaningful in the context of EDR and one Target (and its associated Specifier) that is defined in this specification
+* Target:  A subset of the Targets and Target-Specifiers defined in Version 1.0 of the OpenC2 Language Specification that are meaningful in the context of EDR and three Targets (and their associated Specifiers) that are defined in this specification
 * Arguments:  A subset of the Arguments defined in the Language Specification and a set of Arguments defined in this specification
 * Actuator:  A set of specifiers defined in this specification that are meaningful in the context of EDR
 
 ### 2.1.1 Actions
-Table 2.1.1-1 presents the OpenC2 Actions defined in version 1.0 of the Language Specification which are meaningful in the context of an ER Actuator. The particular Action/Target pairs that are required or are optional are presented in [Section 2.3](#23-openc2-commands).
+Table 2.1.1-1 presents the OpenC2 Actions defined in Version 1.0 of the Language Specification which are meaningful in the context of an ER Actuator. The combinations of Action/Target pairs that are valid for Endpoint Response purposes are presented in [Section 2.3](#23-openc2-commands).
 
 **Table 2.1.1-1. Actions Applicable to ER**
 
@@ -421,15 +412,15 @@ Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification tha
 
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
-| 3 | **device** | Device | The properties of a device |
-| 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities |
-| 10 | **file** | File | The properties of a file |
+| 3 | **device** | Device | The properties of a device. |
+| 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities. |
+| 10 | **file** | File | The properties of a file. |
 | 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
 | 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
-| 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system |
+| 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system. |
 
 #### 2.1.2.2 ER Targets
-The list of common Targets is extended to include the additional Targets defined in this section and referenced with the edr namespace.
+The list of common Targets is extended to include the additional Targets defined in this section and referenced with the `edr` namespace.
 
 **Table 2.1.2-2. Targets Unique to ER**
 
@@ -437,9 +428,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
-| 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems |
-| 1102 | **account** | Account | A user account on an endpoint |
-| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar.) |
+| 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems. |
+| 1102 | **account** | Account | A user account on an endpoint. |
+| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar). |
 
 #### 2.1.2.3 External Namespace Targets
 The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
@@ -463,7 +454,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
 | 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
-| 3 | **type** | String | 1 | The registry value type as defined in the Microsoft Windows [[Winnt.h header]](#winnth-registry-types) |
+| 3 | **type** | String | 1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
 | 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
@@ -484,22 +475,22 @@ The list of external namespace Targets extend the Target list to include Targets
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this file. |
+| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this service. |
 | 3 | **process** | process | 0\.\.1 | The process associated with the service (if it is running). |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
 
-**Table 2.1.4-1. Command Arguments applicable to EDR**
+**Table 2.1.4-1. Command Arguments applicable to ER**
 
 **_Type: Args (Map)_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **start_time** | Date-Time | 0..1 | The specific date/time to initiate the Action |
-| 2 | **stop_time** | Date-Time | 0..1 | The specific date/time to terminate the Action|
-| 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect |
-| 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete` |
+| 1 | **start_time** | Date-Time | 0..1 | The specific date/time to initiate the Action. |
+| 2 | **stop_time** | Date-Time | 0..1 | The specific date/time to terminate the Action.|
+| 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect. |
+| 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete`. |
 
 **Table 2.1.4-1. Command Arguments Unique to EDR**
 
@@ -507,28 +498,28 @@ Arguments provide additional precision to a Command by including information suc
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled |
-| 1202 | **device_containment** | Device-Containment | 1 | Specifies wheter or not to isolate the host on a VLAN or restrict application execution |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled. |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies whether or not to isolate the host on a VLAN or restrict application execution. |
 
 **_Type: Account-Status (Enumerated)_**
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 1 | **enabled** | Enable the account and render it available on the endpoint |
-| 2 | **disabled** | Disable the account and render it unavailable on the endpoint |
+| 1 | **enabled** | Enable the account and render it available on the endpoint. |
+| 2 | **disabled** | Disable the account and render it unavailable on the endpoint. |
 
 **_Type: Device-Containment (Enumerated)_**
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 1 | **port_isolation** | Isolate the host in a VLAN |
-| 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only) |
-| 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint |
+| 1 | **port_isolation** | Isolate the host in a VLAN .|
+| 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only). |
+| 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint. |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
 
-The Actuator Specifiers defined in this document are referenced under the edr namespace.
+The Actuator Specifiers defined in this document are referenced under the `edr` namespace.
 
 **Table 2.1.5-1. EDR Specifiers**
 
@@ -536,30 +527,27 @@ The Actuator Specifiers defined in this document are referenced under the edr na
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **hostname** | String | 0..1 | [[RFC1123]](#rfc1123) hostname (can be a domain name or IP address) for a particular device with EDR functionality |
-| 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor |
-| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed |
+| 1 | **hostname** | String | 0..1 | A hostname for a particular device with EDR functionality. [RFC1123]](#rfc1123) |
+| 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor. |
+| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed. |
 
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
 
-Responses associated with required Actions MUST be implemented. Implementations that include optional Actions MUST implement the RESPONSE associated with the implemented Action. Additional details regarding the Command and associated Response are captured in [Section 2.3](#23-openc2-commands). Examples are provided in [Annex A](#annex-a-sample-commands).
+Responses associated with required Actions MUST be implemented. Implementations that include optional Actions MUST implement the RESPONSE associated with the implemented Action. Additional details regarding the Commands and associated Responses are captured in [Section 2.3](#23-openc2-commands). Examples are provided in [Annex A](#annex-a-sample-commands).
 
-### 2.2.1 Common Results
-Table 2.2.1-1 lists the Response Results properties defined in the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) that are applicable to EDR.
+### 2.2.1 Response Status Codes
+Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Specification that are applicable to ER.
 
-### 2.2.2 Response Status Codes
-Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Specification that are applicable to EDR.
-
-**Table 2.2.1-2. Response Status Codes**
+**Table 2.2.1-1. Response Status Codes**
 
 **_Type: Status-Code (Enumerated.ID)_**
 
 | Value | Description |
 | :--- | :--- |
-| 102 | Processing. Command received but action not necessarily complete. |
-| 200 | OK. |
+| 102 | Processing. The Command was received but the action is not necessarily completed. |
+| 200 | OK. The Command was received and the action was performed. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
 | 501 | Not implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
@@ -568,9 +556,7 @@ Table 2.2.1-2 lists the Response Status Codes defined in the OpenC2 Language Spe
 
 An OpenC2 Command consists of an Action/Target pair and associated Specifiers and Arguments. This section enumerates the allowed Commands and presents the associated Responses.
 
-Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
-
-Table 2.3-2 defines the Commands from the edr namespace that are valid in the context of the ER profile.
+Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command.
 
 **Table 2.3-1. Command Matrix**
 |                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
@@ -585,7 +571,7 @@ Table 2.3-2 defines the Commands from the edr namespace that are valid in the co
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |
 
-Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the SLPF profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination.
 
 **Table 2.3-2. Command Arguments Matrix**
 |    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:run file|
@@ -601,13 +587,14 @@ The valid Target type, associated Specifiers, and Options are summarized in [Sec
 The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 
 ### 2.3.2 Deny
-OpenC2 Consumers that receive a 'deny <target>' Command:
+
+OpenC2 Consumers that receive a 'deny' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'deny <target>' Command
+* but do not support the 'deny' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'Command not supported' in the status text
@@ -616,7 +603,7 @@ OpenC2 Consumers that receive a 'deny <target>' Command:
 #### 2.3.2.1 Deny file
 Prevents the execution of a file.
 
-OpenC2 Consumers that receive the 'deny file' Command:
+OpenC2 Consumers that receive a 'deny file' Command:
 
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
@@ -628,13 +615,13 @@ Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well a
 Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.3 Contain
-OpenC2 Consumers that receive a 'contain <target>' Command:
+OpenC2 Consumers that receive a 'contain' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'contain <target>' Command
+* but do not support the 'contain' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'Command not supported' in the status text
@@ -643,11 +630,13 @@ OpenC2 Consumers that receive a 'contain <target>' Command:
 #### 2.3.3.1 Contain device
 Limits the functionalities of an endpoint in relation to application execution and/or network communications. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'contain' Command and the 'device' Target. The Producer and Consumer of the command MUST support the edr:device_containment Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'contain device' commands
-* MUST populate the Command Arguments field with a Device-Containment argument
+OpenC2 Producers that send 'contain device' Commands:
 
-OpenC2 Consumers that receive 'contain Device' commands
-* But the Command Arguments field is not populated with a Device-Containment argument
+* MUST populate the Command Arguments field with a 'Device-Containment' argument
+
+OpenC2 Consumers that receive a 'contain Device' Command:
+
+* but the Command Arguments field is not populated with a 'Device-Containment' argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
@@ -659,22 +648,22 @@ OpenC2 Consumers that receive 'contain Device' commands
 #### 2.3.3.2 Contain file
 Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
 
-OpenC2 Consumers that receive the 'contain file' Command:
+OpenC2 Consumers that receive a 'contain file' Command:
 
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
 ### 2.3.4 Allow
-'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
+'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' Actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
 
-OpenC2 Consumers that receive an 'allow <target>' Command:
+OpenC2 Consumers that receive a 'allow' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'allow <target>' Command
+* but do not support the 'allow' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'command not supported' in the status text
@@ -682,9 +671,9 @@ OpenC2 Consumers that receive an 'allow <target>' Command:
 
 
 #### 2.3.4.1 Allow device
-Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'Contain device' command first.
+Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'contain device' command first.
 
-OpenC2 Consumers that receive 'allow device' commands
+OpenC2 Consumers that receive a 'allow device' Command:
 
 * but the device is not contained
     * SHOULD respond with status code 400
@@ -697,7 +686,7 @@ OpenC2 Consumers that receive 'allow device' commands
 #### 2.3.4.2 Allow file
 Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first. 
 
-OpenC2 Consumers that receive 'allow file' commands
+OpenC2 Consumers that receive a 'allow file' Command:
 
 * but the file is not contained
     * SHOULD respond with status code 400
@@ -715,13 +704,13 @@ Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well
 Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
 
 ### 2.3.5 Start
-OpenC2 Consumers that receive a 'start <target>' Command:
+OpenC2 Consumers that receive a 'start' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'start <target>' Command
+* but do not support the 'start' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'command not supported' in the status text
@@ -730,10 +719,11 @@ OpenC2 Consumers that receive a 'start <target>' Command:
 #### 2.3.5.1 Start process
 Executes a process.
 
-OpenC2 Producers that send 'start process' commands
+OpenC2 Producers that send 'start process' Commands
 * MUST populate the 'executable' property of the Command Target
 
-OpenC2 Consumers that receive 'start process' commands
+OpenC2 Consumers that receive a 'start process' Command:
+
 * but the 'executable' property of the Command Target is not populated
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
@@ -746,13 +736,13 @@ OpenC2 Consumers that receive 'start process' commands
 #### 2.3.5.2 Start file
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
-OpenC2 Consumers that receive 'start file' commands
+OpenC2 Consumers that receive a 'start file' Commands:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
 ### 2.3.6 Stop
-OpenC2 Consumers that receive a 'stop <target>' Command:
+OpenC2 Consumers that receive a 'stop' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
@@ -767,26 +757,27 @@ OpenC2 Consumers that receive a 'stop <target>' Command:
 #### 2.3.6.1 Stop device
 Shuts down an endpoint.
 
-OpenC2 Consumers that receive 'stop device' commands
+OpenC2 Consumers that receive a 'stop device' Command:
+
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.6.2 Stop process
 Stops an active process. A 'process' Target MUST contain at least one property.
-#### 2.3.6.3 'Stop edr:service
-Stops the running process associated with a service, and prevents it from running again should the endpoint reboot.
+#### 2.3.6.3 Stop edr:service
+Stops the running process associated with a service and prevents it from running again should the endpoint reboot.
 
 OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
 
 ### 2.3.7 Restart
-OpenC2 Consumers that receive a 'restart <target>' Command:
+OpenC2 Consumers that receive a 'restart' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'restart <target>' Command
+* but do not support the 'restart' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'command not supported' in the status text
@@ -795,7 +786,8 @@ OpenC2 Consumers that receive a 'restart <target>' Command:
 #### 2.3.7.1 Restart device
 Restarts an endpoint.
 
-OpenC2 Consumers that receive 'restart device' commands
+OpenC2 Consumers that receive a 'restart device' Command:
+
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
@@ -804,56 +796,57 @@ OpenC2 Consumers that receive 'restart device' commands
 Restarts a process. A 'process' Target MUST contain at least one property.
 
 ### 2.3.8 Set
-OpenC2 Consumers that receive a 'set <target>' Command:
+OpenC2 Consumers that receive a 'set' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 400
     * MAY respond with the 500 status code
-* but do not support the 'set <target>' Command
+* but do not support the 'set' Command
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
-#### 2.3.8.1 Set ipv4 net
+#### 2.3.8.1 Set ipv4_net
 Sets the IPv4 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4_net' Commands:
 * MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
 
-OpenC2 Consumers thet receive 'set ipv4 net' Commands
-* But the CIDR prefix-length is set to a value other than 32
+OpenC2 Consumers thet receive 'set ipv4_net' Commands
+* but the CIDR prefix-length is set to a value other than 32
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with 'IPv4 address not set to a single address' in the status text
 
-#### 2.3.8.2 Set ipv6 net
+#### 2.3.8.2 Set ipv6_net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'set ipv4 net' Commands:
+OpenC2 Producers that send 'set ipv4_net' Commands:
 * MUST include an IPv4 address withouth the prefix-length, or have it set to 128
 
-OpenC2 Consumers thet receive 'set ipv4 net' Commands
-* But the CIDR prefix-length is set to a value other than 128
+OpenC2 Consumers thet receive a 'set ipv4_net' Command:
+* but the CIDR prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with 'IPv6 address not set to a single address' in the status text
 
 
-#### 2.3.8.3 Set edr:registry entry
-Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+#### 2.3.8.3 Set edr:registry_entry
+Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'set edr:registry entry' Commands
-* MUST include the 'path' property of the edr:registry entry Target
+OpenC2 Producers that send 'set edr:registry_entry' Commands:
+* MUST include the 'path' property of the edr:registry_entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'set edr:registry entry' Commands
-* But cannot access the registry entry specified in the registry entry Target
+OpenC2 Consumers that receive a'set edr:registry_entry' Command:
+
+* but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 
@@ -861,15 +854,15 @@ OpenC2 Consumers that receive 'set edr:registry entry' Commands
 #### 2.3.8.4 Set edr:account
 Sets the status of the account to be either enabled or disabled. The producer and consumer of the command MUST support the edr:account_status Command Argument as defined in [Section 2.1.4](#214-command-arguments)
 
-OpenC2 Producers that send 'set edr:account' commands
+OpenC2 Producers that send 'set edr:account' Commands:
 * MUST populate the Command Arguments field with a Account-Status argument
 
-OpenC2 Consumers that receive 'set edr:account' commands
-* But the Command Arguments field is not populated with a Account-Status argument
+OpenC2 Consumers that receive a 'set edr:account' Command:
+* but the Command Arguments field is not populated with a Account-Status argument
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
-    * SHOULD respond with 'account-Status type argument not populated' in the status text
+    * SHOULD respond with 'account-status type argument not populated' in the status text
 * but cannot access the account specified in the edr:account Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access account' in the status text
@@ -879,22 +872,22 @@ OpenC2 Consumers that receive 'set edr:account' commands
 The 'update file' Command is used to replace or update files such as configuration files, rule sets, etc. Implementation of the update file Command is OPTIONAL. OpenC2 Consumers that choose to implement the 'update file' Command MUST include all steps that are required for the update file procedure such as retrieving the file(s), install the file(s), restart/ reboot the device etc. The end state shall be that the EDR operates with the new file at the conclusion of the 'update file' Command. The atomic steps that take place are implementation specific.
 
 ### 2.3.10 Create
-#### 2.3.10.1 Create edr:registry entry
-Creates a registry entry in the specified path. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+#### 2.3.10.1 Create edr:registry_entry
+Creates a registry entry in the specified path. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'create edr:registry entry' Commands
-* But cannot access the registry entry specified in the registry entry Target
+OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
+* but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
 
 ### 2.3.11 Delete
-OpenC2 Consumers that receive a 'delete <target>' Command:
+OpenC2 Consumers that receive a 'delete' Command:
 
 * but cannot parse or process the Command
     * MUST NOT respond with a OK/200
@@ -909,24 +902,26 @@ OpenC2 Consumers that receive a 'delete <target>' Command:
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
 
-OpenC2 Consumers that receive 'delete file' commands
+OpenC2 Consumers that receive a'delete file' Command:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
 
-#### 2.3.11.2 Delete edr:registry entry
-Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in the Microsoft Windows [Winnt.h header](#winnth-registry-types).
+#### 2.3.11.2 Delete edr:registry_entry
+Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'create edr:registry entry' Commands
+OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive 'create edr:registry entry' Commands
-* But cannot access the registry entry specified in the registry entry Target
+OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
+* but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
+
+
 #### 2.3.11.3 Delete edr:service
 Deletes the registry key that executes a service on system boot.
 
