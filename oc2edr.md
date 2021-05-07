@@ -571,14 +571,29 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |
 
-Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination.
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. An Argument (the top row in Table 2.3-2) paired with a Command (the first column in Table 2.3-2) defines an allowable combination.
 
 **Table 2.3-2. Command Arguments Matrix**
-|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:run file|
-|:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
-| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
-| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+|                         | **response_requested** | **Device-Containment** | **Account-Status**| 
+|:---                     |:---:                   |:---:                   |:---:              |
+|contain device			      |valid                   |valid                   |                   |
+|contain file			        |valid                   |                        |                   |
+|allow device			        |valid                   |                        |                   |
+|allow file				        |valid                   |                        |                   |
+|start process			      |valid                   |                        |                   |
+|stop device			        |valid                   |                        |                   |
+|stop file                |valid                   |                        |                   |
+|stop service			        |valid                   |                        |                   |
+|restart device			      |valid                   |                        |                   |
+|restart process		      |valid                   |                        |                   |
+|set ipv4-net			        |valid                   |                        |                   |
+|set ipv6-net			        |valid                   |                        |                   |
+|set edr:registry_entry	  |valid                   |                        |                   |
+|set edr:account		      |valid                   |                        |valid              |
+|create edr:registry_entry|valid                   |                        |                   |
+|delete file			        |valid                   |                        |                   |
+|delete edr:registry_entry|valid                   |                        |                   |
+|delete service			      |valid                   |                        |                   |
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
