@@ -753,6 +753,20 @@ OpenC2 Consumers that receive a 'stop device' Command:
 
 #### 2.3.6.2 Stop process
 Stops an active process. A 'process' Target MUST contain at least one property.
+
+OpenC2 Producers that send 'stop process' commands
+* MUST populate at least one property of the Command Target
+
+OpenC2 Consumers that receive 'stop process' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Process Target does not have any properties populated' in the status text
+* but cannot access the process specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access process' in the status text
+
 #### 2.3.6.3 Stop edr:service
 Stops the running process associated with a service and prevents it from running again should the endpoint reboot.
 
@@ -782,6 +796,16 @@ OpenC2 Consumers that receive a 'restart device' Command:
 
 #### 2.3.7.2 Restart process
 Restarts a process. A 'process' Target MUST contain at least one property.
+
+OpenC2 Consumers that receive 'restart process' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Process Target does not have any properties populated' in the status text
+* but cannot access the process specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access process' in the status text
 
 ### 2.3.8 Set
 OpenC2 Consumers that receive a 'set' Command:
