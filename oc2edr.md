@@ -634,7 +634,7 @@ OpenC2 Consumers that receive a 'contain Device' Command:
     * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.3.2 Contain file
-Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
+Puts a file into quarantine, rendering it inaccessible to the user of the machine and unable to execute on the endpoint.
 
 OpenC2 Consumers that receive a 'contain file' Command:
 
