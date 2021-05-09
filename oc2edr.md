@@ -37,11 +37,10 @@ Martin Evandt (martifev@ifi.uio.no), [University of Oslo](https://www.uio.no/eng
 
 #### Related work:
 This specification is related to:
-* Related specifications (include hyperlink, preferably to HTML format) \
-`(remove "Related work" section or the "replaces" or "related" subsections if no entries)`
+* Open Command and Control (OpenC2) Language Specification Version 1.0 ([[OpenC2-Lang-v1.0]](#openc2-lang-v10))
 
 #### Abstract:
-Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint Detection and Response (EDR) technologies provide a means for continuous endpoint monitoring and analysis to more readily identify, detect, mitigate and remediate, or prevent advanced threats. This Actuator Profile defines OpenC2 Actions, Targets, Specifiers, and Command Arguments in the context of command and control of EDR technologies. The EDR specification is consistent with Version 1.0 of the OpenC2 Language Specification ([OpenC2-Lang-v1.0]).
+Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint Detection and Response (EDR) technologies provide a means for continuous endpoint monitoring and analysis to more readily identify, detect, mitigate and remediate, or prevent advanced threats. This Actuator Profile defines OpenC2 Actions, Targets, Specifiers, and Command Arguments in the context of command and control of EDR technologies. The EDR specification is consistent with Version 1.0 of the OpenC2 Language Specification ([[OpenC2-Lang-v1.0]](#openc2-lang-v10)).
 
 #### Status:
 This document was last revised or approved by the OASIS Open Command and Control (OpenC2) TC on the above date. The level of approval is also listed above. Check the "Latest version" location noted above for possible later revisions of this document. Any other numbered Versions and other technical work produced by the Technical Committee (TC) are listed at https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2#technical.
@@ -1312,13 +1311,6 @@ While any hyperlinks included in this appendix were valid at the time of publica
 
 The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
 
-(Reference sources:
-For references to IETF RFCs, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/ietf-rfc-list/ietf-rfc-list.html.  
-For references to W3C Recommendations, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
-Remove this note before submitting for publication.)
-
 ###### [RFC1123]
 Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
 
@@ -1327,6 +1319,9 @@ Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14,
 
 ###### [RFC8174]
 Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+###### [OpenC2-Lang-v1.0]
+_Open Command and Control (OpenC2) Language Specification Version 1.0_. Edited by Jason Romano and Duncan Sparrell. November 2018, <http://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html>.
 
 ###### [OpenC2-HTTPS-v1.0]
 _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
