@@ -37,11 +37,10 @@ Martin Evandt (martifev@ifi.uio.no), [University of Oslo](https://www.uio.no/eng
 
 #### Related work:
 This specification is related to:
-* Related specifications (include hyperlink, preferably to HTML format) \
-`(remove "Related work" section or the "replaces" or "related" subsections if no entries)`
+* Open Command and Control (OpenC2) Language Specification Version 1.0 ([[OpenC2-Lang-v1.0]](#openc2-lang-v10))
 
 #### Abstract:
-Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint Detection and Response (EDR) technologies provide a means for continuous endpoint monitoring and analysis to more readily identify, detect, mitigate and remediate, or prevent advanced threats. This Actuator Profile defines OpenC2 Actions, Targets, Specifiers, and Command Arguments in the context of command and control of EDR technologies. The EDR specification is consistent with Version 1.0 of the OpenC2 Language Specification ([OpenC2-Lang-v1.0]).
+Open Command and Control (OpenC2) is a concise and extensible language to enable the command and control of cyber defense components, subsystems and/or systems in a manner that is agnostic of the underlying products, technologies, transport mechanisms or other aspects of the implementation. Endpoint Detection and Response (EDR) technologies provide a means for continuous endpoint monitoring and analysis to more readily identify, detect, mitigate and remediate, or prevent advanced threats. This Actuator Profile defines OpenC2 Actions, Targets, Specifiers, and Command Arguments in the context of command and control of EDR technologies. The EDR specification is consistent with Version 1.0 of the OpenC2 Language Specification ([[OpenC2-Lang-v1.0]](#openc2-lang-v10)).
 
 #### Status:
 This document was last revised or approved by the OASIS Open Command and Control (OpenC2) TC on the above date. The level of approval is also listed above. Check the "Latest version" location noted above for possible later revisions of this document. Any other numbered Versions and other technical work produced by the Technical Committee (TC) are listed at https://www.oasis-open.org/committees/tc_home.php?wg_abbrev=openc2#technical.
@@ -79,16 +78,15 @@ For complete copyright information please see the Notices section in the Appendi
 - [1 Introduction](#1-introduction)
   - [1.1 IPR Policy](#11-ipr-policy)
   - [1.2 Terminology](#12-terminology)
-  - [1.3 Normative References](#13-normative-references)
-  - [1.4 Non-Normative References](#14-non-normative-references)
-  - [1.5 Document Conventions](#15-document-conventions)
-    - [1.5.1 Naming Conventions](#151-naming-conventions)
-    - [1.5.2 Font Colors and Style](#152-font-colors-and-style)
-  - [1.6 Overview](#16-overview)
-  - [1.7 Goal](#17-goal)
-  - [1.8 Purpose and Scope](#18-purpose-and-scope)
-  - [1.9 Glossary](#19-glossary)
-    - [1.9.1 Definitions of terms](#191-definitions-of-terms)
+  - [1.3 Glossary](#13-glossary)
+    - [1.3.1 Definitions of terms](#131-definitions-of-terms)
+    - [1.3.2 Acronyms and abbreviations](#132-acronyms-and-abbreviations)
+  - [1.4 Document Conventions](#14-document-conventions)
+    - [1.4.1 Naming Conventions](#141-naming-conventions)
+    - [1.4.2 Font Colors and Style](#142-font-colors-and-style)
+  - [1.5 Overview](#15-overview)
+  - [1.6 Goal](#16-goal)
+  - [1.7 Purpose and Scope](#17-purpose-and-scope)
 - [2 OpenC2 Language Binding for Endpoint Response](#2-openc2-language-binding-for-endpoint-response)
   - [2.1 OpenC2 Command Components](#21-openc2-command-components)
     - [2.1.1 Actions](#211-actions)
@@ -97,8 +95,7 @@ For complete copyright information please see the Notices section in the Appendi
     - [2.1.4 Command Arguments](#214-command-arguments)
     - [2.1.5 Actuator Specifiers](#215-actuator-specifiers)
   - [2.2 OpenC2 Response Components](#22-openc2-response-components)
-    - [2.2.1 Common Results](#221-common-results)
-    - [2.2.2 Response Status Codes](#222-response-status-codes)
+    - [2.2.1 Response Status Codes](#221-response-status-codes)
   - [2.3 OpenC2 Commands](#23-openc2-commands)
     - [2.3.1 Query](#231-query)
     - [2.3.2 Deny](#232-deny)
@@ -154,8 +151,13 @@ For complete copyright information please see the Notices section in the Appendi
   - [A.2 Set](#a2-set)
     - [A.2.1 Set an account on a specific endpoint to be enabled](#a21-set-an-account-on-a-specific-endpoint-to-be-enabled)
     - [A.2.1 Set accounts on a group of endpoints to be disabled](#a21-set-accounts-on-a-group-of-endpoints-to-be-disabled)
-- [Annex B: Acronyms](#annex-b-acronyms)
-- [Annex F. Notices](#appendix-f-notices)
+- [Appendix A. References](#appendix-a-references)
+  - [A.1 Normative References](#a1-normative-references)
+  <!-- [A.2 Informative References](#a2-informative-references) -->
+- [Appendix B. Acknowledgments](#appendix-b-acknowledgments)
+  - [B.1 Participants](#b1-participants)
+- [Appendix C. Revision History](#appendix-c-revision-history)
+- [Appendix D. Notices](#appendix-d-notices)
 
 -------
 
@@ -187,54 +189,29 @@ _This section is normative._
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [[RFC2119]](#rfc2119) and [[RFC8174]](#rfc8174) when, and only when, they appear in all capitals, as shown here.
 
-## 1.3 Normative References
+## 1.3 Glossary
 
-The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
+### 1.3.1 Definitions of terms
+Sensor: A data capturing utility within the context of an EDR.
 
-(Reference sources:
-For references to IETF RFCs, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/ietf-rfc-list/ietf-rfc-list.html.  
-For references to W3C Recommendations, use the approved citation formats at:  
-http://docs.oasis-open.org/templates/w3c-recommendations-list/w3c-recommendations-list.html.  
-Remove this note before submitting for publication.)
+### 1.3.2 Acronyms and abbreviations
+_This section is non-normative_
 
-###### [RFC1123]
-Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
+| Term | Expansion |
+|:---|:---|
+| EDR | Endpoint Detection and Response |
+| ED | Endpoint Detection |
+| ER | Endpoint Response |
 
-###### [RFC2119]
-Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
 
-###### [RFC8174]
-Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-###### [OpenC2-HTTPS-v1.0]
-_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
-
-###### [Winnt.h-registry-types]
-Microsoft, "Registry Value Types", 2018. Accessed: Apr. 2021. [Online]. Available: <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
-
-###### [SLPF-Deny]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
-
-###### [SLPF-Allow]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
-
-###### [SLPF-Conformance]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
-
-## 1.4 Non-Normative References
-
-###### [RFC3552]
-Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
-
-## 1.5 Document Conventions
-### 1.5.1 Naming Conventions
+## 1.4 Document Conventions
+### 1.4.1 Naming Conventions
 * [[RFC2119]](#rfc2119)/[[RFC8174]](#rfc8174) key words (see [Section 1.2](#12-terminology)) are in all uppercase.
 * All property names and literals are in lowercase, except when referencing canonical names defined in another standard (e.g., literal values from an IANA registry).
 * Words in property names are separated with an underscore (_), while words in string enumerations and type names are separated with a hyphen (-).
 * The term "hyphen" used here refers to the ASCII hyphen or minus character, which in Unicode is "hyphen-minus", U+002D.
 
-### 1.5.2 Font Colors and Style
+### 1.4.2 Font Colors and Style
 The following color, font and font style conventions are used in this document:
 
 * A fixed width font is used for all type names, property names, and literals.
@@ -257,7 +234,7 @@ Example:
 }
 ```
 
-## 1.6 Overview
+## 1.5 Overview
 In general, there are two types of participants involved in the exchange of OpenC2 Messages, as depicted in Figure 1-1:
 1. **Producers**: A Producer is an entity that creates Commands to provide instruction to one or more systems to act in accordance with the content of the Command. A Producer may receive and process Responses in conjunction with a Command.
 2. **Consumers**: A Consumer is an entity that receives and may act upon a Command. A Consumer may create Responses that provide any information captured or necessary to send back to the Producer.
@@ -304,7 +281,7 @@ The components of a Command are an Action (what is to be done), a Target (what i
 
 The components of a Response are a numerical status code, an optional status text string, and optional results. The format of the results, if included, depend on the type of Response being transferred.
 
-## 1.7 Goal
+## 1.6 Goal
 The goal of the OpenC2 Language Specification is to provide a language for interoperating between functional elements of cyber defense systems. This language used in conjunction with OpenC2 Actuator Profiles and OpenC2 Transfer Specifications allows for vendor-agnostic cybertime response to attacks.
 
 The Integrated Adaptive Cyber Defense (IACD) framework defines a collection of activities, based on the traditional OODA (Observe–Orient–Decide–Act) Loop [[IACD]](#iacd):
@@ -321,7 +298,7 @@ The goal of OpenC2 is to enable coordinated defense in cyber-relevant time betwe
 * **Abstract:**  Commands and Responses are defined abstractly and can be encoded and transferred via multiple schemes as dictated by the needs of different implementation environments
 * **Extensible:**  While OpenC2 defines a core set of Actions and Targets for cyber defense, the language is expected to evolve with cyber defense technologies, and permits extensions to accommodate new cyber defense technologies.
 
-## 1.8 Purpose and Scope
+## 1.7 Purpose and Scope
 
 An 'Endpoint Detection and Response' (EDR) system is a security mechanism which identifies malicious behaviours by recording system activities and comparing them to sets of signatures or heuristics. EDR systems facilitate in digital forensics and incident response by storing and indexing said events, as well as provide functionality to respond to security incidents as they pertain to actively exploited, infected or vulnerable endpoints.
 
@@ -345,11 +322,6 @@ Cyber defense systems that are utilizing OpenC2 may require the following compon
 
 * OpenC2 Producers: Devices that send Commands, receive Responses, and manage the execution of Commands involving one or more EDR or other Actuators with EDR capability. The OpenC2 Producer needs _a prior_ knowledge of which Commands the Actuator can process and execute, therefore must understand the profiles for any device that it intends to command
 * OpenC2 Consumers: Devices or instances that provide endpoint detection and response functions. Typically these are Actuators that execute the cyber defense function, but could be orchestrators (i.e., a device or instance that forwards Commands to the Actuator)
-
-## 1.9 Glossary
-
-### 1.9.1 Definitions of terms
-Sensor: A data capturing utility within the context of an EDR.
 
 -------
 
@@ -476,7 +448,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
 | 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this service. |
-| 3 | **process** | process | 0\.\.1 | The process associated with the service (if it is running). |
+| 3 | **process** | Process | 0\.\.1 | The process associated with the service (if it is running). |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -492,14 +464,14 @@ Arguments provide additional precision to a Command by including information suc
 | 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect. |
 | 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete`. |
 
-**Table 2.1.4-1. Command Arguments Unique to EDR**
+**Table 2.1.4-2. Command Arguments Unique to EDR**
 
 **_Type: Args (Map)_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled. |
-| 1202 | **device_containment** | Device-Containment | 1 | Specifies whether or not to isolate the host on a VLAN or restrict application execution. |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether an account shall be enabled or disabled. |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction). |
 
 **_Type: Account-Status (Enumerated)_**
 
@@ -512,7 +484,7 @@ Arguments provide additional precision to a Command by including information suc
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 1 | **port_isolation** | Isolate the host in a VLAN .|
+| 1 | **port_isolation** | Isolate the host in a VLAN.|
 | 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only). |
 | 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint. |
 
@@ -527,7 +499,7 @@ The Actuator Specifiers defined in this document are referenced under the `edr` 
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **hostname** | String | 0..1 | A hostname for a particular device with EDR functionality. [RFC1123]](#rfc1123) |
+| 1 | **hostname** | String | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
 | 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor. |
 | 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed. |
 
@@ -550,7 +522,7 @@ Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 200 | OK. The Command was received and the action was performed. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
-| 501 | Not implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
+| 501 | Not Implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
 
 ## 2.3 OpenC2 Commands
 
@@ -571,14 +543,29 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **account** 		 |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		 |     |     |       |     |     |valid|       |     |      |      |valid |
 
-Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination.
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. An Argument (the top row in Table 2.3-2) paired with a Command (the first column in Table 2.3-2) defines an allowable combination.
 
 **Table 2.3-2. Command Arguments Matrix**
-|    |deny file|contain device |contain file|allow device|allow file|start process |stop device|stop file|stop service|restart device|restart process|set ipv*-net|set edr:registry_entry|set edr:account|create edr:registry_entry|delete file|delete edr:registry_entry|delete service|edr:run file|
-|:---                    |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested** |valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|valid|
-| **Account-Status**     |     |     |     |     |     |     |     |     |     |     |     |     |     |valid|     |     |     |     |     |
-| **Device-Containment** |     |valid|     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+|                         | **response_requested** | **Device-Containment** | **Account-Status**| 
+|:---                     |:---:                   |:---:                   |:---:              |
+|contain device			      |valid                   |valid                   |                   |
+|contain file			        |valid                   |                        |                   |
+|allow device			        |valid                   |                        |                   |
+|allow file				        |valid                   |                        |                   |
+|start process			      |valid                   |                        |                   |
+|stop device			        |valid                   |                        |                   |
+|stop file                |valid                   |                        |                   |
+|stop service			        |valid                   |                        |                   |
+|restart device			      |valid                   |                        |                   |
+|restart process		      |valid                   |                        |                   |
+|set ipv4-net			        |valid                   |                        |                   |
+|set ipv6-net			        |valid                   |                        |                   |
+|set edr:registry_entry	  |valid                   |                        |                   |
+|set edr:account		      |valid                   |                        |valid              |
+|create edr:registry_entry|valid                   |                        |                   |
+|delete file			        |valid                   |                        |                   |
+|delete edr:registry_entry|valid                   |                        |                   |
+|delete service			      |valid                   |                        |                   |
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
@@ -646,7 +633,7 @@ OpenC2 Consumers that receive a 'contain Device' Command:
     * SHOULD respond with 'cannot access device' in the status text
 
 #### 2.3.3.2 Contain file
-Quarantines a file, deleting it from the original location and creating a non-executable copy in a hidden folder.
+Puts a file into quarantine, rendering it inaccessible to the user of the machine and unable to execute on the endpoint.
 
 OpenC2 Consumers that receive a 'contain file' Command:
 
@@ -684,7 +671,7 @@ OpenC2 Consumers that receive a 'allow device' Command:
 
 
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first. 
+Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first.
 
 OpenC2 Consumers that receive a 'allow file' Command:
 
@@ -765,6 +752,20 @@ OpenC2 Consumers that receive a 'stop device' Command:
 
 #### 2.3.6.2 Stop process
 Stops an active process. A 'process' Target MUST contain at least one property.
+
+OpenC2 Producers that send 'stop process' commands
+* MUST populate at least one property of the Command Target
+
+OpenC2 Consumers that receive 'stop process' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Process Target does not have any properties populated' in the status text
+* but cannot access the process specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access process' in the status text
+
 #### 2.3.6.3 Stop edr:service
 Stops the running process associated with a service and prevents it from running again should the endpoint reboot.
 
@@ -794,6 +795,16 @@ OpenC2 Consumers that receive a 'restart device' Command:
 
 #### 2.3.7.2 Restart process
 Restarts a process. A 'process' Target MUST contain at least one property.
+
+OpenC2 Consumers that receive 'restart process' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Process Target does not have any properties populated' in the status text
+* but cannot access the process specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access process' in the status text
 
 ### 2.3.8 Set
 OpenC2 Consumers that receive a 'set' Command:
@@ -1288,21 +1299,85 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-# Annex B: Acronyms
-_This section is non-normative_
+-------
 
-| Term | Expansion |
-|:---|:---|
-| EDR | Endpoint Detection and Response |
-| ED | Endpoint Detection |
-| ER | Endpoint Response |
+# Appendix A. References
+
+This appendix contains the normative and informative references that are used in this document. Normative references are specific (identified by date of publication and/or edition number or version number) and Informative references are either specific or non-specific.
+
+While any hyperlinks included in this appendix were valid at the time of publication, OASIS cannot guarantee their long-term validity.
+
+## A.1 Normative References
+
+The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
+
+###### [RFC1123]
+Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
+
+###### [RFC2119]
+Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
+
+###### [RFC8174]
+Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+###### [OpenC2-Lang-v1.0]
+_Open Command and Control (OpenC2) Language Specification Version 1.0_. Edited by Jason Romano and Duncan Sparrell. November 2018, <http://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html>.
+
+###### [OpenC2-HTTPS-v1.0]
+_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
+
+###### [Winnt.h-registry-types]
+_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
+
+###### [SLPF-Deny]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
+
+###### [SLPF-Allow]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
+
+###### [SLPF-Conformance]
+https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
+<!--
+## A.2 Informative References
+
+###### [RFC3552]
+Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
+-->
 
 ---
+# Appendix B. Acknowledgments
 
+Note: A Work Product approved by the TC must include a list of people who participated in the development of the Work Product. This is generally done by collecting the list of names in this appendix. This list shall be initially compiled by the Chair, and any Member of the TC may add or remove their names from the list by request. Remove this note before submitting for publication.
 
-# Appendix F. Notices
+## B.1 Participants
 
-Copyright © OASIS Open 2020. All Rights Reserved.
+<!-- A TC can determine who they list here, however, TC Observers must not be listed. It is common practice for TCs to list everyone that was part of the TC during the creation of the document, but this is ultimately a TC decision on who they want to list and not list. -->
+
+The following individuals have participated in the creation of this specification and are gratefully acknowledged:
+
+**OpenC2 TC Members:**
+
+| First Name | Last Name | Company |
+| :--- | :--- | :--- |
+Alex | Everett | University of North Carolina at Chapel Hill
+Martin | Evandt | University of Oslo
+David | Kemp | National Security Agency
+David | Lemire | G2
+Vasileios | Mavroeidis | University of Oslo
+Duncan | Sparrell | sFractal Consulting LLC
+
+-------
+
+# Appendix C. Revision History
+| Revision | Date | Editor | Changes Made |
+| :--- | :--- | :--- | :--- |
+| edr-ap-v1.0-wd01 | yyyy-mm-dd | Vasileios Mavroeidis, Martin Evandt | Initial working draft |
+
+-------
+
+# Appendix D. Notices
+
+Copyright © OASIS Open 2021. All Rights Reserved.
 
 All capitalized terms in the following text have the meanings assigned to them in the OASIS Intellectual Property Rights Policy (the "OASIS IPR Policy"). The full [Policy](https://www.oasis-open.org/policies-guidelines/ipr) may be found at the OASIS website.
 
