@@ -522,7 +522,7 @@ Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 200 | OK. The Command was received and the action was performed. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
-| 501 | Not implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
+| 501 | Not Implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
 
 ## 2.3 OpenC2 Commands
 
