@@ -448,7 +448,7 @@ The list of external namespace Targets extend the Target list to include Targets
 | :--- | :--- | :--- | :---: | :--- |
 | 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
 | 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this service. |
-| 3 | **process** | process | 0\.\.1 | The process associated with the service (if it is running). |
+| 3 | **process** | Process | 0\.\.1 | The process associated with the service (if it is running). |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -464,14 +464,14 @@ Arguments provide additional precision to a Command by including information suc
 | 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect. |
 | 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete`. |
 
-**Table 2.1.4-1. Command Arguments Unique to EDR**
+**Table 2.1.4-2. Command Arguments Unique to EDR**
 
 **_Type: Args (Map)_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1201 | **account_status** | Account-Status | 1 | Specifies whether the account is enabled or disabled. |
-| 1202 | **device_containment** | Device-Containment | 1 | Specifies whether or not to isolate the host on a VLAN or restrict application execution. |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether an account shall be enabled or disabled. |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction). |
 
 **_Type: Account-Status (Enumerated)_**
 
@@ -484,7 +484,7 @@ Arguments provide additional precision to a Command by including information suc
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 1 | **port_isolation** | Isolate the host in a VLAN .|
+| 1 | **port_isolation** | Isolate the host in a VLAN.|
 | 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only). |
 | 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint. |
 
@@ -499,7 +499,7 @@ The Actuator Specifiers defined in this document are referenced under the `edr` 
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **hostname** | String | 0..1 | A hostname for a particular device with EDR functionality. [RFC1123]](#rfc1123) |
+| 1 | **hostname** | String | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
 | 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor. |
 | 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed. |
 
