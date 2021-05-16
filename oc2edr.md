@@ -658,29 +658,19 @@ OpenC2 Consumers that receive a 'allow' Command:
 
 
 #### 2.3.4.1 Allow device
-Removes a device from containment. This command SHOULD NOT be issued on an endpoint which has not previously received a 'contain device' command first.
+Removes a device from containment.
 
 OpenC2 Consumers that receive a 'allow device' Command:
-
-* but the device is not contained
-    * SHOULD respond with status code 400
-    * SHOULD respond with 'device not contained' in the status text
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access device' in the status text
 
 
 #### 2.3.4.2 Allow file
-Removes execution prevention from a file or takes a file out of quarantine. This command SHOULD NOT be issued towards a file which has not previously received a 'deny file' or a 'contain file' command first.
+Removes execution prevention from a file or takes a file out of quarantine.
 
 OpenC2 Consumers that receive a 'allow file' Command:
 
-* but the file is not contained
-    * SHOULD respond with status code 400
-    * SHOULD respond with 'file not contained' in the status text
-* but the file is not denied
-    * SHOULD respond with status code 400
-    * SHOULD respond with 'file not denied' in the status text
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access file' in the status text
