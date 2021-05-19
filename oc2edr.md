@@ -402,7 +402,7 @@ The list of common Targets is extended to include the additional Targets defined
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems. |
 | 1102 | **account** | Account | A user account on an endpoint. |
-| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar). |
+| 1103 | **service** | Service | A program running on Microsoft Windows systems which can utilize the Service Control Manager or the Windows Registry to automatically execute itself upon system boot. Similar to a UNIX daemon. |
 
 #### 2.1.2.3 External Namespace Targets
 The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
@@ -442,13 +442,14 @@ The list of external namespace Targets extend the Target list to include Targets
 
 **Table 2.1.3-3. Service**
 
-**_Type: Service (Map[1..*])_**
+**_Type: Service (Map{1..*})_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this service. |
+| 1 | **files** | ArrayOf(File) | 0\.\.1 | The file(s) that are associated with the service. |
+| 2 | **registry_entries** | ArrayOf(Registry-Entry) | 0\.\.1 | The registry entries associated with this service. |
 | 3 | **process** | Process | 0\.\.1 | The process associated with the service (if it is running). |
+| 4 | **name** | String | 0\.\.1 | The name of the service as it appears in the Windows Service Control Manager. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -757,10 +758,19 @@ OpenC2 Consumers that receive 'stop process' commands
     * SHOULD respond with 'cannot access process' in the status text
 
 #### 2.3.6.3 Stop edr:service
-Stops the running process associated with a service and prevents it from running again should the endpoint reboot.
+Stops the running process associated with a service and prevents it from running again should the endpoint reboot, either through specifying the name of the service as it appears in the Windows Service Control Manager, or by specifying the relevant registry entries and the process associated with the service (if it is running).
 
-OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
+OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing egistry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped (if running), and that it does not spawn a new process upon device boot.
 
+OpenC2 Producers that send 'stop edr:service' Commands:
+* and populate the 'name' property
+    * SHOULD NOT populate the 'files' property
+    * SHOULD NOT populate the 'registry_entries' property
+    * SHOULD NOT populate the 'process' propery
+* and do not populate the 'name' property
+    * MUST populate the 'registry_entries' property
+    * MAY populate the 'process' propery
+  
 ### 2.3.7 Restart
 OpenC2 Consumers that receive a 'restart' Command:
 
@@ -948,9 +958,19 @@ OpenC2 Consumers that receive a 'delete edr:registry_entry' Command:
 
 
 #### 2.3.11.3 Delete edr:service
-Deletes the registry key that executes a service on system boot.
+Deletes a service form the endpoint, either through specifying the name of the service as it appears in the Windows Service Control Manager, or by specifying the relevant files, registry entries and the process associated with the service (if it is running). 
 
-OpenC2 Consumers that choose to implement the 'delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
+OpenC2 Consumers that choose to implement the 'delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the files associated with the service, removing the registry entries associated with the service, restart/reboot of the host device, etc. The end state shall be that the service is stopped (if running) and removed from the endpoint.
+
+OpenC2 Producers that send 'delete edr:service' Commands:
+* and populate the 'name' property
+    * SHOULD NOT populate the 'files' property
+    * SHOULD NOT populate the 'registry_entries' property
+    * SHOULD NOT populate the 'process' propery
+* and do not populate the 'name' property
+    * MUST populate the 'files' property
+    * MUST populate the 'registry_entries' property
+    * MAY populate the 'process' propery
 
 
 # 3 Conformance statements
@@ -1261,6 +1281,50 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
+## A.X Stop
+
+### A.X.1 Disable a service using the Windows Service Control Manager
+  
+**Command:**
+
+```json
+{
+  "action": "stop",
+  "target": {
+    "service": {
+       "name":"someService"
+    }
+  },
+  "actuator": {
+    "edr": {}
+  }
+}
+```
+  
+### A.X.2 Kill the process of a service and disable it using the registry entries
+  
+**Command:**
+
+```json
+{
+  "action": "stop",
+  "target": {
+    "service": {
+       "registry_entries": [
+          {"path":"HKLM\\SYSTEM\\CurrentControlSet\\Services\\", "name":"someService", ...},
+          {"path":"HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\", "name":"lpLoadOrderGroup", ...}
+        ],
+        "process":{
+          "pid":1234
+        } 
+    }
+   },
+  "actuator": {
+    "edr": {}
+  }
+}
+```
+  
 ## A.2 Set
 
 ### A.2.1 Set an account on a specific endpoint to be enabled
