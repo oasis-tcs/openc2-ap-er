@@ -424,10 +424,10 @@ The list of external namespace Targets extend the Target list to include Targets
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **path** | String | 1 | The absolute path of the registry entry including the hive, key and subkeys with a backslash denoting hierarchy. May also contain the name of the target entry, if the name is not included then the 'name' property MUST be populated.|
-| 2 | **name** | String | 0\.\.1 | The name of the registry entry. |
-| 3 | **type** | String | 0\.\.1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
-| 4 | **value** | String | 0\.\.1 | The value of the registry entry. The actuator is responsible to format the value in accordance with the defined type. |
+| 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
+| 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
+| 3 | **type** | String | 1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
+| 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
@@ -850,21 +850,12 @@ Sets the 'value' property of a Registry Entry. The 'type' property MUST be popul
 
 OpenC2 Producers that send 'set edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry_entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
 OpenC2 Consumers that receive a'set edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
-* but the 'type' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry type property not set' in the status text
+
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -896,21 +887,11 @@ Creates a registry entry in the specified path. The 'type' property MUST be popu
 
 OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
 OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
-* but the 'type' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry type property not set' in the status text
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -937,20 +918,15 @@ OpenC2 Consumers that receive a'delete file' Command:
     * SHOULD respond with 'cannot access file' in the status text
 
 #### 2.3.11.2 Delete edr:registry_entry
-Deletes a registry entry.
+Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'delete edr:registry_entry' Commands:
+OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive a 'delete edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
+OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
