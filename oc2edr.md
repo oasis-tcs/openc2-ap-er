@@ -501,7 +501,7 @@ The Actuator Specifiers defined in this document are referenced under the `edr` 
 | :--- | :--- | :--- | :--- | :--- |
 | 1 | **hostname** | Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
 | 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor. |
-| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed. |
+| 3 | **named_group** | String | 0..1 | User defined collection of devices with EDR sensors installed. |
 
 
 ## 2.2 OpenC2 Response Components
