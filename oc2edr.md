@@ -813,7 +813,7 @@ OpenC2 Consumers that receive a 'set' Command:
 Sets the IPv4 address of the endpoint to the specified Target value.
 
 OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
+* MUST include an IPv4 address without the CIDR prefix-length, or have it set to 32
 
 OpenC2 Consumers thet receive 'set ipv4_net' Commands
 * but the CIDR prefix-length is set to a value other than 32
@@ -825,11 +825,11 @@ OpenC2 Consumers thet receive 'set ipv4_net' Commands
 #### 2.3.8.2 Set ipv6_net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
-OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the prefix-length, or have it set to 128
+OpenC2 Producers that send 'set ipv6_net' Commands:
+* MUST include an IPv6 address without the prefix-length, or have it set to 128
 
-OpenC2 Consumers thet receive a 'set ipv4_net' Command:
-* but the CIDR prefix-length is set to a value other than 128
+OpenC2 Consumers thet receive a 'set ipv6_net' Command:
+* but the  prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
