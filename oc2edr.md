@@ -146,7 +146,7 @@ For complete copyright information please see the Notices section in the Appendi
 - [Annex A: Sample Commands](#annex-a-sample-commands)
   - [A.1 deny, contain and allow](#a1-deny-contain-and-allow)
     - [A.1.1 Ban a binary by hash on every endpoint](#a11-ban-a-binary-by-hash-on-every-endpoint)
-    - [A.1.2 Port isolate a specific endpoint](#a12-port-isolate-a-specific-endpoint)
+    - [A.1.2 Network isolate a specific endpoint](#a12-network-isolate-a-specific-endpoint)
     - [A.1.3 Allow unrestricted app execution on a group of endpoints](#a13-allow-unrestricted-app-execution-on-a-group-of-endpoints)
   - [A.2 Set](#a2-set)
     - [A.2.1 Set an account on a specific endpoint to be enabled](#a21-set-an-account-on-a-specific-endpoint-to-be-enabled)
@@ -424,10 +424,10 @@ The list of external namespace Targets extend the Target list to include Targets
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **path** | String | 1 | The absolute path of the registry entry including the hive, key and subkeys with a backslash denoting hierarchy. May also contain the name of the target entry, if the name is not included then the 'name' property MUST be populated.|
-| 2 | **name** | String | 0\.\.1 | The name of the registry entry. |
-| 3 | **type** | String | 0\.\.1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
-| 4 | **value** | String | 0\.\.1 | The value of the registry entry. The actuator is responsible to format the value in accordance with the defined type. |
+| 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
+| 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
+| 3 | **type** | String | 1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
+| 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
@@ -472,6 +472,7 @@ Arguments provide additional precision to a Command by including information suc
 | :--- | :--- | :--- | :--- | :--- |
 | 1201 | **account_status** | Account-Status | 1 | Specifies whether an account shall be enabled or disabled. |
 | 1202 | **device_containment** | Device-Containment | 1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction). |
+| 1203 | **permitted_addresses** | Permitted-Addresses | 1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
 
 **_Type: Account-Status (Enumerated)_**
 
@@ -484,9 +485,16 @@ Arguments provide additional precision to a Command by including information suc
 
 | ID | Name | Description |
 | :--- | :--- | :--- |
-| 1 | **port_isolation** | Isolate the host in a VLAN.|
+| 1 | **network_isolation** | Isolate the endpoint from communicating with other networked entities, typically through relegation to a private VLAN segment and/or port isolation. MAY be combined with the 'permitted_addresses' Argument to allow communication with select IP or domain name addresses. |
 | 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only). |
 | 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint. |
+
+**_Type: Permitted-Addresses (Map)_**
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | domain_name | ArrayOf(Domain-Name) | 0..1 | The domain name address(es) the contained device(s) can still communicate with. |
+| 2 | ipv4_net | ArrayOf(IPv4-Net) | 0..1 | The IPv4 address(es) or range(s) the contained device(s) can still communicate with. |
+| 3 | ipv6_net | ArrayOf(IPv6-Net) | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -546,26 +554,26 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. An Argument (the top row in Table 2.3-2) paired with a Command (the first column in Table 2.3-2) defines an allowable combination.
 
 **Table 2.3-2. Command Arguments Matrix**
-|                         | **response_requested** | **Device-Containment** | **Account-Status**| 
-|:---                     |:---:                   |:---:                   |:---:              |
-|contain device			      |valid                   |valid                   |                   |
-|contain file			        |valid                   |                        |                   |
-|allow device			        |valid                   |                        |                   |
-|allow file				        |valid                   |                        |                   |
-|start process			      |valid                   |                        |                   |
-|stop device			        |valid                   |                        |                   |
-|stop file                |valid                   |                        |                   |
-|stop service			        |valid                   |                        |                   |
-|restart device			      |valid                   |                        |                   |
-|restart process		      |valid                   |                        |                   |
-|set ipv4-net			        |valid                   |                        |                   |
-|set ipv6-net			        |valid                   |                        |                   |
-|set edr:registry_entry	  |valid                   |                        |                   |
-|set edr:account		      |valid                   |                        |valid              |
-|create edr:registry_entry|valid                   |                        |                   |
-|delete file			        |valid                   |                        |                   |
-|delete edr:registry_entry|valid                   |                        |                   |
-|delete service			      |valid                   |                        |                   |
+|                         | **response_requested** | **Device-Containment** | **Account-Status**| **permitted_addresses** |
+|:---                     |:---:                   |:---:                   |:---:              |:---:                    |
+|contain device			      |valid                   |valid                   |                   |valid                    |
+|contain file			        |valid                   |                        |                   |                         |
+|allow device			        |valid                   |                        |                   |                         |
+|allow file				        |valid                   |                        |                   |                         |
+|start process			      |valid                   |                        |                   |                         |
+|stop device			        |valid                   |                        |                   |                         |
+|stop file                |valid                   |                        |                   |                         |
+|stop service			        |valid                   |                        |                   |                         |
+|restart device			      |valid                   |                        |                   |                         |
+|restart process		      |valid                   |                        |                   |                         |
+|set ipv4-net			        |valid                   |                        |                   |                         |
+|set ipv6-net			        |valid                   |                        |                   |                         |
+|set edr:registry_entry	  |valid                   |                        |                   |                         |
+|set edr:account		      |valid                   |                        |valid              |                         |
+|create edr:registry_entry|valid                   |                        |                   |                         |
+|delete file			        |valid                   |                        |                   |                         |
+|delete edr:registry_entry|valid                   |                        |                   |                         |
+|delete service			      |valid                   |                        |                   |                         |
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
@@ -620,6 +628,7 @@ Limits the functionalities of an endpoint in relation to application execution a
 OpenC2 Producers that send 'contain device' Commands:
 
 * MUST populate the Command Arguments field with a 'Device-Containment' argument
+* MAY populate the Command Arguments field with a 'Permitted-Addresses' argument
 
 OpenC2 Consumers that receive a 'contain Device' Command:
 
@@ -841,21 +850,12 @@ Sets the 'value' property of a Registry Entry. The 'type' property MUST be popul
 
 OpenC2 Producers that send 'set edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry_entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
 OpenC2 Consumers that receive a'set edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
-* but the 'type' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry type property not set' in the status text
+
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -887,21 +887,11 @@ Creates a registry entry in the specified path. The 'type' property MUST be popu
 
 OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
 OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
-* but the 'type' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry type property not set' in the status text
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -928,20 +918,15 @@ OpenC2 Consumers that receive a'delete file' Command:
     * SHOULD respond with 'cannot access file' in the status text
 
 #### 2.3.11.2 Delete edr:registry_entry
-Deletes a registry entry.
+Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
-OpenC2 Producers that send 'delete edr:registry_entry' Commands:
+OpenC2 Producers that send 'create edr:registry_entry' Commands:
 * MUST include the 'path' property of the edr:registry entry Target
-* MUST refer to the name of the registry entry
-    * SHOULD refer to the registry entry's name using the 'name' property
-    * MAY refer to the full registry entry by including the name in the 'path' property
+* MUST refer to the registry key
+    * SHOULD refer to the registry key using the 'key' property
+    * MAY refer to the registry key by including the key in the 'path' property
 
-OpenC2 Consumers that receive a 'delete edr:registry_entry' Command:
-* but the 'path' property is not set
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'registry entry path property not set' in the status text
+OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access registry entry' in the status text
@@ -984,6 +969,11 @@ An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
 * 3.1.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
 
+### 3.1.X Conformance Clause X: Permitted-Addresses Producer
+An OpenC2 Producer satisfies 'Permitted-Addresses Producer' conformance if:
+* 3.1.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.X.2 **MUST** implement the 'Permitted-Addresses' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+  
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
 #### 3.1.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
@@ -1087,6 +1077,11 @@ An OpenC2 Producer satisfies 'Contain Device Consumer' conformance if:
 An OpenC2 Producer satisfies 'Device-Containment Consumer' conformance if:
 * 3.2.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
+  
+### 3.2.X Conformance Clause X: Permitted-Addresses Consumer
+An OpenC2 Consumer satisfies 'Permitted-Addresses Producer' conformance if:
+* 3.2.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.X.2 **MUST** implement the 'Permitted-Addresses' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
 
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
@@ -1215,7 +1210,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.2 Port isolate a specific endpoint
+### A.1.2 Network isolate a specific endpoint
 
 **Command:**
 
@@ -1229,7 +1224,7 @@ Case Three: the Command failed because an Argument was not supported.
   },
   "args": {
     "edr": {
-      "containment":"port_isolation"
+      "containment":"network_isolation"
     }
    },
   "actuator": {
@@ -1237,6 +1232,33 @@ Case Three: the Command failed because an Argument was not supported.
   }
 }
 ```
+
+### A.1.X Network isolate an endpoint, but allow communication with selected IP and domain name addresses
+
+**Command:**
+
+```json
+{
+  "action": "contain",
+  "target": {
+    "device": {
+      "hostname": "DESKTOP-123ABC"
+    }
+  },
+  "args": {
+    "edr": {
+      "device_containment":"network_isolation",
+      "permitted_addresses": {
+        "ipv_net": [192.168.0.255],
+        "domain_name": ["support.organization.tld", "wiki.organization.tld"]
+      }
+    }
+   },
+  "actuator": {
+    "edr": {}
+  }
+}
+```  
 
 ### A.1.3 Allow unrestricted app execution on a group of endpoints
 
