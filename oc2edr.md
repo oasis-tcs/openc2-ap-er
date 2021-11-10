@@ -529,6 +529,7 @@ Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 102 | Processing. The Command was received but the action is not necessarily completed. |
 | 200 | OK. The Command was received and the action was performed. |
 | 400 | Bad Request. Unable to process Command, parsing error. |
+| 404 | Not found. |
 | 500 | Internal Error. |
 | 501 | Not Implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
 
@@ -548,7 +549,7 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **ipv6_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
 | **process** 		   |     |     |       |     |valid|valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
-| **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
+| **account** 		   |valid|     |       |     |     |     |       |valid|      |      |      |
 | **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. An Argument (the top row in Table 2.3-2) paired with a Command (the first column in Table 2.3-2) defines an allowable combination.
@@ -580,6 +581,28 @@ The valid Target type, associated Specifiers, and Options are summarized in [Sec
 
 #### 2.3.1.1 Query features
 The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
+
+#### 2.3.1.2 Query account
+Retrieves information about user accounts on endpoints. 
+
+OpenC2 Consumers that receive a 'query account' Command:
+
+* where the account Target Type is empty and an Actuator Specifier is set 
+    * MUST respond with status code OK/200
+    * MUST return list of all user accounts on the endpoint in the results
+* where the account Target Type is not empty and an Actuator Specifier is set 
+    * but the user account does not exist on the endpoint
+        * MUST respond with status code 404
+        * SHOULD respond with "Account not found" in the status text
+    * and the user account does exist on the endpoint
+        * MUST respond with status code 200
+        * MAY respond with "Account found" in the status text
+* where the account Target Type is not empty and an Actuator Specifier is not set 
+    * MUST respond with status code 200
+    * MUST return a list of all endpoints the account exists on in the results
+* but cannot access or find the endpoint from the 'hostname' Actuator Specifier
+    * MUST respond with status code 500
+    * SHOULD respond with 'cannot access or find device' in the status text
 
 ### 2.3.2 Deny
 
@@ -1188,6 +1211,94 @@ An OpenC2 Producer satisfies 'Service Consumer' conformance if:
 _This section is non-normative_
 
 This section will summarize and provide examples of OpenC2 Commands as they pertain to EDR systems. The sample Commands will be encoded in verbose JSON.
+  
+## A.X query
+  
+### A.X.1 List all accounts on an endpoint
+```json
+{
+  "action": "query",
+  "target": {
+    "account": {}
+  },
+  "actuator": {
+    "edr": {
+      "hostname": "someHost123"
+    }
+  }
+}
+
+```
+**Responses:**
+
+```json
+{
+  "status": 200,
+  "results": {
+    "users": ["Administrator", "DefaultAccount", "Visitor", "someName.AD3"]
+    }
+}
+```
+## A.X.2 Get all endpoints a user has logged on to
+
+```json
+{
+  "action": "query",
+  "target": {
+    "account": {
+      "uid": "S-1-5-21-992878714-4041223874-2616370337-1001"
+    }
+  },
+  "actuator": {
+    "edr": {}
+  }
+}
+
+```
+**Responses:**
+
+```json
+{
+  "status": 200,
+  "results": {
+    "devices": ["someHost123", "someOtherHost123"]
+  }
+}
+```
+
+## A.X.3 Check if an account exists on an endpoint
+
+```json
+{
+  "action": "query",
+  "target": {
+    "account": {
+      "account_name": "someOtherName.AD3"
+    }
+  },
+  "actuator": {
+    "edr": {
+      "hostname": "someOtherHost123"
+    }
+  }
+}
+```
+**Responses:**
+
+Case one: The account exists on the endpoint.
+  
+```json
+{
+  "status": 200,
+}
+```
+Case two: The account does not exist on the endpoint
+```json
+{
+  "status": 400,
+  "status_text": "The account does not exist on the endpoint"
+}
+```
 
 ## A.1 deny, contain and allow
 
