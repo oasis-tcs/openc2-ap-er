@@ -582,7 +582,7 @@ The valid Target type, associated Specifiers, and Options are summarized in [Sec
 #### 2.3.1.1 Query features
 The 'query features' Command MUST be implemented in accordance with Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10).
 
-#### 2.3.1.2 Query account
+#### 2.3.1.2 Query edr:account
 Retrieves information about user accounts on endpoints. 
 
 OpenC2 Consumers that receive a 'query account' Command:
@@ -1194,7 +1194,9 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
 {
   "action": "query",
   "target": {
-    "account": {}
+    "edr": {
+      "account": {}
+    }
   },
   "actuator": {
     "edr": {
@@ -1220,8 +1222,10 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
 {
   "action": "query",
   "target": {
-    "account": {
-      "uid": "S-1-5-21-992878714-4041223874-2616370337-1001"
+    "edr": {
+      "account": {
+        "uid": "S-1-5-21-992878714-4041223874-2616370337-1001"
+      }
     }
   },
   "actuator": {
@@ -1247,8 +1251,10 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
 {
   "action": "query",
   "target": {
-    "account": {
-      "account_name": "someOtherName.AD3"
+    "edr": {
+      "account": {
+        "account_name": "someOtherName.AD3"
+      }
     }
   },
   "actuator": {
