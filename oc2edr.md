@@ -497,19 +497,35 @@ Arguments provide additional precision to a Command by including information suc
 | 3 | ipv6_net | ArrayOf(IPv6-Net) | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
 
 ### 2.1.5 Actuator Specifiers
-An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the EDR and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
+An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine: 
 
-The Actuator Specifiers defined in this document are referenced under the `edr` namespace.
+1. Which Actuator(s) shall execute the Action 
+2. On which specific entity or list of entities the Actuator(s) shall execute the Action.
 
-**Table 2.1.5-1. EDR Specifiers**
+The Actuator Specifiers defined in this document are referenced under the `er` namespace.
+
+**Table 2.1.5-1. ER Specifier Type Definitions**
+
+**_Type: ER-server_**
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **hostname** | Hostname | 1 | The hostname of a machine with ER actuator capabilities. MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
+| 2 | **tenant_id** | string | 0..1 | description |
+
+**_Type: ER-endpoint_**
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **uid** | string | 0..1 | Unique identifier for a particular device with an EDR sensor installed. |
+| 2 | **named_group** | strings | 0..1 | User defined collection of devices with EDR sensors installed. | 
+
+**Table 2.1.5-2. ER Specifiers**
 
 **_Type: Specifiers (Map)_**
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **hostname** | Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
-| 2 | **sensor_id** | String | 0..1 | Unique identifier for a particular EDR sensor. |
-| 3 | **named_group** | arrayOf(String) | 0..1 | User defined collection of devices with EDR sensors installed. |
+| 1 | **server** | ER-server | 1 | Specifies the particular ER actuator which is to perform an Action. |
+| 2 | **endpoint** | ER-endpoint | 0..1 | Specifies the particular endpoint(s) on which an actuator is to perform an Action. |
 
 
 ## 2.2 OpenC2 Response Components
@@ -1179,7 +1195,11 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
     }
   },
   "actuator": {
-    "edr": {}
+    "er": {
+      "server": {
+        "hostname": "http://edr.organization.com"
+      }
+    }
   }
 }
 ```
@@ -1210,6 +1230,29 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
+### A.1.X Ban a binary by hash on every endpoint within a specific tenant
+
+**Command:**
+
+```json
+{
+  "action": "deny",
+  "target": {
+    "file": {
+      "hash": "0a73291ab5607aef7db23863cf8e72f55bcb3c273bb47f00edf011515aeb5894"
+    }
+  },
+  "actuator": {
+    "er": {
+      "server": {
+        "hostname": "http://edr.organization.com",
+        
+      }
+    }
+  }
+}
+```
+  
 ### A.1.2 Network isolate a specific endpoint
 
 **Command:**
@@ -1283,6 +1326,34 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
+## A.X Stop
+
+## A.X.1 Stop a process on a specific endpoint
+
+**Command:**
+
+```json
+{
+  "action": "stop",
+  "target": {
+    "process": {
+      "name":"calc.exe"
+    }
+  },
+  "actuator": {
+    "er": {
+      "server": {
+        "hostname": "http://edr.organization.com",
+        "tenant_id": "WXYZ1234"
+      },
+      "endpoint": {
+        "endpoint_id":"DESKTOP-123ABC"
+      }
+    }
+  }
+}
+```
+  
 ## A.2 Set
 
 ### A.2.1 Set an account on a specific endpoint to be enabled
