@@ -515,7 +515,7 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 **_Type: ER-endpoint_**
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **uid** | string | 0..1 | Unique identifier for a particular device with an EDR sensor installed. |
+| 1 | **endpoint_id** | string | 0..1 | Unique identifier for a particular device with an EDR sensor installed. |
 | 2 | **named_group** | strings | 0..1 | User defined collection of devices with EDR sensors installed. | 
 
 **Table 2.1.5-2. ER Specifiers**
@@ -1230,7 +1230,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.X Ban a binary by hash on every endpoint within a specific tenant
+### A.1.X Ban a binary by hash on every endpoint managed by a specific tenant
 
 **Command:**
 
@@ -1246,7 +1246,7 @@ Case Three: the Command failed because an Argument was not supported.
     "er": {
       "server": {
         "hostname": "http://edr.organization.com",
-        
+        "tenant_id": "WXYZ1234"
       }
     }
   }
@@ -1344,7 +1344,6 @@ Case Three: the Command failed because an Argument was not supported.
     "er": {
       "server": {
         "hostname": "http://edr.organization.com",
-        "tenant_id": "WXYZ1234"
       },
       "endpoint": {
         "endpoint_id":"DESKTOP-123ABC"
