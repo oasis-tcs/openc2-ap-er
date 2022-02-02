@@ -509,7 +509,7 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 **_Type: ER-server_**
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **hostname** | Hostname | 1 | The hostname of a machine with ER actuator capabilities. MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
+| 1 | **hostname** | Hostname | 1 | The hostname of a machine with ER Actuator capabilities. MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123) |
 | 2 | **tenant_id** | string | 0..1 | description |
 
 **_Type: ER-endpoint_**
@@ -524,8 +524,8 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| 1 | **server** | ER-server | 1 | Specifies the particular ER actuator which is to perform an Action. |
-| 2 | **endpoint** | ER-endpoint | 0..1 | Specifies the particular endpoint(s) on which an actuator is to perform an Action. |
+| 1 | **server** | ER-server | 1 | Specifies the particular ER Actuator which is to perform an Action. |
+| 2 | **endpoint** | ER-endpoint | 0..1 | Specifies the particular endpoint(s) on which an Actuator is to perform an Action. |
 
 
 ## 2.2 OpenC2 Response Components
