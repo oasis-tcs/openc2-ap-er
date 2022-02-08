@@ -19,9 +19,10 @@ means for continuous endpoint monitoring and analysis to more
 readily identify, detect, mitigate and remediate, or prevent
 advanced threats. This OpenC2 Actuator Profile defines the
 Actions, Targets, Specifiers and Options that are consistent with
-the version 1.0 of the OpenC2 Language Specification
-([OpenC2-Lang-v1.0]) in the context of command and control of
-various endpoint response technologies.
+the version 1.0 of the [OpenC2 Language
+Specification](https://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html)
+in the context of command and control of various endpoint
+response technologies.
 
 ### :twisted_rightwards_arrows: Repository Organization :twisted_rightwards_arrows:
 
