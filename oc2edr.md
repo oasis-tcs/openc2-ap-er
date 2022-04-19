@@ -702,24 +702,7 @@ OpenC2 Consumers that receive a 'start' Command:
     * SHOULD respond with 'command not supported' in the status text
     * MAY respond with status code 500
 
-#### 2.3.5.1 Start process
-Executes a process.
-
-OpenC2 Producers that send 'start process' Commands
-* MUST populate the 'executable' property of the Command Target
-
-OpenC2 Consumers that receive a 'start process' Command:
-
-* but the 'executable' property of the Command Target is not populated
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with 'executable Target property not specified' in the status text
-* but cannot access the file specified in the process 'executable' property
-    * MUST respond with status code 500
-    * SHOULD respond with 'cannot access file' in the status text
-
-#### 2.3.5.2 Start file
+#### 2.3.5.1 Start file
 Instructs the Actuator to retrieve, install, process, and operate a file.
 
 OpenC2 Consumers that receive a 'start file' Commands:
@@ -973,7 +956,12 @@ An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
 An OpenC2 Producer satisfies 'Permitted-Addresses Producer' conformance if:
 * 3.1.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.X.2 **MUST** implement the 'Permitted-Addresses' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
-  
+
+### 3.1.Y Conformance Clause Y: Start File Producer
+An OpenC2 Producer satisfies 'Start File Producer' conformance if:
+* 3.1.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
 #### 3.1.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
@@ -1083,6 +1071,11 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Producer' conformance if:
 * 3.2.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.X.2 **MUST** implement the 'Permitted-Addresses' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
 
+### 3.2.Y Conformance Clause Y: Start File Producer
+An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
+* 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+  
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
 * 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
