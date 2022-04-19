@@ -402,7 +402,7 @@ The list of common Targets is extended to include the additional Targets defined
 | :--- | :--- | :--- | :--- |
 | 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems. |
 | 1102 | **account** | Account | A user account on an endpoint. |
-| 1103 | **service** | Service | A collection of one or more files which holds state information on an endpoint (configurations, execution on boot, utilization of windows registry, or similar). |
+| 1103 | **service** | Service | A program which is managed and executed by a service host process, where several services may be sharing the same service host. |
 
 #### 2.1.2.3 External Namespace Targets
 The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
@@ -446,9 +446,8 @@ The list of external namespace Targets extend the Target list to include Targets
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **executable** | File | 0\.\.1 | The executable file that starts the service. |
-| 2 | **registry_entries** | Registry-Entry | 0\.\.1 | The registry entries associated with this service. |
-| 3 | **process** | Process | 0\.\.1 | The process associated with the service (if it is running). |
+| 1 | **name** | String | 0\.\.1 | The unique name of the service. |
+| 2 | **display_name** | String | 0\.\.1 | The display name of the service. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
@@ -765,10 +764,22 @@ OpenC2 Consumers that receive 'stop process' commands
     * MUST respond with status code 500
     * SHOULD respond with 'cannot access process' in the status text
 
-#### 2.3.6.3 Stop edr:service
-Stops the running process associated with a service and prevents it from running again should the endpoint reboot.
+#### 2.3.6.3 Stop er:service
+Stops a running service and removes it from its service host process.
 
-OpenC2 Consumers that choose to implement the 'stop edr:service' Command MUST include all steps that are required for the disable service procedure such as ending the process of the service, editing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped, and that it does not restart upon device boot.
+OpenC2 Producers that send 'stop er:service' commands
+* MUST populate at least one property of the Command Target
+
+OpenC2 Consumers that receive 'stop er:service' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Service Target does not have any properties populated' in the status text
+* but cannot stop the service specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * MAY respond with 'Cannot stop service' in the status text
+    * SHOULD respond with a status text detailing why the service could not be deleted
 
 ### 2.3.7 Restart
 OpenC2 Consumers that receive a 'restart' Command:
@@ -932,10 +943,22 @@ OpenC2 Consumers that receive a 'create edr:registry_entry' Command:
     * SHOULD respond with 'cannot access registry entry' in the status text
 
 
-#### 2.3.11.3 Delete edr:service
-Deletes the registry key that executes a service on system boot.
+#### 2.3.11.3 Delete er:service
+Deletes a service from the endpoint.
 
-OpenC2 Consumers that choose to implement the 'delete edr:service' Command MUST include all steps that are required for the delete service procedure such as ending the process of the service, removing the executable and other files, removing configuration files/registry entries, restart/reboot of the host device etc. The end state shall be that the service is stopped and removed from the endpoint.
+OpenC2 Producers that send 'delete er:service' commands
+* MUST populate at least one property of the Command Target
+
+OpenC2 Consumers that receive 'delete er:service' commands
+* but the Command Target does not contain at least one property
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with 'Service Target does not have any properties populated' in the status text
+* but cannot delete the service specified by the populated propertie(s)
+    * MUST respond with status code 500
+    * MAY respond with 'Cannot delete service' in the status text
+    * SHOULD respond with a status text detailing why the service could not be deleted
 
 
 # 3 Conformance statements
@@ -973,7 +996,7 @@ An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
 An OpenC2 Producer satisfies 'Permitted-Addresses Producer' conformance if:
 * 3.1.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.X.2 **MUST** implement the 'Permitted-Addresses' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
-  
+
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
 #### 3.1.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
@@ -1045,8 +1068,8 @@ An OpenC2 Producer satisfies 'Account-Status Producers' conformance if:
 ### 3.1.16 Conformance Clause 16: Service Producer
 An OpenC2 Producer satisfies 'Service Producer' conformance if:
 * 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
-* 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
+* 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
+* 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
 
 
 ## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
@@ -1077,7 +1100,7 @@ An OpenC2 Producer satisfies 'Contain Device Consumer' conformance if:
 An OpenC2 Producer satisfies 'Device-Containment Consumer' conformance if:
 * 3.2.3.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.3.2 **MUST** implement the 'device-containment' Command Argument as a valid option for the 'contain device' command in accordance with [Section 2.3.3.1](#2331-contain-device) of this specification
-  
+
 ### 3.2.X Conformance Clause X: Permitted-Addresses Consumer
 An OpenC2 Consumer satisfies 'Permitted-Addresses Producer' conformance if:
 * 3.2.X.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
@@ -1154,8 +1177,8 @@ An OpenC2 Producer satisfies 'Account Status Consumer' conformance if:
 ### 3.2.16 Conformance Clause 32: Service Consumer
 An OpenC2 Producer satisfies 'Service Consumer' conformance if:
 * 3.2.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.2.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-edrservice) of this specification
-* 3.2.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-edrservice) of this specification
+* 3.2.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
+* 3.2.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
 
 -------
 # Annex A: Sample Commands
