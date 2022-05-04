@@ -407,6 +407,7 @@ The list of common Targets is extended to include the additional Targets defined
 The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
 
 **Table 2.1.2-3 Stateless Packet Filter Targets Applicable to ER**
+
 | ID | Name | Type | Description |
 | :--- | :--- | :--- | :--- |
 | 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
@@ -550,29 +551,16 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
 
-Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. An Argument (the top row in Table 2.3-2) paired with a Command (the first column in Table 2.3-2) defines an allowable combination.
+Table 2.3-2 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-2) paired with a Target (the first column in Table 2.3-2) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
 **Table 2.3-2. Command Arguments Matrix**
-|                         | **response_requested** | **Device-Containment** | **Account-Status**| **permitted_addresses** |
-|:---                     |:---:                   |:---:                   |:---:              |:---:                    |
-|contain device			      |valid                   |valid                   |                   |valid                    |
-|contain file			        |valid                   |                        |                   |                         |
-|allow device			        |valid                   |                        |                   |                         |
-|allow file				        |valid                   |                        |                   |                         |
-|start process			      |valid                   |                        |                   |                         |
-|stop device			        |valid                   |                        |                   |                         |
-|stop file                |valid                   |                        |                   |                         |
-|stop service			        |valid                   |                        |                   |                         |
-|restart device			      |valid                   |                        |                   |                         |
-|restart process		      |valid                   |                        |                   |                         |
-|set ipv4-net			        |valid                   |                        |                   |                         |
-|set ipv6-net			        |valid                   |                        |                   |                         |
-|set edr:registry_entry	  |valid                   |                        |                   |                         |
-|set edr:account		      |valid                   |                        |valid              |                         |
-|create edr:registry_entry|valid                   |                        |                   |                         |
-|delete file			        |valid                   |                        |                   |                         |
-|delete edr:registry_entry|valid                   |                        |                   |                         |
-|delete service			      |valid                   |                        |                   |                         |
+
+|                         |**deny _target_** |**contain _target_**|**allow _target_**|**start process**|**stop _target_**|**restart _target_**|**set _target_**|**update file**|**create edr:registry_entry**|**delete _target_**|
+|:---                     |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **response_requested**  |[2.3.2](#232-deny)|[2.3.3](#233-contain)|[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8](#238-set)|[2.3.9.1](#2391-update-file)|[2.3.10.1](#23101-create-edrregistry_entry)|[2.3.2](#2311-delete)|
+| **device_containment**  |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
+| **account_status**      |                  |                     |                  |                 |                 |                    |[2.3.8](#238-set)|               |                             |                   |
+| **permitted_addresses** |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
