@@ -414,10 +414,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name | Type | # | Description |
 | :--- | :--- | :--- | :---: | :--- |
-| 1 | **path** | String | 1 | The absolute path of the registry entry including the hive and optionally the key. If the key is not included then the key property MUST be populated.|
-| 2 | **key** | String | 0\.\.1 | The registry key. They key may contain subkeys referenced with a backslash to indicate hierarchy. |
-| 3 | **type** | String | 1 | The registry value type as defined in [[Winnt.h header]](#winnth-registry-types). |
-| 4 | **value** | String | 0\.\.1 | The value of the registry key. The actuator is responsible to format the value in accordance with the defined type. |
+| 1 | **key** | String | 0\.\.1 | Specifies the full registry key including the hive. |
+| 2 | **type** | String | 1 | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types). |
+| 3 | **value** | String | 0\.\.1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
@@ -541,14 +540,19 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 | **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
 
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
+
+A Command where the Target portion of the Action/Target pair is not specified (written as _target_), denotes that the Argument can be combined with all Commands covered by the Action.
+
 **Table 2.3-2. Command Arguments Matrix**
 
-|                         |**deny _target_** |**contain _target_**|**allow _target_**|**start process**|**stop _target_**|**restart _target_**|**set _target_**|**update file**|**create edr:registry_entry**|**delete _target_**|
-|:---                     |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested**  |[2.3.2](#232-deny)|[2.3.3](#233-contain)|[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8](#238-set)|[2.3.9.1](#2391-update-file)|[2.3.10.1](#23101-create-edrregistry_entry)|[2.3.2](#2311-delete)|
-| **device_containment**  |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
-| **account_status**      |                  |                     |                  |                 |                 |                    |[2.3.8](#238-set)|               |                             |                   |
-| **permitted_addresses** |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
+|                         |**deny _target_** |**contain device**             |**contain _target_**         |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_**         |**create _target_**   |**delete _target_**   |
+|:---                     |:---:             |:---:                          |:---:                        |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:                       |:---:                 |:---:                 |
+| **response_requested**  |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)        |[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)        |[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
+| **device_containment**  |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **account_status**      |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
+| **permitted_addresses** |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
@@ -874,15 +878,18 @@ OpenC2 Consumers thet receive a 'set ipv4_net' Command:
 Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
 OpenC2 Producers that send 'set er:registry_entry' Commands:
-* MUST include the 'path' property of the er:registry_entry Target
-* MUST refer to the registry key
-    * SHOULD refer to the registry key using the 'key' property
-    * MAY refer to the registry key by including the key in the 'path' property
+* MUST populate the 'type' property
 
 OpenC2 Consumers that receive a'set er:registry_entry' Command:
-
+* but the 'type' property is not populated
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
+    * SHOULD respond with "Registry entry type not specified" in the status text
 * but cannot access the registry entry specified in the registry entry Target
-    * MUST respond with status code 500
+    * MUST NOT respond with status code OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
 
 
