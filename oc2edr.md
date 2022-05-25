@@ -534,7 +534,7 @@ Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Spe
 
 An OpenC2 Command consists of an Action/Target pair and associated Specifiers and Arguments. This section enumerates the allowed Commands and presents the associated Responses.
 
-Table 2.3-1 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-1) paired with a Target (the first column in Table 2.3-1) defines a valid Command.
+Table 2.3-2 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-2) paired with a Target (the first column in Table 2.3-2) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
 **Table 2.3-1. Command Matrix**
 
@@ -545,12 +545,10 @@ Table 2.3-1 defines the Commands that are valid in the context of the ER profile
 | **file** 			     |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
 | **ipv4_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
 | **ipv6_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
-| **process** 		   |     |     |       |     |valid|valid| valid |     |      |      |      |
+| **process** 		   |     |     |       |     |     |valid| valid |     |      |      |      |
 | **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
-
-Table 2.3-2 defines the Commands that are valid in the context of the ER profile. An Action (the top row in Table 2.3-2) paired with a Target (the first column in Table 2.3-2) defines a valid Command. The subsequent subsections provide the property tables applicable to each OpenC2 Command.
 
 **Table 2.3-2. Command Arguments Matrix**
 
