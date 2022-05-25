@@ -403,16 +403,6 @@ The list of common Targets is extended to include the additional Targets defined
 | 1102 | **account** | Account | A user account on an endpoint. |
 | 1103 | **service** | Service | A program which is managed and executed by a service host process, where several services may be sharing the same service host. |
 
-#### 2.1.2.3 External Namespace Targets
-The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
-
-**Table 2.1.2-3 Stateless Packet Filter Targets Applicable to ER**
-
-| ID | Name | Type | Description |
-| :--- | :--- | :--- | :--- |
-| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
-| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
-
 
 ### 2.1.3 Type Definitions
 
@@ -540,6 +530,7 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 
 |                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
 |:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **domain_name**		 |     |valid|       |valid|     |     |       |     |      |      |      |
 | **device** 		     |     |     | valid |valid|     |valid| valid |     |      |      |      |
 | **features** 	  	 |valid|     |       |     |     |     |       |     |      |      |      |
 | **file** 			     |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
@@ -579,6 +570,17 @@ OpenC2 Consumers that receive a 'deny' Command:
     * SHOULD respond with "Command not supported" in the status text
     * MAY respond with status code 500
 
+#### 2.3.2.X Deny domain_name
+Prevents an endpoint from connecting to a Domain Name address.
+
+OpenC2 Consumers that receive a 'deny domain_name' Command:
+
+* but do not implement the 'deny domain_name' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
 #### 2.3.2.1 Deny file
 Prevents the execution of a file.
 
@@ -588,10 +590,27 @@ OpenC2 Consumers that receive a 'deny file' Command:
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
 
-#### 2.3.2.2 slpf:Deny ipv4 net
-Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.2.3 slpf:Deny ipv6 net
-Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.2.2 Deny ipv4_net
+Prevents an endpoint from connecting to an IPv4 address.
+
+OpenC2 Consumers that receive a 'deny ipv4_net' Command:
+
+* but do not implement the 'deny ipv4_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
+#### 2.3.2.3 Deny ipv6_net
+Prevents an endpoint from connecting to an IPv6 address.
+
+OpenC2 Consumers that receive a 'deny ipv6_net' Command:
+
+* but do not implement the 'deny ipv6_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 ### 2.3.3 Contain
 OpenC2 Consumers that receive a 'contain' Command:
@@ -649,6 +668,16 @@ OpenC2 Consumers that receive a 'allow' Command:
     * SHOULD respond with "Command not supported" in the status text
     * MAY respond with status code 500
 
+#### 2.3.4.X Allow domain_name
+Allows an endpoint to connect to a Domain Name address.
+
+OpenC2 Consumers that receive a 'allow domain_name' Command:
+
+* but do not implement the 'allow domain_name' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 #### 2.3.4.1 Allow device
 Removes a device from containment.
@@ -668,10 +697,27 @@ OpenC2 Consumers that receive a 'allow file' Command:
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
 
-#### 2.3.4.3 slpf:Allow ipv4 net
-Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.4.4 slpf:Allow ipv6 net
-Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.4.3 Allow ipv4_net
+Allows an endpoint to connect to an IPv4 address.
+
+OpenC2 Consumers that receive a 'allow ipv4_net' Command:
+
+* but do not implement the 'allow ipv4_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
+#### 2.3.4.4 Allow ipv6_net
+Allows an endpoint to connect to an IPv6 address.
+
+OpenC2 Consumers that receive a 'allow ipv6_net' Command:
+
+* but do not implement the 'allow ipv6_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 ### 2.3.5 Start
 OpenC2 Consumers that receive a 'start' Command:
@@ -994,15 +1040,11 @@ An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
-* 3.1.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.1.8.2 **MUST** implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.1.8.3 **MUST** implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.1.9 Conformance Clause 9: Allow/Deny IPv6 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
-* 3.1.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.1.9.2 **MUST** implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.1.9.3 **MUST** implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.1.10 Conformance Clause 10: Set IPv4 Net Producer
 An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
@@ -1108,15 +1150,11 @@ An OpenC2 Producer satisfies 'Contain File Consumer' conformance if:
 
 ### 3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Consumer' conformance if:
-* 3.2.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.2.8.2 **MUST** implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.2.8.3 **MUST** implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.2.9 Conformance Clause 25: Allow/Deny IPv6 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Consumer' conformance if:
-* 3.2.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.2.9.2 **MUST** implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.2.9.3 **MUST** implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.2.10 Conformance Clause 26: Set IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Set IPv4 Net Consumer' conformance if:
@@ -1366,14 +1404,6 @@ _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by
 ###### [Winnt.h-registry-types]
 _Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
-###### [SLPF-Deny]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
-
-###### [SLPF-Allow]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
-
-###### [SLPF-Conformance]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
 <!--
 ## A.2 Informative References
 
