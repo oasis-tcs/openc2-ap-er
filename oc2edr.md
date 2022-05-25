@@ -550,14 +550,19 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 | **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
 
+Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
+
+A Command where the Target portion of the Action/Target pair is not specified (written as _target_), denotes that the Argument can be combined with all Commands covered by the Action.
+
 **Table 2.3-2. Command Arguments Matrix**
 
-|                         |**deny _target_** |**contain _target_**|**allow _target_**|**start process**|**stop _target_**|**restart _target_**|**set _target_**|**update file**|**create edr:registry_entry**|**delete _target_**|
-|:---                     |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **response_requested**  |[2.3.2](#232-deny)|[2.3.3](#233-contain)|[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8](#238-set)|[2.3.9.1](#2391-update-file)|[2.3.10.1](#23101-create-edrregistry_entry)|[2.3.2](#2311-delete)|
-| **device_containment**  |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
-| **account_status**      |                  |                     |                  |                 |                 |                    |[2.3.8](#238-set)|               |                             |                   |
-| **permitted_addresses** |                  |[2.3.3](#233-contain)|                  |                 |                 |                    |                 |               |                             |                   |
+|                         |**deny _target_** |**contain device**             |**contain _target_**         |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_**         |**create _target_**   |**delete _target_**   |
+|:---                     |:---:             |:---:                          |:---:                        |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:                       |:---:                 |:---:                 |
+| **response_requested**  |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)        |[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)        |[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
+| **device_containment**  |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **account_status**      |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
+| **permitted_addresses** |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
