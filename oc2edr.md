@@ -354,21 +354,21 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in Version 1.0 of the Language
 
 **Table 2.1.1-1. Actions Applicable to ER**
 
-**Type: Action (Enumerated)**
+**_Type: Action (Enumerated)_**
 
-| ID | Item        | Description                                                                                                                               |
-|----|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| 3  | **query**   | Query the ER actuator for a list of available features.                                                                                   |
-| 6  | **deny**    | Deny a process or service from being executed on the endpoint.                                                                            |
-| 7  | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file.                                                   |
-| 8  | **allow**   | Un-isolate a previously isolated device.                                                                                                  |
-| 9  | **start**   | Initiate a process, application, system, or activity.                                                                                     |
-| 10 | **stop**    | Halt a system or end an activity.                                                                                                         |
-| 11 | **restart** | Restart a device, system, or process.                                                                                                     |
-| 15 | **set**     | Change a value, configuration, or state of a managed entity (e.g., registry value, account).                                              |
-| 16 | **update**  | Instructs the Actuator to retrieve, install, process, and operate in accordance with a software update, reconfiguration, or other update. |
-| 19 | **create**  | Add a new entity of a known type (e.g., registry entry, file).                                                                            |
-| 20 | **delete**  | Remove an entity (e.g., registry entry, file).                                                                                            |
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 3 | **query** | Query the ER actuator for a list of available features. |
+| 6 | **deny** | Deny a process or service from being executed on the endpoint. |
+| 7 | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file. |
+| 8 | **allow** | Un-isolate a previously isolated device. |
+| 9 | **start** | Initiate a process, application, system, or activity. |
+| 10 | **stop** | Halt a system or end an activity. |
+| 11 | **restart** | Restart a device, system, or process. |
+| 15 | **set** | Change a value, configuration, or state of a managed entity (e.g., registry value, account). |
+| 16 | **update** | Instructs the Actuator to retrieve, install, process, and operate in accordance with a software update, reconfiguration, or other update. |
+| 19 | **create** | Add a new entity of a known type (e.g., registry entry, file). |
+| 20 | **delete** | Remove an entity (e.g., registry entry, file). |
 
 
 ### 2.1.2 Targets
@@ -379,30 +379,40 @@ Table 2.1.2-1 lists the Targets defined in the OpenC2 Language Specification tha
 
 **Table 2.1.2-1. Language Specification Targets Applicable to ER**
 
-**Type: Target (Choice)**
+**_Type: Target (Choice)_**
 
-| ID   | Name         | Type         | \# | Description                                                                                                                                                                                  |
-|------|--------------|--------------|----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 3    | **device**   | ls:Device    | 1  | The properties of a device.                                                                                                                                                                  |
-| 9    | **features** | ls:Features  | 1  | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities. |
-| 10   | **file**     | ls:File      | 1  | The properties of a file.                                                                                                                                                                    |
-| 13   | **ipv4_net** | ls:IPv4-Net  | 1  | An IPv4 address range including CIDR prefix length.                                                                                                                                          |
-| 14   | **ipv6_net** | ls:IPv6-Net  | 1  | An IPv6 address range including prefix length.                                                                                                                                               |
-| 18   | **process**  | ls:Process   | 1  | Common properties of an instance of a computer program as executed on an operating system.                                                                                                   |
-| 1027 | **er/**      | er:AP-Target | 1  | Targets defined in the Endpoint Response actuator profile                                                                                                                                    |
+| ID | Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| 3 | **device** | Device | The properties of a device. |
+| 9 | **features** | Features | A set of items such as Action/Target pairs, profiles versions, options that are supported by the Actuator. The Target is used with the query Action to determine an Actuator's capabilities. |
+| 10 | **file** | File | The properties of a file. |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
+| 18 | **process** | Process | Common properties of an instance of a computer program as executed on an operating system. |
 
 #### 2.1.2.2 ER Targets
 The list of common Targets is extended to include the additional Targets defined in this section and referenced with the `er` namespace.
 
 **Table 2.1.2-2. Targets Unique to ER**
 
-**Type: AP-Target (Choice)**
+**_Type: Target (Choice)_**
 
-| ID | Name               | Type           | \# | Description                                                                                                                     |
-|----|--------------------|----------------|----|---------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **registry_entry** | Registry-Entry | 1  | A registry entry applicable to Windows Operating Systems.                                                                       |
-| 2  | **account**        | Account        | 1  | A user account on an endpoint.                                                                                                  |
-| 3  | **service**        | Service        | 1  | A program which is managed and executed by a service host process, where several services may be sharing the same service host. |
+| ID | Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| 1101 | **registry_entry** | Registry-Entry | A registry entry applicable to Windows Operating Systems. |
+| 1102 | **account** | Account | A user account on an endpoint. |
+| 1103 | **service** | Service | A program which is managed and executed by a service host process, where several services may be sharing the same service host. |
+
+#### 2.1.2.3 External Namespace Targets
+The list of external namespace Targets extend the Target list to include Targets from other Actuator Profiles.
+
+**Table 2.1.2-3 Stateless Packet Filter Targets Applicable to ER**
+
+| ID | Name | Type | Description |
+| :--- | :--- | :--- | :--- |
+| 13 | **ipv4_net** | IPv4-Net | An IPv4 address range including CIDR prefix length. |
+| 14 | **ipv6_net** | IPv6-Net | An IPv6 address range including prefix length. |
+
 
 ### 2.1.3 Type Definitions
 
@@ -410,101 +420,93 @@ The list of common Targets is extended to include the additional Targets defined
 
 **Table 2.1.3-1. Registry Entry**
 
-**Type: Registry-Entry (Record)**
+**_Type: Registry-Entry (Record{1..*})_**
 
-| ID | Name      | Type   | \#   | Description                                                                                                         |
-|----|-----------|--------|------|---------------------------------------------------------------------------------------------------------------------|
-| 1 | **key** | String | 0..1 | Specifies the full registry key including the hive. |
-| 2 | **type** | String |  1   | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types). |
-| 3 | **value** | String | 0..1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **key** | String | 0\.\.1 | Specifies the full registry key including the hive. |
+| 2 | **type** | String | 1 | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types). |
+| 3 | **value** | String | 0\.\.1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
-**Type: Account (Map{1..\*})**
+**_Type: Account (Map{1..*})_**
 
-| ID | Name             | Type   | \#   | Description                               |
-|----|------------------|--------|------|-------------------------------------------|
-| 1  | **uid**          | String | 0..1 | The unique identifier of the account.     |
-| 2  | **account_name** | String | 0..1 | The chosen display name of the account.   |
-| 3  | **directory**    | String | 0..1 | The path to the account's home directory. |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **uid** | String | 0\.\.1 | The unique identifier of the account.|
+| 2 | **account_name** | String | 0\.\.1 | The chosen display name of the account. |
+| 3 | **directory** | String | 0\.\.1 | The path to the account's home directory. |
 
 
 **Table 2.1.3-3. Service**
 
-**Type: Service (Map{1..\*})**
+**_Type: Service (Map{1..*})_**
 
-| ID | Name             | Type   | \#   | Description                      |
-|----|------------------|--------|------|----------------------------------|
-| 1  | **name**         | String | 0..1 | The unique name of the service.  |
-| 2  | **display_name** | String | 0..1 | The display name of the service. |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :---: | :--- |
+| 1 | **name** | String | 0\.\.1 | The unique name of the service. |
+| 2 | **display_name** | String | 0\.\.1 | The display name of the service. |
 
 ### 2.1.4 Command Arguments
 Arguments provide additional precision to a Command by including information such as how, when, or where a Command is to be executed. Table 2.1.3-1 summarizes the Command Arguments defined in Version 1.0 of the [[OpenC2-Lang-v1.0]](#openc2-lang-v10) as they relate to ER functionality.
 
 **Table 2.1.4-1. Command Arguments applicable to ER**
 
-**Type: Args (Map{1..\*})**
+**_Type: Args (Map)_**
 
-| ID   | Name                   | Type             | \#   | Description                                                                        |
-|------|------------------------|------------------|------|------------------------------------------------------------------------------------|
-| 1    | **start_time**         | ls:Date-Time     | 0..1 | The specific date/time to initiate the Command                                     |
-| 2    | **stop_time**          | ls:Date-Time     | 0..1 | The specific date/time to terminate the Command                                    |
-| 3    | **duration**           | ls:Duration      | 0..1 | The length of time for an Command to be in effect                                  |
-| 4    | **response_requested** | ls:Response-Type | 0..1 | The type of Response required for the Command: `none`, `ack`, `status`, `complete` |
-| 1027 | **er/**                | er:AP-Args       | 0..1 | Command Arguments for Endpoint Response                                            |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **start_time** | Date-Time | 0..1 | The specific date/time to initiate the Action. |
+| 2 | **stop_time** | Date-Time | 0..1 | The specific date/time to terminate the Action.|
+| 3 | **duration** | Duration | 0..1 | The length of time for an Action to be in effect. |
+| 4 | **response_requested** | Response-Type | 0..1 | The type of Response required for the Action: `none`, `ack`, `status`, `complete`. |
 
 **Table 2.1.4-2. Command Arguments Unique to ER**
 
-**Type: AP-Args (Map{1..\*})**
+**_Type: Args (Map)_**
 
-| ID | Name                    | Type                | \#   | Description                                                                                                                                                       |
-|----|-------------------------|---------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                        |
-| 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                              |
-| 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1201 | **account_status** | Account-Status | 1 | Specifies whether an account shall be enabled or disabled. |
+| 1202 | **device_containment** | Device-Containment | 1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction). |
+| 1203 | **permitted_addresses** | Permitted-Addresses | 1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
 
-**Type: Account-Status (Enumerated)**
+**_Type: Account-Status (Enumerated)_**
 
-| ID | Item         | Description                                                    |
-|----|--------------|----------------------------------------------------------------|
-| 1  | **enabled**  | Enable the account and render it available on the endpoint.    |
-| 2  | **disabled** | Disable the account and render it unavailable on the endpoint. |
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **enabled** | Enable the account and render it available on the endpoint. |
+| 2 | **disabled** | Disable the account and render it unavailable on the endpoint. |
 
-**Type: Device-Containment (Enumerated)**
+**_Type: Device-Containment (Enumerated)_**
 
-| ID | Item                  | Description                                                                                                                                                                                                                                                                  |
-|----|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **network_isolation** | Isolate the endpoint from communicating with other networked entities, typically through relegation to a private VLAN segment and/or port isolation. MAY be combined with the 'permitted_addresses' Argument to allow communication with select IP or domain name addresses. |
-| 2  | **app_restriction**   | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only).                                                                                                                                                              |
-| 3  | **disable_nic**       | Disable the Network Interface Controller(s) on the endpoint.                                                                                                                                                                                                                 |
+| ID | Name | Description |
+| :--- | :--- | :--- |
+| 1 | **network_isolation** | Isolate the endpoint from communicating with other networked entities, typically through relegation to a private VLAN segment and/or port isolation. MAY be combined with the 'permitted_addresses' Argument to allow communication with select IP or domain name addresses. |
+| 2 | **app_restriction** | Restrict the execution of applications to only those that are signed by a trusted party (e.g., Microsoft only). |
+| 3 | **disable_nic** | Disable the Network Interface Controller(s) on the endpoint. |
 
-**Type: Permitted-Addresses (Map{1..\*})**
+**_Type: Permitted-Addresses (Map)_**
 
-| ID | Name            | Type                    | \#   | Description                                                                          |
-|----|-----------------|-------------------------|------|--------------------------------------------------------------------------------------|
-| 1  | **domain_name** | ArrayOf(ls:Domain-Name) | 0..1 | The domain name address(es) the contained device(s) can still communicate with.      |
-| 2  | **ipv4_net**    | ArrayOf(ls:IPv4-Net)    | 0..1 | The IPv4 address(es) or range(s) the contained device(s) can still communicate with. |
-| 3  | **ipv6_net**    | ArrayOf(ls:IPv6-Net)    | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **domain_name** | ArrayOf(Domain-Name) | 0..1 | The domain name address(es) the contained device(s) can still communicate with. |
+| 2 | **ipv4_net** | ArrayOf(IPv4-Net) | 0..1 | The IPv4 address(es) or range(s) the contained device(s) can still communicate with. |
+| 3 | **ipv6_net** | ArrayOf(IPv6-Net) | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
-
-**Type: Actuator (Choice)**
-
-| ID   | Name    | Type             | \# | Description                                            |
-|------|---------|------------------|----|--------------------------------------------------------|
-| 1027 | **er/** | er:AP-Specifiers | 1  | Actuator function and specifiers for Endpoint Response |
 
 The Actuator Specifiers defined in this document are referenced under the `er` namespace.
 
 **Table 2.1.5-1. ER Specifiers**
 
-**Type: AP-Specifiers (Map)**
+**_Type: Specifiers (Map)_**
 
-| ID | Name            | Type        | \#   | Description                                                                                                                                                                     |
-|----|-----------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **hostname**    | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
-| 2  | **named_group** | String      | 0..1 | User defined collection of devices                                                                                                                                              |
+| ID | Name | Type | # | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | **hostname** | Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
 
 
 ## 2.2 OpenC2 Response Components
@@ -526,17 +528,6 @@ Table 2.2.1-1 lists the Response Status Codes defined in the OpenC2 Language Spe
 | 400 | Bad Request. Unable to process Command, parsing error. |
 | 500 | Internal Error. |
 | 501 | Not Implemented. For "response_requested" value "complete", one of the following MAY apply:<br> * Target not supported<br> * Option not supported<br> * Command not supported |
-
-**Table 2.2.2-1. Results applicable to ER**
-
-**Type: Results (Map{1..\*})**
-
-| ID | Name           | Type              | \#    | Description                                                         |
-|----|----------------|-------------------|-------|---------------------------------------------------------------------|
-| 1  | **versions**   | ls:Version unique | 0..\* | List of OpenC2 language versions supported by this Consumer         |
-| 2  | **profiles**   | ls:Nsid unique    | 0..\* | List of profiles supported by this Consumer                         |
-| 3  | **pairs**      | Action-Targets    | 0..1  | List of targets applicable to each supported Action                 |
-| 4  | **rate_limit** | Number{0.0..\*}   | 0..1  | Maximum number of requests per minute supported by design or policy |
 
 ## 2.3 OpenC2 Commands
 
