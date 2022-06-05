@@ -414,9 +414,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name      | Type   | \#   | Description                                                                                                         |
 |----|-----------|--------|------|---------------------------------------------------------------------------------------------------------------------|
-| 1 | **key** | String | 0..1 | Specifies the full registry key including the hive. |
-| 2 | **type** | String |  1   | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types). |
-| 3 | **value** | String | 0..1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
+| 1 | **key**    | String | 0..1 | Specifies the full registry key including the hive.                                                                 |
+| 2 | **type**   | String |  1   | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types).                               |
+| 3 | **value**  | String | 0..1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
