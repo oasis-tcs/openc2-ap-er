@@ -546,17 +546,17 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
-|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
-| **device** 		     |     |     | valid |valid|     |valid| valid |     |      |      |      |
-| **features** 	  	 |valid|     |       |     |     |     |       |     |      |      |      |
-| **file** 			     |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
-| **ipv4_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
-| **ipv6_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
-| **process** 		   |     |     |       |     |     |valid| valid |     |      |      |      |
-| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
-| **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
-| **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
+|                      |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
+|:---------------------|:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **device** 		        |     |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 	  	    |valid   |     |       |     |     |     |       |     |      |      |      |
+| **file** 			         |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
+| **ipv4_net**		       |     |valid|  |valid|     |     |       |valid|      |      |      |
+| **ipv6_net**		       |     |valid|       |valid|     |     |       |valid|      |      |      |
+| **process** 		       |     |     |       |     |     |valid| valid |     |      |      |      |
+| **registry_entry**   |     |     |       |     |     |     |       |valid|      |valid |valid |
+| **account** 		       |     |     |       |     |     |     |       |valid|      |      |      |
+| **service** 		       |     |     |       |     |     |valid|       |     |      |      |valid |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
@@ -1192,7 +1192,9 @@ This section will summarize and provide examples of OpenC2 Commands as they pert
   "action": "deny",
   "target": {
     "file": {
-      "hash": "0a73291ab5607aef7db23863cf8e72f55bcb3c273bb47f00edf011515aeb5894"
+      "hashes": {
+        "sha256": "0a73291ab5607aef7db23863cf8e72f55bcb3c273bb47f00edf011515aeb5894"
+      }
     }
   },
   "actuator": {
@@ -1241,13 +1243,14 @@ Case Three: the Command failed because an Argument was not supported.
   },
   "args": {
     "er": {
-      "containment":"network_isolation"
+      "device_containment":"network_isolation"
     }
    },
   "actuator": {
     "er": {}
   }
 }
+
 ```
 
 ### A.1.X Network isolate an endpoint, but allow communication with selected IP and domain name addresses
@@ -1285,11 +1288,13 @@ Case Three: the Command failed because an Argument was not supported.
 {
   "action": "allow",
   "target": {
-    "device": {}
+    "device": {
+      "hostname": "DESKTOP-123ABC"
+    }
   },
   "args": {
     "er": {
-      "containment":"app_restriction"
+      "device_containment":"app_restriction"
     }
    },
   "actuator": {
@@ -1310,8 +1315,10 @@ Case Three: the Command failed because an Argument was not supported.
 {
   "action": "set",
   "target": {
-    "account": {
-       "uid":"S-1-5-21-7375663-6890924511-1272660413-2944159"
+    "er": {
+      "account": {
+         "uid":"S-1-5-21-7375663-6890924511-1272660413-2944159"
+      }
     }
   },
   "args": {
@@ -1321,7 +1328,7 @@ Case Three: the Command failed because an Argument was not supported.
    },
   "actuator": {
     "er": {
-       "hostname": "edr_oslo"
+       "hostname": "edr-oslo"
     }
   }
 }
@@ -1335,8 +1342,10 @@ Case Three: the Command failed because an Argument was not supported.
 {
   "action": "set",
   "target": {
-    "account": {
-       "account_name":"sql_admin"
+    "er": {
+      "account": {
+        "account_name":"sql_admin"
+      }
     }
   },
   "args": {
@@ -1410,17 +1419,17 @@ The following individuals have participated in the creation of this specificatio
 
 **OpenC2 TC Members:**
 
-| First Name | Last Name | Company |
-| :--- | :--- | :--- |
-Joe | Brule | National Security Agency
-Alex | Everett | University of North Carolina at Chapel Hill
-Martin | Evandt | University of Oslo
-David | Kemp | National Security Agency
-David | Lemire | G2
-Vasileios | Mavroeidis | University of Oslo
-Michael | Rosa | National Security Agency
-Duncan | Sparrell | sFractal Consulting LLC
-Russel | Warren | IBM
+| First Name | Last Name  | Company                                     |
+|:-----------|:-----------|:--------------------------------------------|
+| Joe        | Brule      | National Security Agency                    |
+| Alex       | Everett    | University of North Carolina at Chapel Hill |
+| Martin     | Evandt     | University of Oslo                          |
+| David      | Kemp       | National Security Agency                    |
+| David      | Lemire     | G2                                          |
+| Vasileios  | Mavroeidis | University of Oslo                          |
+| Michael    | Rosa       | National Security Agency                    |
+| Duncan     | Sparrell   | sFractal Consulting LLC                     |
+| Russel     | Warren     | IBM                                         |
 
 -------
 
