@@ -414,9 +414,9 @@ The list of common Targets is extended to include the additional Targets defined
 
 | ID | Name      | Type   | \#   | Description                                                                                                         |
 |----|-----------|--------|------|---------------------------------------------------------------------------------------------------------------------|
-| 1 | **key**    | String | 0..1 | Specifies the full registry key including the hive.                                                                 |
-| 2 | **type**   | String |  1   | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types).                               |
-| 3 | **value**  | String | 0..1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
+| 1  | **key**   | String | 0..1 | Specifies the full registry key including the hive.                                                                 |
+| 2  | **type**  | String | 1    | The registry value type as defined in the [[Winnt.h header]](#winnth-registry-types).                               |
+| 3  | **value** | String | 0..1 | The value of the registry key. The Actuator is responsible to format the value in accordance with the defined type. |
 
 **Table 2.1.3-2. Account**
 
@@ -501,11 +501,9 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 
 **Type: AP-Specifiers (Map)**
 
-| ID | Name            | Type        | \#   | Description                                                                                                                                                                     |
-|----|-----------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **hostname**    | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
-| 2  | **named_group** | String      | 0..1 | User defined collection of devices                                                                                                                                              |
-
+| ID | Name         | Type        | \#   | Description                                                                                                                                                                     |
+|----|--------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **hostname** | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
@@ -1298,9 +1296,7 @@ Case Three: the Command failed because an Argument was not supported.
     }
    },
   "actuator": {
-    "er": {
-       "named_group":"accounting"
-    }
+    "er": {}
   }
 }
 ```
@@ -1354,9 +1350,7 @@ Case Three: the Command failed because an Argument was not supported.
     }
    },
   "actuator": {
-    "er": {
-       "named_group":"production"
-    }
+    "er": {}
   }
 }
 ```
