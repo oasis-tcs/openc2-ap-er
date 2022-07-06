@@ -192,7 +192,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## 1.3 Glossary
 
 ### 1.3.1 Definitions of terms
-Sensor: A data capturing utility within the context of an EDR.
+* **Agent**: A utility or suite of utilities with the capability to carry out EDR response functionalities on devices where the Agent is present and operational.
+* **Endpoint**: A computing device capable of executing code and communicating with networks (e.g., desktop or laptop computers, servers, mobile devices). Use of this term within this Actuator Profile implies that the Endpoint has an Agent present and operational on it.
 
 ### 1.3.2 Acronyms and abbreviations
 _This section is non-normative_
@@ -1097,7 +1098,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
-  
+
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
 * 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
