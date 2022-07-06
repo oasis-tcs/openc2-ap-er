@@ -1015,7 +1015,7 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
 * 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.1.12 Conformance Clause 12: Process Producer
+### 3.1.12 Conformance Clause 12: Stop Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
@@ -1127,7 +1127,7 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
 * 3.2.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.2.12 Conformance Clause 28: Process Consumer
+### 3.2.12 Conformance Clause 28: Stop Process Consumer
 An OpenC2 Producer satisfies 'Process Consumer' conformance if:
 * 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
