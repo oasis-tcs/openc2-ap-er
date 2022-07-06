@@ -968,9 +968,25 @@ An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
 * 3.1.1.5 **MUST** be conformant with Version 1.0 of the OpenC2 Language Specification
 * 3.1.1.6 **MUST** implement the 'query features' Command in accordance with the normative text provided in Version 1.0 of the OpenC2 Language Specification
 * 3.1.1.7 **MUST** implement the 'response_requested' Command Argument as a valid option for any Command
-* * 3.1.1.8 **MUST** conform to at least one of the following conformance clauses in this specification:
+* 3.1.1.8 **MAY** implement the 'er:Downstream-Device' Command Argument as a valid option for any Command not included in section [Section 3.1.Z](#31Z-conformance-clause-zdownstream-device-consumers)
+* * 3.1.1.9 **MUST** conform to at least one of the following conformance clauses in this specification:
    * TBD
    * TBD
+
+### 3.1.Z Conformance Clause Z: Downstream Device Consumers<!-- 'Z' is temporary to avoid having to shift the whole list-->
+An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
+* 3.1.Z.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.Z.2 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.1.Z.3 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
+* 3.1.Z.4 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.1.Z.5 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.1.Z.6 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.Z.7 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set er:registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry)) of this specification
+* 3.1.Z.8 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'create er:registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
+* 3.1.Z.9 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'delete er:registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.1.Z.10 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set er:account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.1.Z.11 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'stop er:service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
+* 3.1.Z.12 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'delete er:service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
 
 ### 3.1.2 Conformance Clause 2: Contain Device Producer
 An OpenC2 Producer satisfies 'Contain Device Producer' conformance if:
@@ -1015,7 +1031,7 @@ An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
 * 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 * 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
-* 3.1.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.1.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
@@ -1033,19 +1049,19 @@ An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
 An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
 * 3.1.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.1.10.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
 
 ### 3.1.11 Conformance Clause 11: Set IPv6 Net Producer
 An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
 * 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.1.11.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.1.12 Conformance Clause 12: Process Producer
+### 3.1.12 Conformance Clause 12: Stop Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
-* 3.1.12.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section E.F.G.H](#EFGH-) of this specification
+* 3.1.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.12.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
@@ -1053,11 +1069,13 @@ An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
 * 3.1.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry) of this specification
 * 3.1.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
 * 3.1.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.1.13.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 ### 3.1.14 Conformance Clause 14: Account Producer
 An OpenC2 Producer satisfies 'Account Producer' conformance if:
 * 3.1.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.1.14.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
 
 ### 3.1.15 Conformance Clause 15: Account Status Producers
 An OpenC2 Producer satisfies 'Account-Status Producers' conformance if:
@@ -1069,6 +1087,7 @@ An OpenC2 Producer satisfies 'Service Producer' conformance if:
 * 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
 * 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
+* 3.1.16.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 
 ## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
@@ -1109,6 +1128,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.2.Y.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
 
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
@@ -1131,6 +1151,7 @@ An OpenC2 Producer satisfies 'Contain File Consumer' conformance if:
 * 3.2.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 * 3.2.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.2.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 
 ### 3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Consumer' conformance if:
@@ -1148,18 +1169,19 @@ An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Consumer' conformance if:
 An OpenC2 Producer satisfies 'Set IPv4 Net Consumer' conformance if:
 * 3.2.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.2.10.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
 
 ### 3.2.11 Conformance Clause 27: Set IPv6 Net Consumer
 An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
 * 3.2.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.2.11.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.2.12 Conformance Clause 28: Process Consumer
+### 3.2.12 Conformance Clause 28: Stop Process Consumer
 An OpenC2 Producer satisfies 'Process Consumer' conformance if:
 * 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.2.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.2.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.2.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.2.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.2.12.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.2.13 Conformance Clause 29: Registry Entry Consumer
 An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
@@ -1167,11 +1189,13 @@ An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
 * 3.2.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry) of this specification
 * 3.2.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
 * 3.2.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.2.13.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 ### 3.2.14 Conformance Clause 30: Account Consumer
 An OpenC2 Producer satisfies 'Account Consumer' conformance if:
 * 3.2.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.2.14.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
 
 ### 3.2.15 Conformance Clause 31: Account Status Consumer
 An OpenC2 Producer satisfies 'Account Status Consumer' conformance if:
@@ -1183,6 +1207,7 @@ An OpenC2 Producer satisfies 'Service Consumer' conformance if:
 * 3.2.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
 * 3.2.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
+* 3.2.16.2 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 -------
 # Annex A: Sample Commands
