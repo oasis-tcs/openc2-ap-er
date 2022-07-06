@@ -504,6 +504,7 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 | ID | Name         | Type        | \#   | Description                                                                                                                                                                     |
 |----|--------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1  | **hostname** | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
+| 2  | **tenant_id  | ls:String   | 0..1 | Specifies a tenant ID for cloud environments where several separate Actuators share the same hostname.                                                                          |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
@@ -1097,7 +1098,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
-  
+
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
 * 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
