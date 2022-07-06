@@ -359,6 +359,7 @@ Table 2.1.1-1 presents the OpenC2 Actions defined in Version 1.0 of the Language
 
 | ID | Item        | Description                                                                                                                               |
 |----|-------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **scan**    | Initiate a scan for binaries classified as malicious.                                                                                     |
 | 3  | **query**   | Query the ER actuator for a list of available features.                                                                                   |
 | 6  | **deny**    | Deny a process or service from being executed on the endpoint.                                                                            |
 | 7  | **contain** | Isolate a device from communicating with other devices on a network, quarantine a file.                                                   |
@@ -464,6 +465,8 @@ Arguments provide additional precision to a Command by including information suc
 | 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                        |
 | 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                              |
 | 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
+| 4  | **scan_depth**           | Scan-Depth           | 0..1 | Specifies which type of scan to perform on a device.                                                                                                              |
+| 5  | **periodc_scan**        | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                    |
 
 **Type: Account-Status (Enumerated)**
 
@@ -487,6 +490,20 @@ Arguments provide additional precision to a Command by including information suc
 | 1  | **domain_name** | ArrayOf(ls:Domain-Name) | 0..1 | The domain name address(es) the contained device(s) can still communicate with.      |
 | 2  | **ipv4_net**    | ArrayOf(ls:IPv4-Net)    | 0..1 | The IPv4 address(es) or range(s) the contained device(s) can still communicate with. |
 | 3  | **ipv6_net**    | ArrayOf(ls:IPv6-Net)    | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
+
+**Type: Scan-Depth (Enumerated)**
+
+| ID | Item                  | Description                            |
+|----|-----------------------|----------------------------------------|
+| 1  | **shallow**           | Initiate a shallow (A.K.A quick) scan. |
+| 2  | **deep**              | Initiate a deep (A.K.A full) scan.     |
+
+**Type: Periodic-Scan (Enumerated)**
+
+| ID | Item         | Description             |
+|----|--------------|-------------------------|
+| 1  | **enabled**  | Enable periodic scans   |
+| 2  | **disabled** | Disable periodic scans. |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -566,13 +583,51 @@ A Command where the Target portion of the Action/Target pair is not specified (w
 
 **Table 2.3-2. Command Arguments Matrix**
 
-|                         |**deny _target_** |**contain device**             |**contain _target_**         |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_**         |**create _target_**   |**delete _target_**   |
-|:---                     |:---:             |:---:                          |:---:                        |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:                       |:---:                 |:---:                 |
-| **response_requested**  |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)        |[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)        |[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
-| **device_containment**  |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
-| **account_status**      |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
-| **permitted_addresses** |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+|                         |**scan device**             |**deny _target_** |**contain device**             |**contain _target_**         |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_**         |**create _target_**   |**delete _target_**   |
+|:---                     |:---:                       |:---:             |:---:                          |:---:                        |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:                       |:---:                 |:---:                 |
+| **response_requested**  |[2.3.X.1](#2331-scan-device)|[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)        |[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)        |[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
+| **device_containment**  |                            |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **account_status**      |                            |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
+| **permitted_addresses** |                            |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **scan_depth**          |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **periodc_scan**        |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
 
+<!--2.3.X instead of 2.3.1 is temporary and to avoid shifting the whole list until all Commands are present in the PR.
+Scan is put at the top of this list due to it being the top-most in table '2.1.1 Actions' both here and in the LS-->
+### 2.3.X Scan
+
+OpenC2 Consumers that receive a 'scan' Command:
+
+* but cannot parse or process the Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 400
+    * MAY respond with the 500 status code
+* but do not support the 'scan' Command
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with "Command not supported" in the status text
+    * MAY respond with status code 500
+
+#### 2.3.X.1 Scan device
+Scan a device for binaries classified as malicious.
+
+OpenC2 Producers that send 'scan device' Commands:
+
+* MAY populate the Command Arguments field with a 'scan_depth' argument
+* MAY populate the Command Arguments field with a 'periodc_scan' argument
+
+OpenC2 Consumers that receive 'scan device' Commands:
+
+* but do not support the 'scan_depth' argument
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with "Argument not supported" in the status Text
+    * MAY respond with status code 500
+* but do not support the 'periodc_scan' argument
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with status code 501
+    * SHOULD respond with "Argument not supported" in the status Text
+    * MAY respond with status code 500
 
 ### 2.3.1 Query
 The valid Target type, associated Specifiers, and Options are summarized in [Section 2.3.3.1](#2331-query-features).
