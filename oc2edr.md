@@ -192,7 +192,8 @@ The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "S
 ## 1.3 Glossary
 
 ### 1.3.1 Definitions of terms
-Sensor: A data capturing utility within the context of an EDR.
+* **Agent**: A utility or suite of utilities with the capability to carry out EDR response functionalities on devices where the Agent is present and operational.
+* **Endpoint**: A computing device capable of executing code and communicating with networks (e.g., desktop or laptop computers, servers, mobile devices). Use of this term within this Actuator Profile implies that the Endpoint has an Agent present and operational on it.
 
 ### 1.3.2 Acronyms and abbreviations
 _This section is non-normative_
@@ -397,6 +398,7 @@ The list of common Targets is extended to include the additional Targets defined
 
 **Table 2.1.2-2. Targets Unique to ER**
 
+
 **Type: AP-Target (Choice)**
 
 | ID | Name               | Type           | \# | Description                                                                                                                     |
@@ -521,6 +523,7 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 | ID | Name         | Type        | \#   | Description                                                                                                                                                                     |
 |----|--------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1  | **hostname** | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
+| 2  | **tenant_id  | ls:String   | 0..1 | Specifies a tenant ID for cloud environments where several separate Actuators share the same hostname.                                                                          |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
@@ -561,17 +564,18 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 
 **Table 2.3-1. Command Matrix**
 
-|                      |scan |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
-|:---------------------|:---:|:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
-| **device** 		        |valid|     |     | valid |valid|     |valid| valid |     |      |      |      |
-| **features** 	  	    |     |valid   |     |       |     |     |     |       |     |      |      |      |
-| **file** 			         |     |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
-| **ipv4_net**		       |     |     |valid|  |valid|     |     |       |valid|      |      |      |
-| **ipv6_net**		       |     |     |valid|       |valid|     |     |       |valid|      |      |      |
-| **process** 		       |     |     |     |       |     |     |valid| valid |     |      |      |      |
-| **registry_entry**   |     |     |     |       |     |     |     |       |valid|      |valid |valid |
-| **account** 		       |     |     |     |       |     |     |     |       |valid|      |      |      |
-| **service** 		       |     |     |     |       |     |     |valid|       |     |      |      |valid |
+|                    |query|deny |contain|allow|start|stop |restart|set  |update|create|delete|
+|:---                |:---:|:---:|:---:  |:---:|:---:|:---:| :---: |:---:|:---: |:---: |:---: |
+| **domain_name**		 |     |valid|       |valid|     |     |       |     |      |      |      |
+| **device** 		     |     |     | valid |valid|     |valid| valid |     |      |      |      |
+| **features** 	  	 |valid|     |       |     |     |     |       |     |      |      |      |
+| **file** 			     |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
+| **ipv4_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
+| **ipv6_net**		   |     |valid|       |valid|     |     |       |valid|      |      |      |
+| **process** 		   |     |     |       |     |     |valid| valid |     |      |      |      |
+| **registry_entry** |     |     |       |     |     |     |       |valid|      |valid |valid |
+| **account** 		   |     |     |       |     |     |     |       |valid|      |      |      |
+| **service** 		   |     |     |       |     |     |valid|       |     |      |      |valid |
 
 Table 2.3-2 defines the Command Arguments that are allowed for a particular Command by the ER profile. A Command (the top row in Table 2.3-2) paired with an Argument (the first column in Table 2.3-2) defines an allowable combination. The subsection identified at the intersection of the Command/Argument provides details applicable to each Command as influenced by the Argument.
 
@@ -645,6 +649,17 @@ OpenC2 Consumers that receive a 'deny' Command:
     * SHOULD respond with "Command not supported" in the status text
     * MAY respond with status code 500
 
+#### 2.3.2.X Deny domain_name
+Prevents an endpoint from connecting to a Domain Name address.
+
+OpenC2 Consumers that receive a 'deny domain_name' Command:
+
+* but do not implement the 'deny domain_name' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
 #### 2.3.2.1 Deny file
 Prevents the execution of a file.
 
@@ -654,10 +669,27 @@ OpenC2 Consumers that receive a 'deny file' Command:
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
 
-#### 2.3.2.2 slpf:Deny ipv4 net
-Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.2.3 slpf:Deny ipv6 net
-Must be implemented in accordance with [SLPF Deny Command](#SLPF-Deny) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.2.2 Deny ipv4_net
+Prevents an endpoint from connecting to an IPv4 address.
+
+OpenC2 Consumers that receive a 'deny ipv4_net' Command:
+
+* but do not implement the 'deny ipv4_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
+#### 2.3.2.3 Deny ipv6_net
+Prevents an endpoint from connecting to an IPv6 address.
+
+OpenC2 Consumers that receive a 'deny ipv6_net' Command:
+
+* but do not implement the 'deny ipv6_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 ### 2.3.3 Contain
 OpenC2 Consumers that receive a 'contain' Command:
@@ -715,6 +747,16 @@ OpenC2 Consumers that receive a 'allow' Command:
     * SHOULD respond with "Command not supported" in the status text
     * MAY respond with status code 500
 
+#### 2.3.4.X Allow domain_name
+Allows an endpoint to connect to a Domain Name address.
+
+OpenC2 Consumers that receive a 'allow domain_name' Command:
+
+* but do not implement the 'allow domain_name' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 #### 2.3.4.1 Allow device
 Removes a device from containment.
@@ -734,10 +776,27 @@ OpenC2 Consumers that receive a 'allow file' Command:
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
 
-#### 2.3.4.3 slpf:Allow ipv4 net
-Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
-#### 2.3.4.4 slpf:Allow ipv6 net
-Must be implemented in accordance with [SLPF Allow Command](#SLPF-Allow) as well as the [SLPF Conformance Statements](#SLPF-Conformance).
+#### 2.3.4.3 Allow ipv4_net
+Allows an endpoint to connect to an IPv4 address.
+
+OpenC2 Consumers that receive a 'allow ipv4_net' Command:
+
+* but do not implement the 'allow ipv4_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
+
+#### 2.3.4.4 Allow ipv6_net
+Allows an endpoint to connect to an IPv6 address.
+
+OpenC2 Consumers that receive a 'allow ipv6_net' Command:
+
+* but do not implement the 'allow ipv6_net' Command:
+    * MUST NOT respond with a OK/200
+    * SHOULD respond with the 501 Response code
+    * SHOULD respond with 'Target type not supported' in the status text
+    * MAY respond with the 500 status code
 
 ### 2.3.5 Start
 OpenC2 Consumers that receive a 'start' Command:
@@ -836,19 +895,6 @@ OpenC2 Consumers that receive a 'restart device' Command:
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access device" in the status text
-
-#### 2.3.7.2 Restart process
-Restarts a process. A 'process' Target MUST contain at least one property.
-
-OpenC2 Consumers that receive 'restart process' commands
-* but the Command Target does not contain at least one property
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with "Process Target does not have any properties populated" in the status text
-* but cannot access the process specified by the populated propertie(s)
-    * MUST respond with status code 500
-    * SHOULD respond with "Cannot access process" in the status text
 
 ### 2.3.8 Set
 OpenC2 Consumers that receive a 'set' Command:
@@ -1063,15 +1109,11 @@ An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
-* 3.1.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.1.8.2 **MUST** implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.1.8.3 **MUST** implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.1.9 Conformance Clause 9: Allow/Deny IPv6 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
-* 3.1.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.1.9.2 **MUST** implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.1.9.3 **MUST** implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.1.10 Conformance Clause 10: Set IPv4 Net Producer
 An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
@@ -1083,12 +1125,10 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
 * 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.1.12 Conformance Clause 12: Process Producer
+### 3.1.12 Conformance Clause 12: Stop Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.1.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
@@ -1177,15 +1217,11 @@ An OpenC2 Producer satisfies 'Contain File Consumer' conformance if:
 
 ### 3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Consumer' conformance if:
-* 3.2.8.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.2.8.2 **MUST** implement the 'allow ipv4_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.2.8.3 **MUST** implement the 'deny ipv4_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.2.9 Conformance Clause 25: Allow/Deny IPv6 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Consumer' conformance if:
-* 3.2.9.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of [the conformance section of the Stateless Packet Filter specification](#slpf-conformance)
-* 3.2.9.2 **MUST** implement the 'allow ipv6_net' Command in accordance with Section [2.3.1 of the Stateless Packet Filter specification](#slpf-allow)
-* 3.2.9.3 **MUST** implement the 'deny ipv6_net' Command in accordance with Section [2.3.2 of the Stateless Packet Filter specification](#slpf-deny)
+* TBA
 
 ### 3.2.10 Conformance Clause 26: Set IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Set IPv4 Net Consumer' conformance if:
@@ -1197,12 +1233,10 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
 * 3.2.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
-### 3.2.12 Conformance Clause 28: Process Consumer
+### 3.2.12 Conformance Clause 28: Stop Process Consumer
 An OpenC2 Producer satisfies 'Process Consumer' conformance if:
 * 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.2.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.2.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.2.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.2.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.2.13 Conformance Clause 29: Registry Entry Consumer
 An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
@@ -1440,14 +1474,6 @@ _Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by
 ###### [Winnt.h-registry-types]
 _Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
 
-###### [SLPF-Deny]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#232-deny
-
-###### [SLPF-Allow]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#231-allow
-
-###### [SLPF-Conformance]
-https://github.com/oasis-tcs/openc2-apsc-stateless-packet-filter/blob/master/oc2slpf.md#3-conformance-statements
 <!--
 ## A.2 Informative References
 
