@@ -648,11 +648,20 @@ OpenC2 Consumers that receive a 'contain device' Command:
 #### 2.3.3.2 Contain file
 Puts a file into quarantine, rendering it inaccessible to the user of the machine and unable to execute on the endpoint.
 
+OpenC2 Producers that send 'contain file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 OpenC2 Consumers that receive a 'contain file' Command:
 
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' Actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
@@ -709,10 +718,19 @@ OpenC2 Consumers that receive a 'start' Command:
 #### 2.3.5.1 Start file
 Instructs the Actuator to execute a file.
 
+OpenC2 Producers that send 'start file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 OpenC2 Consumers that receive a 'start file' Commands:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.6 Stop
 OpenC2 Consumers that receive a 'stop' Command:
@@ -741,6 +759,7 @@ Stops an active process. A 'process' Target MUST contain at least one property.
 
 OpenC2 Producers that send 'stop process' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'stop process' commands
 * but the Command Target does not contain at least one property
@@ -751,12 +770,18 @@ OpenC2 Consumers that receive 'stop process' commands
 * but cannot access the process specified by the populated propertie(s)
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access process" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.6.3 Stop er:service
 Stops a running service and removes it from its service host process.
 
 OpenC2 Producers that send 'stop er:service' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'stop er:service' commands
 * but the Command Target does not contain at least one property
@@ -768,6 +793,11 @@ OpenC2 Consumers that receive 'stop er:service' commands
     * MUST respond with status code 500
     * MAY respond with 'Cannot stop service' in the status text
     * SHOULD respond with a status text detailing why the service could not be deleted
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.7 Restart
 OpenC2 Consumers that receive a 'restart' Command:
@@ -821,34 +851,46 @@ OpenC2 Consumers that receive a 'set' Command:
 Sets the IPv4 address of the endpoint to the specified Target value.
 
 OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
+* MUST include an IPv4 address without the CIDR prefix-length, or have it set to 32
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
-OpenC2 Consumers thet receive 'set ipv4_net' Commands
+OpenC2 Consumers that receive 'set ipv4_net' Commands
 * but the CIDR prefix-length is set to a value other than 32
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "IPv4 address not set to a single address" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.8.2 Set ipv6_net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
 OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the prefix-length, or have it set to 128
+* MUST include an IPv4 address without the prefix-length, or have it set to 128
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
-OpenC2 Consumers thet receive a 'set ipv4_net' Command:
+OpenC2 Consumers that receive a 'set ipv4_net' Command:
 * but the CIDR prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "IPv6 address not set to a single address" in the status text
-
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.8.3 Set er:registry_entry
 Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
 OpenC2 Producers that send 'set er:registry_entry' Commands:
 * MUST populate the 'type' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a'set er:registry_entry' Command:
 * but the 'type' property is not populated
@@ -861,6 +903,11 @@ OpenC2 Consumers that receive a'set er:registry_entry' Command:
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 #### 2.3.8.4 Set er:account
@@ -868,6 +915,7 @@ Sets the status of the account to be either enabled or disabled. The producer an
 
 OpenC2 Producers that send 'set er:account' Commands:
 * MUST populate the Command Arguments field with a Account-Status argument
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a 'set er:account' Command:
 * but the Command Arguments field is not populated with a Account-Status argument
@@ -878,6 +926,11 @@ OpenC2 Consumers that receive a 'set er:account' Command:
 * but cannot access the account specified in the er:account Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access account" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.9 Update
 #### 2.3.9.1 Update file
@@ -892,11 +945,17 @@ OpenC2 Producers that send 'create er:registry_entry' Commands:
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a 'create er:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.11 Delete
 OpenC2 Consumers that receive a 'delete' Command:
@@ -914,10 +973,19 @@ OpenC2 Consumers that receive a 'delete' Command:
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
 
-OpenC2 Consumers that receive a'delete file' Command:
+OpenC2 Producers that send 'delete file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
+OpenC2 Consumers that receive a 'delete file' Command:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.11.2 Delete er:registry_entry
 Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
@@ -927,11 +995,18 @@ OpenC2 Producers that send 'create er:registry_entry' Commands:
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 
 OpenC2 Consumers that receive a 'create er:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 #### 2.3.11.3 Delete er:service
@@ -939,6 +1014,7 @@ Deletes a service from the endpoint.
 
 OpenC2 Producers that send 'delete er:service' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'delete er:service' commands
 * but the Command Target does not contain at least one property
@@ -950,6 +1026,11 @@ OpenC2 Consumers that receive 'delete er:service' commands
     * MUST respond with status code 500
     * MAY respond with 'Cannot delete service' in the status text
     * SHOULD respond with a status text detailing why the service could not be deleted
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 # 3 Conformance statements
