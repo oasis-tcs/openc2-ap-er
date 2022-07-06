@@ -457,11 +457,12 @@ Arguments provide additional precision to a Command by including information suc
 
 **Type: AP-Args (Map{1..\*})**
 
-| ID | Name                    | Type                | \#   | Description                                                                                                                                                       |
-|----|-------------------------|---------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                        |
-| 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                              |
-| 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
+| ID | Name                    | Type                | \#   | Description                                                                                                                                                                                                                                                                              |
+|----|-------------------------|---------------------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                                                                                                                                               |
+| 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                                                                                                                                                     |
+| 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'.                                                                                                                        |
+| 6  | **downstream_device**   | Downstream-Device   | 0..1 | Specifies a single Endpoint or group of Endpoints on which a Command is to be performed. MUST be included for Commands where the Target field is populated by types other than 'device' and the Command is meant to be performed on a single Endpoint or limited selection of Endpoints. |
 
 **Type: Account-Status (Enumerated)**
 
@@ -485,6 +486,13 @@ Arguments provide additional precision to a Command by including information suc
 | 1  | **domain_name** | ArrayOf(ls:Domain-Name) | 0..1 | The domain name address(es) the contained device(s) can still communicate with.      |
 | 2  | **ipv4_net**    | ArrayOf(ls:IPv4-Net)    | 0..1 | The IPv4 address(es) or range(s) the contained device(s) can still communicate with. |
 | 3  | **ipv6_net**    | ArrayOf(ls:IPv6-Net)    | 0..1 | The IPv6 address(es) or range(s) the contained device(s) can still communicate with. |
+
+**Type: Downstream-Device (Map{1..\*})**
+
+| ID | Name              | Type               | \#   | Description                                                                                   |
+|----|-------------------|--------------------|------|-----------------------------------------------------------------------------------------------|
+| 1  | **devices**       | ArrayOf(ls:Device) | 0..1 | One or more Endpoint on which the associated Command is to be performed.                      |
+| 2  | **device_groups** | ArrayOf(ls:String) | 0..1 | One or more defined groups of Endpoints on which the associated Command is to be performed.   |
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -562,12 +570,13 @@ A Command where the Target portion of the Action/Target pair is not specified (w
 
 **Table 2.3-2. Command Arguments Matrix**
 
-|                         |**deny _target_** |**contain device**             |**contain _target_**         |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_**         |**create _target_**   |**delete _target_**   |
-|:---                     |:---:             |:---:                          |:---:                        |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:                       |:---:                 |:---:                 |
-| **response_requested**  |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)        |[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)        |[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
-| **device_containment**  |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
-| **account_status**      |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
-| **permitted_addresses** |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+|                         |**deny _target_** |**contain device**             |**contain _target_** |**allow _target_** |**start _target_** |**stop _target_** |**restart _target_** |**set er:account**            |**set _target_** |**update _target_** |**create _target_**   |**delete _target_**   |
+|:---                     |:---:             |:---:                          |:---:                |:---:              |:---:              |:---:             |:---:                |:---:                         |:---:            |:---:               |:---:                 |:---:                 |
+| **response_requested**  |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)|[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)|[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
+| **device_containment**  |                  |[2.3.3.1](#2331-contain-device)|                     |                   |                   |                  |                     |                              |                 |                    |                      |                      |
+| **account_status**      |                  |                               |                     |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                    |                      |                      |
+| **permitted_addresses** |                  |[2.3.3.1](#2331-contain-device)|                     |                   |                   |                  |                     |                              |                 |                    |                      |                      |
+| **downstream_device**   |[2.3.2](#232-deny)|[2.3.3.1](#2331-contain-device)|[2.3.3](#233-contain)|[2.3.4](#234-allow)|[2.3.5](#235-start)|[2.3.6](#236-stop)|[2.3.7](#237-restart)|[2.3.8.4](#2384-set-eraccount)|[2.3.8](#238-set)|[2.3.9](#239-update)|[2.3.10](#2310-create)|[2.3.11](#2311-delete)|
 
 
 ### 2.3.1 Query
@@ -983,6 +992,7 @@ An OpenC2 Producer satisfies 'Permitted-Addresses Producer' conformance if:
 An OpenC2 Producer satisfies 'Start File Producer' conformance if:
 * 3.1.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.1.Y.2 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
 
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
@@ -1005,6 +1015,7 @@ An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
 * 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 * 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.1.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
@@ -1034,6 +1045,7 @@ An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
 * 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 * 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.1.12.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section E.F.G.H](#EFGH-) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
@@ -1097,7 +1109,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
-  
+
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
 * 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
