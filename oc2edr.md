@@ -466,7 +466,7 @@ Arguments provide additional precision to a Command by including information suc
 | 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                              |
 | 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
 | 4  | **scan_depth**           | Scan-Depth           | 0..1 | Specifies which type of scan to perform on a device.                                                                                                              |
-| 5  | **periodc_scan**        | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                    |
+| 5  | **periodic_scan**        | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                    |
 
 **Type: Account-Status (Enumerated)**
 
@@ -590,7 +590,7 @@ A Command where the Target portion of the Action/Target pair is not specified (w
 | **account_status**      |                            |                  |                               |                             |                   |                   |                  |                     |[2.3.8.4](#2384-set-eraccount)|                 |                            |                      |                      |
 | **permitted_addresses** |                            |                  |[2.3.3.1](#2331-contain-device)|                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
 | **scan_depth**          |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
-| **periodc_scan**        |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
+| **periodic_scan**        |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
 
 <!--2.3.X instead of 2.3.1 is temporary and to avoid shifting the whole list until all Commands are present in the PR.
 Scan is put at the top of this list due to it being the top-most in table '2.1.1 Actions' both here and in the LS-->
@@ -614,7 +614,7 @@ Scan a device for binaries classified as malicious.
 OpenC2 Producers that send 'scan device' Commands:
 
 * MAY populate the Command Arguments field with a 'scan_depth' argument
-* MAY populate the Command Arguments field with a 'periodc_scan' argument
+* MAY populate the Command Arguments field with a 'periodic_scan' argument
 
 OpenC2 Consumers that receive 'scan device' Commands:
 
@@ -623,7 +623,7 @@ OpenC2 Consumers that receive 'scan device' Commands:
     * SHOULD respond with status code 501
     * SHOULD respond with "Argument not supported" in the status Text
     * MAY respond with status code 500
-* but do not support the 'periodc_scan' argument
+* but do not support the 'periodic_scan' argument
     * MUST NOT respond with a OK/200
     * SHOULD respond with status code 501
     * SHOULD respond with "Argument not supported" in the status Text
