@@ -551,7 +551,7 @@ Table 2.3-2 defines the Commands that are valid in the context of the ER profile
 | **file** 			         |     |valid| valid |valid|valid|     |       |     |valid |      |valid |
 | **ipv4_net**		       |     |valid|  |valid|     |     |       |valid|      |      |      |
 | **ipv6_net**		       |     |valid|       |valid|     |     |       |valid|      |      |      |
-| **process** 		       |     |     |       |     |     |valid| valid |     |      |      |      |
+| **process** 		       |     |     |       |     |     |valid|       |     |      |      |      |
 | **registry_entry**   |     |     |       |     |     |     |       |valid|      |valid |valid |
 | **account** 		       |     |     |       |     |     |     |       |valid|      |      |      |
 | **service** 		       |     |     |       |     |     |valid|       |     |      |      |valid |
@@ -781,19 +781,6 @@ OpenC2 Consumers that receive a 'restart device' Command:
 * but cannot access the device specified in the device Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access device" in the status text
-
-#### 2.3.7.2 Restart process
-Restarts a process. A 'process' Target MUST contain at least one property.
-
-OpenC2 Consumers that receive 'restart process' commands
-* but the Command Target does not contain at least one property
-    * MUST NOT respond with status code OK/200
-    * SHOULD respond with status code 400
-    * MAY respond with status code 500
-    * SHOULD respond with "Process Target does not have any properties populated" in the status text
-* but cannot access the process specified by the populated propertie(s)
-    * MUST respond with status code 500
-    * SHOULD respond with "Cannot access process" in the status text
 
 ### 2.3.8 Set
 OpenC2 Consumers that receive a 'set' Command:
@@ -1031,9 +1018,7 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
 ### 3.1.12 Conformance Clause 12: Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.1.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.1.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.1.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.1.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
@@ -1097,7 +1082,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
-  
+
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
 * 3.2.4.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
@@ -1145,9 +1130,7 @@ An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
 ### 3.2.12 Conformance Clause 28: Process Consumer
 An OpenC2 Producer satisfies 'Process Consumer' conformance if:
 * 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
-* 3.2.12.2 **MUST** implement the 'start process' Command in accordance with [Section 2.3.5.1](#2351-start-process) of this specification
-* 3.2.12.3 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
-* 3.2.12.4 **MUST** implement the 'restart process' Command in accordance with [Section 2.3.7.2](#2372-restart-process) of this specification
+* 3.2.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.2.13 Conformance Clause 29: Registry Entry Consumer
 An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
