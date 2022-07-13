@@ -460,13 +460,14 @@ Arguments provide additional precision to a Command by including information suc
 
 **Type: AP-Args (Map{1..\*})**
 
-| ID | Name                    | Type                | \#   | Description                                                                                                                                                       |
-|----|-------------------------|---------------------|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                        |
-| 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                              |
-| 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'. |
-| 4  | **scan_depth**           | Scan-Depth           | 0..1 | Specifies which type of scan to perform on a device.                                                                                                              |
-| 5  | **periodic_scan**        | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                    |
+| ID | Name                    | Type                | \#   | Description                                                                                                                                                                                                                                                                              |
+|----|-------------------------|---------------------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **account_status**      | Account-Status      | 0..1 | Specifies whether an account shall be enabled or disabled.                                                                                                                                                                                                                               |
+| 2  | **device_containment**  | Device-Containment  | 0..1 | Specifies which type of isolation an endpoint shall be subjected to (e.g., port isolation, application restriction).                                                                                                                                                                     |
+| 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'.                                                                                                                        |
+| 4  | **scan_depth**          | Scan-Depth          | 0..1 | Specifies which type of scan to perform on a device.                                                                                                                                                                                                                                     |
+| 5  | **periodic_scan**       | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                                                                                                                                           |
+| 6  | **downstream_device**   | Downstream-Device   | 0..* | Specifies a single Endpoint or group of Endpoints on which a Command is to be performed. MUST be included for Commands where the Target field is populated by types other than 'device' and the Command is meant to be performed on a single Endpoint or limited selection of Endpoints. |
 
 **Type: Account-Status (Enumerated)**
 
@@ -505,6 +506,18 @@ Arguments provide additional precision to a Command by including information suc
 | 1  | **enabled**  | Enable periodic scans   |
 | 2  | **disabled** | Disable periodic scans. |
 
+**Type: Downstream-Device (Map{1..\*})**
+
+| ID | Name              | Type               | \#   | Description                                                                                               |
+|----|-------------------|--------------------|------|-----------------------------------------------------------------------------------------------------------|
+| 1  | **devices**       | ArrayOf(ls:Device) | 0..1 | One or more Endpoint on which the associated Command is to be performed.                                  |
+| 2  | **device_groups** | ArrayOf(ls:String) | 0..1 | One or more defined groups of Endpoints on which the associated Command is to be performed.               |
+| 3  | **tenant_id**     | ls:String          | 0..1 | Specifies a particular instance of an ER OpenC2 Message Consumer which is hosted in a multi-tenant cloud. |
+
+Usage Requirements:
+  * Entities that receive a Downstream-Device argument AND `tenant_id` is populated:
+      * MUST process the `tenant_id` field before `device` or `device_groups`
+
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
 
@@ -520,10 +533,9 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 
 **Type: AP-Specifiers (Map)**
 
-| ID | Name         | Type        | \#   | Description                                                                                                                                                                     |
-|----|--------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **hostname** | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
-| 2  | **tenant_id  | ls:String   | 0..1 | Specifies a tenant ID for cloud environments where several separate Actuators share the same hostname.                                                                          |
+| ID | Name         | Type        | \#   | Description                                                                                                                                         |
+|----|--------------|-------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **hostname** | ls:Hostname | 0..1 | Internet host name for a particular device with ER functionality. MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
@@ -592,8 +604,7 @@ A Command where the Target portion of the Action/Target pair is not specified (w
 | **scan_depth**          |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
 | **periodic_scan**        |[2.3.X.1](#2331-scan-device)|                  |                               |                             |                   |                   |                  |                     |                              |                 |                            |                      |                      |
 
-<!--2.3.X instead of 2.3.1 is temporary and to avoid shifting the whole list until all Commands are present in the PR.
-Scan is put at the top of this list due to it being the top-most in table '2.1.1 Actions' both here and in the LS-->
+<!--2.3.X instead of 2.3.1 is temporary and to avoid shifting the whole list until all Commands are present in the AP-->
 ### 2.3.X Scan
 
 OpenC2 Consumers that receive a 'scan' Command:
@@ -610,6 +621,7 @@ OpenC2 Consumers that receive a 'scan' Command:
 
 #### 2.3.X.1 Scan device
 Scan a device for binaries classified as malicious.
+
 
 OpenC2 Producers that send 'scan device' Commands:
 
@@ -726,11 +738,20 @@ OpenC2 Consumers that receive a 'contain device' Command:
 #### 2.3.3.2 Contain file
 Puts a file into quarantine, rendering it inaccessible to the user of the machine and unable to execute on the endpoint.
 
+OpenC2 Producers that send 'contain file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 OpenC2 Consumers that receive a 'contain file' Command:
 
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.4 Allow
 'Allow' can be treated as the mathematical complement to 'deny' Actions as well as 'contain' Actions. Table 2.3-2 summarizes the Command Arguments that apply to all of the Commands consisting of the 'deny' and 'contain' Actions and their valid Target types.
@@ -814,10 +835,19 @@ OpenC2 Consumers that receive a 'start' Command:
 #### 2.3.5.1 Start file
 Instructs the Actuator to execute a file.
 
+OpenC2 Producers that send 'start file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 OpenC2 Consumers that receive a 'start file' Commands:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.6 Stop
 OpenC2 Consumers that receive a 'stop' Command:
@@ -846,6 +876,7 @@ Stops an active process. A 'process' Target MUST contain at least one property.
 
 OpenC2 Producers that send 'stop process' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'stop process' commands
 * but the Command Target does not contain at least one property
@@ -856,12 +887,18 @@ OpenC2 Consumers that receive 'stop process' commands
 * but cannot access the process specified by the populated propertie(s)
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access process" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.6.3 Stop er:service
 Stops a running service and removes it from its service host process.
 
 OpenC2 Producers that send 'stop er:service' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'stop er:service' commands
 * but the Command Target does not contain at least one property
@@ -873,6 +910,11 @@ OpenC2 Consumers that receive 'stop er:service' commands
     * MUST respond with status code 500
     * MAY respond with 'Cannot stop service' in the status text
     * SHOULD respond with a status text detailing why the service could not be deleted
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.7 Restart
 OpenC2 Consumers that receive a 'restart' Command:
@@ -913,34 +955,46 @@ OpenC2 Consumers that receive a 'set' Command:
 Sets the IPv4 address of the endpoint to the specified Target value.
 
 OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the CIDR prefix-length, or have it set to 32
+* MUST include an IPv4 address without the CIDR prefix-length, or have it set to 32
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
-OpenC2 Consumers thet receive 'set ipv4_net' Commands
+OpenC2 Consumers that receive 'set ipv4_net' Commands
 * but the CIDR prefix-length is set to a value other than 32
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "IPv4 address not set to a single address" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.8.2 Set ipv6_net
 Sets the IPv6 address of the endpoint to the specified Target value.
 
 OpenC2 Producers that send 'set ipv4_net' Commands:
-* MUST include an IPv4 address withouth the prefix-length, or have it set to 128
+* MUST include an IPv4 address without the prefix-length, or have it set to 128
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
-OpenC2 Consumers thet receive a 'set ipv4_net' Command:
+OpenC2 Consumers that receive a 'set ipv4_net' Command:
 * but the CIDR prefix-length is set to a value other than 128
     * MUST NOT respond with status code OK/200
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "IPv6 address not set to a single address" in the status text
-
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.8.3 Set er:registry_entry
 Sets the 'value' property of a Registry Entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
 
 OpenC2 Producers that send 'set er:registry_entry' Commands:
 * MUST populate the 'type' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a'set er:registry_entry' Command:
 * but the 'type' property is not populated
@@ -953,6 +1007,11 @@ OpenC2 Consumers that receive a'set er:registry_entry' Command:
     * SHOULD respond with status code 400
     * MAY respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 #### 2.3.8.4 Set er:account
@@ -960,6 +1019,7 @@ Sets the status of the account to be either enabled or disabled. The producer an
 
 OpenC2 Producers that send 'set er:account' Commands:
 * MUST populate the Command Arguments field with a Account-Status argument
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a 'set er:account' Command:
 * but the Command Arguments field is not populated with a Account-Status argument
@@ -970,6 +1030,11 @@ OpenC2 Consumers that receive a 'set er:account' Command:
 * but cannot access the account specified in the er:account Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access account" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.9 Update
 #### 2.3.9.1 Update file
@@ -984,11 +1049,17 @@ OpenC2 Producers that send 'create er:registry_entry' Commands:
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive a 'create er:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 ### 2.3.11 Delete
 OpenC2 Consumers that receive a 'delete' Command:
@@ -1006,10 +1077,19 @@ OpenC2 Consumers that receive a 'delete' Command:
 #### 2.3.11.1 Delete file
 Deletes the specified file from an endpoint.
 
-OpenC2 Consumers that receive a'delete file' Command:
+OpenC2 Producers that send 'delete file' Commands:
+
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
+OpenC2 Consumers that receive a 'delete file' Command:
 * but cannot access the file specified in the file Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access file" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 #### 2.3.11.2 Delete er:registry_entry
 Deletes a registry entry. The 'type' property MUST be populated and MUST conform to the registry entry types as defined in [Winnt.h header](#winnth-registry-types).
@@ -1019,11 +1099,18 @@ OpenC2 Producers that send 'create er:registry_entry' Commands:
 * MUST refer to the registry key
     * SHOULD refer to the registry key using the 'key' property
     * MAY refer to the registry key by including the key in the 'path' property
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
+
 
 OpenC2 Consumers that receive a 'create er:registry_entry' Command:
 * but cannot access the registry entry specified in the registry entry Target
     * MUST respond with status code 500
     * SHOULD respond with "Cannot access registry entry" in the status text
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 #### 2.3.11.3 Delete er:service
@@ -1031,6 +1118,7 @@ Deletes a service from the endpoint.
 
 OpenC2 Producers that send 'delete er:service' commands
 * MUST populate at least one property of the Command Target
+* MUST populate the Command Arguments field with a 'er:downstream_device' argument
 
 OpenC2 Consumers that receive 'delete er:service' commands
 * but the Command Target does not contain at least one property
@@ -1042,6 +1130,11 @@ OpenC2 Consumers that receive 'delete er:service' commands
     * MUST respond with status code 500
     * MAY respond with 'Cannot delete service' in the status text
     * SHOULD respond with a status text detailing why the service could not be deleted
+* but the Command Arguments field is not populated with a 'er:downstream_device' argument
+  * MUST NOT respond with status code OK/200
+  * SHOULD respond with status code 400
+  * MAY respond with status code 500
+  * SHOULD respond with "Downstream device argument not populated" in the status text
 
 
 # 3 Conformance statements
@@ -1060,9 +1153,25 @@ An OpenC2 Producer satisfies Baseline OpenC2 Producer conformance if:
 * 3.1.1.5 **MUST** be conformant with Version 1.0 of the OpenC2 Language Specification
 * 3.1.1.6 **MUST** implement the 'query features' Command in accordance with the normative text provided in Version 1.0 of the OpenC2 Language Specification
 * 3.1.1.7 **MUST** implement the 'response_requested' Command Argument as a valid option for any Command
-* * 3.1.1.8 **MUST** conform to at least one of the following conformance clauses in this specification:
+* 3.1.1.8 **MAY** implement the 'er:Downstream-Device' Command Argument as a valid option for any Command not included in section [Section 3.1.Z](#31Z-conformance-clause-zdownstream-device-consumers)
+* * 3.1.1.9 **MUST** conform to at least one of the following conformance clauses in this specification:
    * TBD
    * TBD
+
+### 3.1.Z Conformance Clause Z: Downstream Device Consumers<!-- 'Z' is temporary to avoid having to shift the whole list-->
+An OpenC2 Producer satisfies 'Device-Containment Producer' conformance if:
+* 3.1.Z.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
+* 3.1.Z.2 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.1.Z.3 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
+* 3.1.Z.4 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.1.Z.5 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.1.Z.6 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.Z.7 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set er:registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry)) of this specification
+* 3.1.Z.8 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'create er:registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
+* 3.1.Z.9 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'delete er:registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.1.Z.10 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'set er:account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.1.Z.11 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'stop er:service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
+* 3.1.Z.12 **MUST** implement the 'er:Downstream-Device' Command Argument as a valid option for the 'delete er:service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
 
 ### 3.1.2 Conformance Clause 2: Contain Device Producer
 An OpenC2 Producer satisfies 'Contain Device Producer' conformance if:
@@ -1084,6 +1193,7 @@ An OpenC2 Producer satisfies 'Permitted-Addresses Producer' conformance if:
 An OpenC2 Producer satisfies 'Start File Producer' conformance if:
 * 3.1.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.1.Y.2 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
 
 ### 3.1.4 Conformance Clause 4: Stop Device Producer
 An OpenC2 Producer satisfies 'Stop Device Producer' conformance if:
@@ -1106,6 +1216,7 @@ An OpenC2 Producer satisfies 'Contain File Producer' conformance if:
 * 3.1.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 * 3.1.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.1.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 
 ### 3.1.8 Conformance Clause 8: Allow/Deny IPv4 Net Producer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Producer' conformance if:
@@ -1119,16 +1230,19 @@ An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Producer' conformance if:
 An OpenC2 Producer satisfies 'Set IPv4 Net Producer' conformance if:
 * 3.1.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.1.10.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
 
 ### 3.1.11 Conformance Clause 11: Set IPv6 Net Producer
 An OpenC2 Producer satisfies 'Set IPv6 Net Producer' conformance if:
 * 3.1.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.1.11.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
 ### 3.1.12 Conformance Clause 12: Stop Process Producer
 An OpenC2 Producer satisfies 'Process Producer' conformance if:
 * 3.1.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.1.12.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.1.13 Conformance Clause 13: Registry Entry Producer
 An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
@@ -1136,11 +1250,13 @@ An OpenC2 Producer satisfies 'Registry Entry Producer' conformance if:
 * 3.1.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry) of this specification
 * 3.1.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
 * 3.1.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.1.13.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 ### 3.1.14 Conformance Clause 14: Account Producer
 An OpenC2 Producer satisfies 'Account Producer' conformance if:
 * 3.1.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.1.14.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
 
 ### 3.1.15 Conformance Clause 15: Account Status Producers
 An OpenC2 Producer satisfies 'Account-Status Producers' conformance if:
@@ -1152,6 +1268,7 @@ An OpenC2 Producer satisfies 'Service Producer' conformance if:
 * 3.1.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.1.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
 * 3.1.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
+* 3.1.16.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 
 ## 3.2 Clauses Pertaining to the OpenC2 Consumer Conformance Target
@@ -1192,6 +1309,7 @@ An OpenC2 Consumer satisfies 'Permitted-Addresses Consumer' conformance if:
 An OpenC2 Producer satisfies 'Start File Consumer' conformance if:
 * 3.2.Y.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.Y.2 **MUST** implement the 'start file' Command in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
+* 3.2.Y.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.5.1](#2351-start-file) of this specification
 
 ### 3.2.4 Conformance Clause 20: Stop Device Consumer
 An OpenC2 Producer satisfies 'Stop Device Consumer' conformance if:
@@ -1214,6 +1332,7 @@ An OpenC2 Producer satisfies 'Contain File Consumer' conformance if:
 * 3.2.2.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.6.2 **MUST** implement the 'contain file' Command in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 * 3.2.6.3 **MUST** implement the 'allow file' Command in accordance with [Section 2.3.4.2](#2342-allow-file) of this specification
+* 3.2.6.4 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.3.2](#2332-contain-file) of this specification
 
 ### 3.2.8 Conformance Clause 24: Allow/Deny IPv4 Net Consumer
 An OpenC2 Producer satisfies 'Allow/Deny IPv4 Net Consumer' conformance if:
@@ -1227,16 +1346,19 @@ An OpenC2 Producer satisfies 'Allow/Deny IPv6 Net Consumer' conformance if:
 An OpenC2 Producer satisfies 'Set IPv4 Net Consumer' conformance if:
 * 3.2.10.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.10.2 **MUST** implement the 'set ipv4_net' Command in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
+* 3.2.10.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.1](#2381-set-ipv4-net) of this specification
 
 ### 3.2.11 Conformance Clause 27: Set IPv6 Net Consumer
 An OpenC2 Producer satisfies 'Set IPv6 Net Consumer' conformance if:
 * 3.2.11.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.11.2 **MUST** implement the 'set ipv6_net' Command in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
+* 3.2.11.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.2](#2382-set-ipv6-net) of this specification
 
 ### 3.2.12 Conformance Clause 28: Stop Process Consumer
 An OpenC2 Producer satisfies 'Process Consumer' conformance if:
 * 3.2.12.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.12.2 **MUST** implement the 'stop process' Command in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
+* 3.2.12.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.6.2](#2362-stop-process) of this specification
 
 ### 3.2.13 Conformance Clause 29: Registry Entry Consumer
 An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
@@ -1244,11 +1366,13 @@ An OpenC2 Producer satisfies 'Registry Entry Consumer' conformance if:
 * 3.2.13.2 **MUST** implement the 'set registry_entry' Command in accordance with [Section 2.3.8.3](#2383-set-erregistry-entry) of this specification
 * 3.2.13.3 **MUST** implement the 'create registry_entry' Command in accordance with [Section 2.3.10.1](#23101-create-erregistry-entry) of this specification
 * 3.2.13.4 **MUST** implement the 'delete registry_entry' Command in accordance with [Section 2.3.11.2](#23112-delete-erregistry-entry) of this specification
+* 3.2.13.5 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 ### 3.2.14 Conformance Clause 30: Account Consumer
 An OpenC2 Producer satisfies 'Account Consumer' conformance if:
 * 3.2.14.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.14.2 **MUST** implement the 'set account' Command in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
+* 3.2.14.3 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with [Section 2.3.8.4](#2384-set-eraccount) of this specification
 
 ### 3.2.15 Conformance Clause 31: Account Status Consumer
 An OpenC2 Producer satisfies 'Account Status Consumer' conformance if:
@@ -1260,6 +1384,7 @@ An OpenC2 Producer satisfies 'Service Consumer' conformance if:
 * 3.2.16.1 **MUST** meet all of conformance criteria identified in Conformance Clause 1 of this specification
 * 3.2.16.2 **MUST** implement the 'stop service' Command in accordance with [Section 2.3.6.3](#2363-stop-erservice) of this specification
 * 3.2.16.2 **MUST** implement the 'delete service' Command in accordance with [Section 2.3.11.3](#23113-delete-erservice) of this specification
+* 3.2.16.2 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 -------
 # Annex A: Sample Commands
