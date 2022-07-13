@@ -467,7 +467,7 @@ Arguments provide additional precision to a Command by including information suc
 | 3  | **permitted_addresses** | Permitted-Addresses | 0..1 | Specifies which IP or domain name addresses shall remain accessible when a device is contained with the 'device_containment' Argument set to 'network_isolation'.                                                                                                                        |
 | 4  | **scan_depth**          | Scan-Depth          | 0..1 | Specifies which type of scan to perform on a device.                                                                                                                                                                                                                                     |
 | 5  | **periodic_scan**       | Periodic-Scan       | 0..1 | Specifies whether periodic scans shall be enabled or disabled.                                                                                                                                                                                                                           |
-| 6  | **downstream_device**   | Downstream-Device   | 0..1 | Specifies a single Endpoint or group of Endpoints on which a Command is to be performed. MUST be included for Commands where the Target field is populated by types other than 'device' and the Command is meant to be performed on a single Endpoint or limited selection of Endpoints. |
+| 6  | **downstream_device**   | Downstream-Device   | 0..* | Specifies a single Endpoint or group of Endpoints on which a Command is to be performed. MUST be included for Commands where the Target field is populated by types other than 'device' and the Command is meant to be performed on a single Endpoint or limited selection of Endpoints. |
 
 **Type: Account-Status (Enumerated)**
 
@@ -508,10 +508,15 @@ Arguments provide additional precision to a Command by including information suc
 
 **Type: Downstream-Device (Map{1..\*})**
 
-| ID | Name              | Type               | \#   | Description                                                                                   |
-|----|-------------------|--------------------|------|-----------------------------------------------------------------------------------------------|
-| 1  | **devices**       | ArrayOf(ls:Device) | 0..1 | One or more Endpoint on which the associated Command is to be performed.                      |
-| 2  | **device_groups** | ArrayOf(ls:String) | 0..1 | One or more defined groups of Endpoints on which the associated Command is to be performed.   |
+| ID | Name              | Type               | \#   | Description                                                                                               |
+|----|-------------------|--------------------|------|-----------------------------------------------------------------------------------------------------------|
+| 1  | **devices**       | ArrayOf(ls:Device) | 0..1 | One or more Endpoint on which the associated Command is to be performed.                                  |
+| 2  | **device_groups** | ArrayOf(ls:String) | 0..1 | One or more defined groups of Endpoints on which the associated Command is to be performed.               |
+| 3  | **tenant_id**     | ls:String          | 0..1 | Specifies a particular instance of an ER OpenC2 Message Consumer which is hosted in a multi-tenant cloud. |
+
+Usage Requirements:
+  * Entities that receive a Downstream-Device argument AND `tenant_id` is populated:
+      * MUST process the `tenant_id` field before `device` or `device_groups`
 
 ### 2.1.5 Actuator Specifiers
 An Actuator is the entity that provides the functionality and performs the Action. The Actuator executes the Action on the Target. In the context of this profile, the Actuator is the ER and the presence of one or more Specifiers further refine which Actuator(s) shall execute the Action.
@@ -528,10 +533,9 @@ The Actuator Specifiers defined in this document are referenced under the `er` n
 
 **Type: AP-Specifiers (Map)**
 
-| ID | Name         | Type        | \#   | Description                                                                                                                                                                     |
-|----|--------------|-------------|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1  | **hostname** | ls:Hostname | 0..1 | Specifies a particular endpoint with EDR functionality. This specifier Type is a String which MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
-| 2  | **tenant_id  | ls:String   | 0..1 | Specifies a tenant ID for cloud environments where several separate Actuators share the same hostname.                                                                          |
+| ID | Name         | Type        | \#   | Description                                                                                                                                         |
+|----|--------------|-------------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1  | **hostname** | ls:Hostname | 0..1 | Internet host name for a particular device with ER functionality. MUST be formatted as an internet host name as specified in [[RFC1123]](#rfc1123). |
 
 ## 2.2 OpenC2 Response Components
 Response messages originate from the Actuator as a result of a Command.
