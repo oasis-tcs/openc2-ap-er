@@ -1387,15 +1387,92 @@ An OpenC2 Producer satisfies 'Service Consumer' conformance if:
 * 3.2.16.2 **MUST** implement the 'er:Downstream-Device' Command Argument in accordance with the above sections <!-- Temporary description. I will split this conformance clause after the PR has been merged -->
 
 -------
-# Annex A: Sample Commands
+# Annex A: JADN Schema
+
+
+-------
+
+# Appendix A. References
+
+This appendix contains the normative and informative references that are used in this document. Normative references are specific (identified by date of publication and/or edition number or version number) and Informative references are either specific or non-specific.
+
+While any hyperlinks included in this appendix were valid at the time of publication, OASIS cannot guarantee their long-term validity.
+
+## A.1 Normative References
+
+The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
+
+###### [RFC1123]
+Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
+
+###### [RFC2119]
+Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
+
+###### [RFC8174]
+Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+
+###### [OpenC2-Lang-v1.0]
+_Open Command and Control (OpenC2) Language Specification Version 1.0_. Edited by Jason Romano and Duncan Sparrell. November 2018, <http://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html>.
+
+###### [OpenC2-HTTPS-v1.0]
+_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
+
+###### [Winnt.h-registry-types]
+_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
+
+<!--
+## A.2 Informative References
+
+###### [RFC3552]
+Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
+-->
+
+---
+# Appendix B. Safety, Security and Privacy Considerations
+
+---
+# Appendix C. Acknowledgments
+
+Note: A Work Product approved by the TC must include a list of people who participated in the development of the Work Product. This is generally done by collecting the list of names in this appendix. This list shall be initially compiled by the Chair, and any Member of the TC may add or remove their names from the list by request. Remove this note before submitting for publication.
+
+## C.1 Participants
+
+<!-- A TC can determine who they list here, however, TC Observers must not be listed. It is common practice for TCs to list everyone that was part of the TC during the creation of the document, but this is ultimately a TC decision on who they want to list and not list. -->
+
+The following individuals have participated in the creation of this specification and are gratefully acknowledged:
+
+**OpenC2 TC Members:**
+
+| First Name | Last Name  | Company                                     |
+|:-----------|:-----------|:--------------------------------------------|
+| Joe        | Brule      | National Security Agency                    |
+| Alex       | Everett    | University of North Carolina at Chapel Hill |
+| Martin     | Evandt     | University of Oslo                          |
+| David      | Kemp       | National Security Agency                    |
+| David      | Lemire     | G2                                          |
+| Vasileios  | Mavroeidis | University of Oslo                          |
+| Michael    | Rosa       | National Security Agency                    |
+| Duncan     | Sparrell   | sFractal Consulting LLC                     |
+| Russel     | Warren     | IBM                                         |
+
+-------
+
+# Appendix D. Revision History
+| Revision | Date | Editor | Changes Made |
+| :--- | :--- | :--- | :--- |
+| er-ap-v1.0-wd01 | yyyy-mm-dd | Vasileios Mavroeidis, Martin Evandt | Initial working draft |
+
+-------
+
+# Appendix E. Endpoint Response Command / Response Examples
 
 _This section is non-normative_
 
 This section will summarize and provide examples of OpenC2 Commands as they pertain to er systems. The sample Commands will be encoded in verbose JSON.
 
-## A.1 deny, contain and allow
+## E.1 deny, contain and allow
 
-### A.1.1 Ban a binary by hash on every endpoint
+### E.1.1 Ban a binary by hash on every endpoint
 
 **Command:**
 
@@ -1441,7 +1518,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.2 Network isolate a specific endpoint
+### E.1.2 Network isolate a specific endpoint
 
 **Command:**
 
@@ -1465,7 +1542,7 @@ Case Three: the Command failed because an Argument was not supported.
 
 ```
 
-### A.1.X Network isolate an endpoint, but allow communication with selected IP and domain name addresses
+### E.1.X Network isolate an endpoint, but allow communication with selected IP and domain name addresses
 
 **Command:**
 
@@ -1492,7 +1569,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.1.3 Allow unrestricted app execution on a group of endpoints
+### E.1.3 Allow unrestricted app execution on a group of endpoints
 
 **Command:**
 
@@ -1515,9 +1592,9 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-## A.2 Set
+## E.2 Set
 
-### A.2.1 Set an account on a specific endpoint to be enabled
+### E.2.1 Set an account on a specific endpoint to be enabled
 
 **Command:**
 
@@ -1544,7 +1621,7 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
-### A.2.1 Set accounts on a group of endpoints to be disabled
+### E.2.1 Set accounts on a group of endpoints to be disabled
 
 **Command:**
 
@@ -1569,78 +1646,12 @@ Case Three: the Command failed because an Argument was not supported.
 }
 ```
 
--------
 
-# Appendix A. References
 
-This appendix contains the normative and informative references that are used in this document. Normative references are specific (identified by date of publication and/or edition number or version number) and Informative references are either specific or non-specific.
-
-While any hyperlinks included in this appendix were valid at the time of publication, OASIS cannot guarantee their long-term validity.
-
-## A.1 Normative References
-
-The following documents are referenced in such a way that some or all of their content constitutes requirements of this document.
-
-###### [RFC1123]
-Braden, R., Ed., "Requirements for Internet Hosts - Application and Support", STD 3, RFC 1123, DOI 10.17487/RFC1123, October 1989, <https://www.rfc-editor.org/info/rfc1123>.
-
-###### [RFC2119]
-Bradner, S., "Key words for use in RFCs to Indicate Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/RFC2119, March 1997, <https://www.rfc-editor.org/info/rfc2119>.
-
-###### [RFC8174]
-Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174, May 2017, <https://www.rfc-editor.org/info/rfc8174>.
-
-###### [OpenC2-Lang-v1.0]
-_Open Command and Control (OpenC2) Language Specification Version 1.0_. Edited by Jason Romano and Duncan Sparrell. November 2018, <http://docs.oasis-open.org/openc2/oc2ls/v1.0/oc2ls-v1.0.html>.
-
-###### [OpenC2-HTTPS-v1.0]
-_Specification for Transfer of OpenC2 Messages via HTTPS Version 1.0_. Edited by David Lemire. Latest version: http://docs.oasis-open.org/openc2/open-impl-https/v1.0/open-impl-https-v1.0.html
-
-###### [Winnt.h-registry-types]
-_Registry Value Types_. Microsoft Windows documentation, <https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-value-types>
-
-<!--
-## A.2 Informative References
-
-###### [RFC3552]
-Rescorla, E. and B. Korver, "Guidelines for Writing RFC Text on Security Considerations", BCP 72, RFC 3552, DOI 10.17487/RFC3552, July 2003, https://www.rfc-editor.org/info/rfc3552.
--->
-
----
-# Appendix B. Acknowledgments
-
-Note: A Work Product approved by the TC must include a list of people who participated in the development of the Work Product. This is generally done by collecting the list of names in this appendix. This list shall be initially compiled by the Chair, and any Member of the TC may add or remove their names from the list by request. Remove this note before submitting for publication.
-
-## B.1 Participants
-
-<!-- A TC can determine who they list here, however, TC Observers must not be listed. It is common practice for TCs to list everyone that was part of the TC during the creation of the document, but this is ultimately a TC decision on who they want to list and not list. -->
-
-The following individuals have participated in the creation of this specification and are gratefully acknowledged:
-
-**OpenC2 TC Members:**
-
-| First Name | Last Name  | Company                                     |
-|:-----------|:-----------|:--------------------------------------------|
-| Joe        | Brule      | National Security Agency                    |
-| Alex       | Everett    | University of North Carolina at Chapel Hill |
-| Martin     | Evandt     | University of Oslo                          |
-| David      | Kemp       | National Security Agency                    |
-| David      | Lemire     | G2                                          |
-| Vasileios  | Mavroeidis | University of Oslo                          |
-| Michael    | Rosa       | National Security Agency                    |
-| Duncan     | Sparrell   | sFractal Consulting LLC                     |
-| Russel     | Warren     | IBM                                         |
 
 -------
 
-# Appendix C. Revision History
-| Revision | Date | Editor | Changes Made |
-| :--- | :--- | :--- | :--- |
-| er-ap-v1.0-wd01 | yyyy-mm-dd | Vasileios Mavroeidis, Martin Evandt | Initial working draft |
-
--------
-
-# Appendix D. Notices
+# Appendix F. Notices
 
 Copyright © OASIS Open 2021. All Rights Reserved.
 
